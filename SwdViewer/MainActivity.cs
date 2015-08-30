@@ -12,8 +12,7 @@ namespace SwdViewer
     [Activity(Label = "SwdViewer", MainLauncher = true, Icon = "@drawable/icon")]
     public class MainActivity : Activity
     {
-        protected override void OnCreate(Bundle bundle)
-        {
+        protected override void OnCreate(Bundle bundle) {
             base.OnCreate(bundle);
 
             RequestWindowFeature(WindowFeatures.NoTitle);
@@ -31,6 +30,21 @@ namespace SwdViewer
             TableRow rowTitle = new TableRow(this);
             rowTitle.SetGravity(GravityFlags.CenterHorizontal);
 
+            EditText title = new EditText(this);
+            title.SetText("용접 조건 데이터", EditText.BufferType.Editable);
+            title.TextSize = 18;
+            title.Gravity = GravityFlags.Center;
+            title.SetTypeface(Typeface.Serif, TypefaceStyle.Bold);
+
+            Android.Views.InputMethods.InputMethodManager imm = (Android.Views.InputMethods.InputMethodManager)GetSystemService(Context.InputMethodService);
+            imm.HideSoftInputFromWindow(title.WindowToken, 0);
+
+            TableRow.LayoutParams layoutParams = new TableRow.LayoutParams();
+            layoutParams.Span = 4;
+
+            rowTitle.AddView(title, layoutParams);
+            table.AddView(rowTitle);
+
             TableRow rowDayLables = new TableRow(this);
             TableRow rowHighs = new TableRow(this);
             TableRow rowLows = new TableRow(this);
@@ -40,17 +54,6 @@ namespace SwdViewer
             EditText empty = new EditText(this);
 
             // title column/row
-            EditText title = new EditText(this);
-            title.SetText("Java Weather Table", EditText.BufferType.Editable);
-            title.TextSize = 18;
-            title.Gravity = GravityFlags.Center;
-            title.SetTypeface(Typeface.Serif, TypefaceStyle.Bold);
-
-            TableRow.LayoutParams layoutParams = new TableRow.LayoutParams();
-            layoutParams.Span = 4;
-
-            rowTitle.AddView(title, layoutParams);
-
             // labels column
             EditText highsLabel = new EditText(this);
             highsLabel.SetText("Day High", EditText.BufferType.Editable);
@@ -63,7 +66,7 @@ namespace SwdViewer
             //EditText conditionsLabel = new EditText(this);
             //conditionsLabel.Text = "Conditions";
             //conditionsLabel.Typeface = Typeface.DefaultBold;
-            
+
             rowDayLables.AddView(empty);
             rowHighs.AddView(highsLabel);
             rowLows.AddView(lowsLabel);
@@ -173,7 +176,6 @@ namespace SwdViewer
             rowLows.AddView(day5Low);
             //rowConditions.AddView(day5Conditions);
 
-            table.AddView(rowTitle);
             table.AddView(rowDayLables);
             table.AddView(rowHighs);
             table.AddView(rowLows);

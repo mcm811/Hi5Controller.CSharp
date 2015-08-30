@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:minWidth="25px"
+    android:minHeight="25px">
+    <TableLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/tableLayout1"
+        android:shrinkColumns="*"
+        android:stretchColumns="*"
+        android:layout_marginRight="30pt">
+        <TableRow
+            android:id="@+id/tableRow1">
+            <TextView
+                android:text="출력 데이터 (Output data):"
+                android:id="@+id/textView1"
+                android:gravity="right"
+                android:layout_column="0"
+                android:layout_width="wrap_content" />
+            <EditText
+                android:inputType="text"
+                android:id="@+id/editText1"
+                android:layout_column="1"
+                android:layout_width="match_parent"
+                android:gravity="right"
+                android:selectAllOnFocus="true"
+                android:editable="false" />
+        </TableRow>
+        <TableRow
+            android:id="@+id/tableRow2">
+            <TextView
+                android:text="출력 타입 (Output type):"
+                android:id="@+id/textView2"
+                android:gravity="right"
+                android:layout_column="0"
+                android:layout_width="wrap_content" />
+            <EditText
+                android:inputType="number"
+                android:id="@+id/editText2"
+                android:layout_column="1"
+                android:layout_width="match_parent"
+                android:numeric="integer"
+                android:gravity="right"
+                android:selectAllOnFocus="true" />
+        </TableRow>
+        <TableRow
+            android:id="@+id/tableRow3">
+            <TextView
+                android:text="가압력 (Squeeze force):"
+                android:id="@+id/textView3"
+                android:gravity="right"
+                android:layout_column="0" />
+            <EditText
+                android:inputType="number"
+                android:id="@+id/editText3"
+                android:layout_column="1"
+                android:numeric="integer"
+                android:gravity="right"
+                android:selectAllOnFocus="true" />
+        </TableRow>
+        <TableRow
+            android:id="@+id/tableRow4">
+            <TextView
+                android:text="이동극 제거율 (Move tip clearance):"
+                android:id="@+id/textView4"
+                android:gravity="right"
+                android:layout_column="0" />
+            <EditText
+                android:inputType="numberDecimal"
+                android:id="@+id/editText4"
+                android:layout_column="1"
+                android:gravity="right"
+                android:selectAllOnFocus="true"
+                android:numeric="decimal" />
+        </TableRow>
+        <TableRow
+            android:id="@+id/tableRow7">
+            <TextView
+                android:text="고정극 제거율 (Fixed tip clearence):"
+                android:id="@+id/textView5"
+                android:gravity="right"
+                android:layout_column="0" />
+            <EditText
+                android:inputType="numberDecimal"
+                android:id="@+id/editText5"
+                android:layout_column="1"
+                android:gravity="right"
+                android:selectAllOnFocus="true"
+                android:numeric="decimal" />
+        </TableRow>
+        <TableRow
+            android:id="@+id/tableRow6">
+            <TextView
+                android:text="패널 두께 (Pannel thickness):"
+                android:id="@+id/textView6"
+                android:gravity="right"
+                android:layout_column="0" />
+            <EditText
+                android:inputType="numberDecimal"
+                android:id="@+id/editText6"
+                android:layout_column="1"
+                android:gravity="right"
+                android:selectAllOnFocus="true"
+                android:numeric="decimal" />
+        </TableRow>
+        <TableRow
+            android:id="@+id/tableRow5">
+            <TextView
+                android:text="명령 옵셋 (Command offset):"
+                android:id="@+id/textView7"
+                android:gravity="right"
+                android:layout_column="0" />
+            <EditText
+                android:inputType="numberDecimal"
+                android:id="@+id/editText7"
+                android:layout_column="1"
+                android:layout_width="match_parent"
+                android:gravity="right"
+                android:selectAllOnFocus="true"
+                android:numeric="decimal" />
+        </TableRow>
+    </TableLayout>
+</LinearLayout>
