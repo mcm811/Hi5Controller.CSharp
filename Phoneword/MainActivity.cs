@@ -9,7 +9,7 @@ using System.Collections.Generic;
 
 namespace Phoneword
 {
-    [Activity(Label = "Phone word", MainLauncher = true, Icon = "@drawable/icon")]
+    [Activity(Label = "Phone word", MainLauncher = false, Icon = "@drawable/icon")]
     public class MainActivity : Activity
     {
         static readonly List<string> phoneNumbers = new List<string>();

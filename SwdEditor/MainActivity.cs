@@ -7,13 +7,15 @@ using Android.Widget;
 using Android.OS;
 using Android.Graphics;
 using Android.Text;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace SwdEditor
 {
-	[Activity(Label = "용접 조건 데이터 (Weld condition data)", MainLauncher = true, Icon = "@drawable/icon")]
+	[Activity(Label = "SWD 편집기", MainLauncher = true, Icon = "@drawable/icon")]
 	public class MainActivity : Activity
 	{
-		string[] weldConditionData = new string[] {
+		static readonly List<string> weldConditionData = new List<string>()	{
 			"	- 1=1,1,280,10.0,4.0,0.0,0.0",
 			"	- 2=2,1,280,10.0,4.0,0.0,0.0",
 			"	- 3=3,1,280,10.0,4.0,0.0,0.0",
@@ -271,157 +273,27 @@ namespace SwdEditor
 			"	-255=255,1,130,10.0,4.0,0.0,0.0",
 		};
 
-		string[] stringTitle = new string[] {
-			"출력 데이터,출력 타입,가압력,이동극 제거율,고정극 제거율,패널 두께,명령 옵셋",
-			//"Output data,Output type,Squeeze force,Move tip clearance,Fixed tip clearence,Pannel thickness,Command offset",
-		};
-
-		const int columnWidth = 100;
-
-		protected override void OnCreate(Bundle bundle) {
+        protected override void OnCreate(Bundle bundle) {
 			base.OnCreate(bundle);
+
+			SetContentView(Resource.Layout.Main);
 
 			//RequestWindowFeature(WindowFeatures.NoTitle);
 			//this.Window.AddFlags(WindowManagerFlags.Fullscreen);
 			//this.Window.ClearFlags(WindowManagerFlags.Fullscreen);
 
-			bool verticalMode = false;
-			var surfaceOrientation = WindowManager.DefaultDisplay.Rotation;
-			if (surfaceOrientation == SurfaceOrientation.Rotation0 || surfaceOrientation == SurfaceOrientation.Rotation180) {
-				verticalMode = true;	// 세로
-			}
+			AnalogClock ac = FindViewById <AnalogClock>(Resource.Id.analogClock1);
+			ac.ScaleY = 1.5F;
+			ac.ScaleX = 1.5F;
 
-			LinearLayout linearLayout = new LinearLayout(this);
-			linearLayout.Orientation = Orientation.Vertical;
-			//linearLayout.LayoutParameters = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.FillParent, ViewGroup.LayoutParams.FillParent);
+			var toast = Toast.MakeText(this, "시계를 터치하세요", ToastLength.Short);
+			toast.Show();
 
-			TableLayout tableTitle = new TableLayout(this);
-			tableTitle.StretchAllColumns = true;
-			tableTitle.ShrinkAllColumns = true;
-
-			int n = 0;
-			foreach (string item in stringTitle) {
-				TableRow rowItem = new TableRow(this);
-
-				CheckBox checkBox = new CheckBox(this);
-				checkBox.Text = n == 0 ? "번호" : "Index";
-				checkBox.SetTextSize(Android.Util.ComplexUnitType.Pt, 6);
-				rowItem.AddView(checkBox);
-
-				int nValue = 0;
-				string[] data = item.Trim().Split(new char[] { ',', '-' });
-				foreach (string value in data) {
-					if (value.Length != 0) {
-						TextView valueText = new TextView(this);
-						valueText.SetText(value.Trim(), TextView.BufferType.Editable);
-						valueText.Gravity = GravityFlags.Center;
-						valueText.SetSingleLine(true);
-						valueText.SetWidth(columnWidth);
-						valueText.SetTextSize(Android.Util.ComplexUnitType.Pt, 6);
-						//if (verticalMode && nValue < 2) valueText.Visibility = ViewStates.Gone;
-						rowItem.AddView(valueText);
-						nValue++;
-					}
-				}
-				tableTitle.AddView(rowItem);
-				n++;
-			}
-			linearLayout.AddView(tableTitle);
-
-			ScrollView scv = new ScrollView(this);
-			TableLayout table = new TableLayout(this);
-			table.StretchAllColumns = true;
-			table.ShrinkAllColumns = true;
-
-			int tableIndex = 1;
-			foreach (string item in weldConditionData) {
-				TableRow rowItem = new TableRow(this);
-
-				CheckBox checkBox = new CheckBox(this);
-				checkBox.Text = tableIndex++.ToString();
-				checkBox.SetTextSize(Android.Util.ComplexUnitType.Pt, 6);
-				rowItem.AddView(checkBox);
-
-				int nValue = 0;
-				string[] data = item.Trim().Split(new char[] { ',', '-' });
-				foreach (string value in data) {
-					if (value.Length != 0) {
-						TextView valueText = new TextView(this);
-						valueText.SetText(value.Trim(), TextView.BufferType.Editable);
-						valueText.Gravity = GravityFlags.Center;
-						valueText.SetSingleLine(true);
-						valueText.SetWidth(columnWidth);
-						//if (verticalMode && nValue < 2) valueText.Visibility = ViewStates.Gone;
-						rowItem.AddView(valueText);
-						nValue++;
-					}
-				}
-
-				rowItem.Click += (sender, e) => {
-					CheckBox cb = (CheckBox)rowItem.GetChildAt(0);
-					cb.Checked = !cb.Checked;
-				};
-
-				rowItem.LongClick += (sender, e) => {
-					int checkCount = 0;
-					for (int i = 0; i < table.ChildCount; i++) {
-						TableRow ri = (TableRow)table.GetChildAt(i);
-						CheckBox cb = (CheckBox)ri.GetChildAt(0);
-						if (cb.Checked) checkCount++;
-					}
-
-					LayoutInflater layoutInflater = LayoutInflater.From(this);
-					View editFieldView = layoutInflater.Inflate(Resource.Layout.EditField, null);
-					EditText[] editText = new EditText[rowItem.ChildCount - 1];
-					editText[0] = editFieldView.FindViewById<EditText>(Resource.Id.editText1);
-					editText[1] = editFieldView.FindViewById<EditText>(Resource.Id.editText2);
-					editText[2] = editFieldView.FindViewById<EditText>(Resource.Id.editText3);
-					editText[3] = editFieldView.FindViewById<EditText>(Resource.Id.editText4);
-					editText[4] = editFieldView.FindViewById<EditText>(Resource.Id.editText5);
-					editText[5] = editFieldView.FindViewById<EditText>(Resource.Id.editText6);
-					editText[6] = editFieldView.FindViewById<EditText>(Resource.Id.editText7);
-
-					if (checkCount <= 1) {
-						for (int i = 1; i < rowItem.ChildCount; i++) {
-							TextView tv = (TextView)rowItem.GetChildAt(i);
-							editText[i - 1].Text = tv.Text;
-						}
-					}
-
-					var dialog = new AlertDialog.Builder(this);
-					dialog.SetView(editFieldView);
-					dialog.SetNegativeButton("취소", delegate { });
-					dialog.SetPositiveButton("확인", delegate {
-						if (checkCount > 1) {
-							for (int j = 0; j < table.ChildCount; j++) {
-								TableRow ri = (TableRow)table.GetChildAt(j);
-								CheckBox cb = (CheckBox)ri.GetChildAt(0);
-								if (cb.Checked) {
-									for (int i = 1; i < ri.ChildCount; i++) {
-										if (editText[i - 1].Text != "") {
-											TextView tv = (TextView)ri.GetChildAt(i);
-											tv.Text = string.Format("{0:F1}", Double.Parse(editText[i - 1].Text));
-										}
-									}
-								}
-							}
-						} else {
-							for (int i = 1; i < rowItem.ChildCount; i++) {
-								if (editText[i - 1].Text != "") {
-									TextView tv = (TextView)rowItem.GetChildAt(i);
-									tv.Text = editText[i - 1].Text;
-								}
-							}
-						}
-					});
-					dialog.Show();
-				};
-				table.AddView(rowItem);
-			}
-
-			scv.AddView(table);
-			linearLayout.AddView(scv);
-			SetContentView(linearLayout);
+			ac.Click += (sender, e) => {
+				var intent = new Intent(this, typeof(SwdActivity));
+				intent.PutStringArrayListExtra("weld_condition_data", weldConditionData);
+				StartActivity(intent);
+			};
 		}
 	}
 }

@@ -11,7 +11,7 @@
         android:id="@+id/tableLayout1"
         android:shrinkColumns="*"
         android:stretchColumns="*"
-        android:layout_marginRight="30pt">
+        android:paddingRight="10pt">
         <TableRow
             android:id="@+id/tableRow1">
             <TextView
@@ -19,15 +19,19 @@
                 android:id="@+id/textView1"
                 android:gravity="right"
                 android:layout_column="0"
-                android:layout_width="wrap_content" />
+                android:layout_width="wrap_content"
+                android:paddingRight="15pt" />
             <EditText
                 android:inputType="text"
                 android:id="@+id/editText1"
-                android:layout_column="1"
                 android:layout_width="match_parent"
                 android:gravity="right"
                 android:selectAllOnFocus="true"
-                android:editable="false" />
+                android:editable="false"
+                android:textStyle="bold"
+                android:textSize="8pt"
+                android:textColor="#00FF00"
+                android:visibility="visible" />
         </TableRow>
         <TableRow
             android:id="@+id/tableRow2">
@@ -36,11 +40,11 @@
                 android:id="@+id/textView2"
                 android:gravity="right"
                 android:layout_column="0"
-                android:layout_width="wrap_content" />
+                android:layout_width="wrap_content"
+                android:paddingRight="15pt" />
             <EditText
                 android:inputType="number"
                 android:id="@+id/editText2"
-                android:layout_column="1"
                 android:layout_width="match_parent"
                 android:numeric="integer"
                 android:gravity="right"
@@ -52,11 +56,11 @@
                 android:text="가압력 (Squeeze force):"
                 android:id="@+id/textView3"
                 android:gravity="right"
-                android:layout_column="0" />
+                android:layout_column="0"
+                android:paddingRight="15pt" />
             <EditText
                 android:inputType="number"
                 android:id="@+id/editText3"
-                android:layout_column="1"
                 android:numeric="integer"
                 android:gravity="right"
                 android:selectAllOnFocus="true" />
@@ -67,11 +71,12 @@
                 android:text="이동극 제거율 (Move tip clearance):"
                 android:id="@+id/textView4"
                 android:gravity="right"
-                android:layout_column="0" />
+                android:layout_column="0"
+                android:paddingRight="15pt"
+                android:layout_width="wrap_content" />
             <EditText
                 android:inputType="numberDecimal"
                 android:id="@+id/editText4"
-                android:layout_column="1"
                 android:gravity="right"
                 android:selectAllOnFocus="true"
                 android:numeric="decimal" />
@@ -82,11 +87,11 @@
                 android:text="고정극 제거율 (Fixed tip clearence):"
                 android:id="@+id/textView5"
                 android:gravity="right"
-                android:layout_column="0" />
+                android:layout_column="0"
+                android:paddingRight="15pt" />
             <EditText
                 android:inputType="numberDecimal"
                 android:id="@+id/editText5"
-                android:layout_column="1"
                 android:gravity="right"
                 android:selectAllOnFocus="true"
                 android:numeric="decimal" />
@@ -97,11 +102,11 @@
                 android:text="패널 두께 (Pannel thickness):"
                 android:id="@+id/textView6"
                 android:gravity="right"
-                android:layout_column="0" />
+                android:layout_column="0"
+                android:paddingRight="15pt" />
             <EditText
                 android:inputType="numberDecimal"
                 android:id="@+id/editText6"
-                android:layout_column="1"
                 android:gravity="right"
                 android:selectAllOnFocus="true"
                 android:numeric="decimal" />
@@ -112,15 +117,45 @@
                 android:text="명령 옵셋 (Command offset):"
                 android:id="@+id/textView7"
                 android:gravity="right"
-                android:layout_column="0" />
+                android:layout_column="0"
+                android:paddingRight="15pt" />
             <EditText
                 android:inputType="numberDecimal"
                 android:id="@+id/editText7"
-                android:layout_column="1"
                 android:layout_width="match_parent"
                 android:gravity="right"
                 android:selectAllOnFocus="true"
                 android:numeric="decimal" />
+        </TableRow>
+        <TableRow
+            android:id="@+id/tableRow8">
+            <SeekBar
+                android:id="@+id/seekBar1"
+                android:layout_column="0"
+                android:paddingRight="15pt" />
+            <EditText
+                android:inputType="number"
+                android:id="@+id/editText8"
+                android:gravity="right"
+                android:numeric="integer"
+                android:selectAllOnFocus="true"
+                android:visibility="invisible" />
+        </TableRow>
+        <TableRow
+            android:id="@+id/tableRow9">
+            <SeekBar
+                android:id="@+id/seekBar2"
+                android:mirrorForRtl="true"
+                android:layout_column="0"
+                android:indeterminateTint="#000000ff"
+                android:paddingRight="15pt" />
+            <EditText
+                android:inputType="number"
+                android:id="@+id/editText9"
+                android:gravity="right"
+                android:numeric="integer"
+                android:selectAllOnFocus="true"
+                android:visibility="invisible" />
         </TableRow>
     </TableLayout>
 </LinearLayout>
