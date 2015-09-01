@@ -5,6 +5,11 @@
     android:layout_height="fill_parent"
     android:minWidth="25px"
     android:minHeight="25px">
+    <SeekBar
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/sampleSeekBar"
+        android:alpha="0" />
     <TableLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -22,15 +27,13 @@
                 android:layout_width="wrap_content"
                 android:paddingRight="15pt" />
             <EditText
-                android:inputType="text"
+                android:inputType="none"
                 android:id="@+id/editText1"
                 android:layout_width="match_parent"
-                android:gravity="right"
+                android:gravity="center"
                 android:selectAllOnFocus="true"
-                android:editable="false"
                 android:textStyle="bold"
-                android:textSize="8pt"
-                android:textColor="#00FF00"
+                android:textColor="#3498DB"
                 android:visibility="visible" />
         </TableRow>
         <TableRow
@@ -130,7 +133,7 @@
         <TableRow
             android:id="@+id/tableRow8">
             <SeekBar
-                android:id="@+id/seekBar1"
+                android:id="@+id/beginSeekBar"
                 android:layout_column="0"
                 android:paddingRight="15pt" />
             <EditText
@@ -144,11 +147,12 @@
         <TableRow
             android:id="@+id/tableRow9">
             <SeekBar
-                android:id="@+id/seekBar2"
+                android:id="@+id/endSeekBar"
                 android:mirrorForRtl="true"
                 android:layout_column="0"
                 android:indeterminateTint="#000000ff"
-                android:paddingRight="15pt" />
+                android:paddingLeft="15pt"
+                android:scaleX="-1" />
             <EditText
                 android:inputType="number"
                 android:id="@+id/editText9"
@@ -158,4 +162,10 @@
                 android:visibility="invisible" />
         </TableRow>
     </TableLayout>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/statusText"
+        android:gravity="center"
+        android:paddingBottom="4pt" />
 </LinearLayout>

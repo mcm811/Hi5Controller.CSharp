@@ -9,6 +9,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SwdViewer", "SwdViewer\SwdV
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SwdEditor", "SwdEditor\SwdEditor.csproj", "{FB1821FC-46BD-460E-AA20-E66FF453E3F6}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FilePickerExample", "..\..\..\..\..\..\..\GitHub\recipes\android\data\files\browse_files\FilePickerExample.csproj", "{A8480CE8-DDAA-4DD9-9120-24AD8804D5E6}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -25,6 +27,8 @@ Global
 		{FB1821FC-46BD-460E-AA20-E66FF453E3F6}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{FB1821FC-46BD-460E-AA20-E66FF453E3F6}.Release|Any CPU.Build.0 = Release|Any CPU
 		{FB1821FC-46BD-460E-AA20-E66FF453E3F6}.Release|Any CPU.Deploy.0 = Release|Any CPU
+		{A8480CE8-DDAA-4DD9-9120-24AD8804D5E6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A8480CE8-DDAA-4DD9-9120-24AD8804D5E6}.Release|Any CPU.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

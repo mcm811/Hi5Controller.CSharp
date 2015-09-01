@@ -3,11 +3,46 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:minWidth="25px"
-    android:minHeight="25px"
     android:id="@+id/linearLayout1">
-    <AnalogClock
+    <android.support.v7.widget.CardView
+        android:id="@+id/cardView"
+        android:layout_width="fill_parent"
+        android:layout_height="245dp"
+        android:layout_gravity="center_horizontal">
+        <ImageButton
+            android:src="@drawable/box"
+            android:id="@+id/imageButton1"
+            android:scaleType="center"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:maxHeight="10pt"
+            android:tint="#000000ff" />
+        <TextView
+            android:id="@+id/cardText"
+            android:text="데이터 편집"
+            android:layout_marginTop="0dp"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:layout_centerVertical="true"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true" />
+    </android.support.v7.widget.CardView>
+    <Button
+        android:text="파일 읽기"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/openButton" />
+    <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:id="@+id/analogClock1" />
+        android:id="@+id/scrollView1"
+        android:minWidth="25px"
+        android:minHeight="25px">
+        <TextView
+            android:id="@+id/scrollTextView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+    </ScrollView>
 </LinearLayout>
