@@ -12,12 +12,14 @@ using System.Threading.Tasks;
 using System.IO;
 using Android.Util;
 using Java.Util;
-using Android.Support.V7.Widget;
+using Android.Support.V7.App;
+using Android.Support.Design.Widget;
+using AlertDialog = Android.Support.V7.App.AlertDialog;
 
 namespace SwdEditor
 {
 	[Activity(Label = "SWD 편집기", MainLauncher = true, Icon = "@drawable/icon", Theme = "@style/MyCustomTheme")]
-	public class MainActivity : Activity
+	public class MainActivity : AppCompatActivity
 	{
         protected override void OnCreate(Bundle bundle) {
 			base.OnCreate(bundle);
@@ -28,15 +30,24 @@ namespace SwdEditor
 			//this.Window.AddFlags(WindowManagerFlags.Fullscreen);
 			//this.Window.ClearFlags(WindowManagerFlags.Fullscreen);
 
-			CardView cv = FindViewById<CardView>(Resource.Id.cardView);
+			//CardView cv = FindViewById<CardView>(Resource.Id.cardView);
 			ImageButton tp = FindViewById <ImageButton>(Resource.Id.imageButton1);
 			Button bt = FindViewById<Button>(Resource.Id.openButton);
 			TextView stv = FindViewById<TextView>(Resource.Id.scrollTextView);
 
+			if (stv.Text.Length == 0) {
+				try {
+					StreamReader sr = new StreamReader(Assets.Open("ROBOT.SWD"));
+					stv.Text = sr.ReadToEnd();
+					sr.Close();
+				} catch {
+					Log.Error("swd", "Init StreamReader");
+				}
+			}
+
 			tp.Click += (sender, e) => {
 				var intent = new Intent(this, typeof(SwdActivity));
-				List<string> weldConditionData = SwdFile.GetList(stv.Text);
-				intent.PutStringArrayListExtra("weld_condition_data", weldConditionData);
+				intent.PutStringArrayListExtra("weld_condition_data", SwdFile.GetStringArrayList(stv.Text));
 				StartActivity(intent);
 			};
 
@@ -44,8 +55,9 @@ namespace SwdEditor
 				try {
 					StreamReader sr = new StreamReader(Assets.Open("ROBOT.SWD"));
 					stv.Text = await sr.ReadToEndAsync();
+					sr.Close();
 				} catch {
-					Log.Error("swd", "StreamReader");
+					Log.Error("swd", "Event Async StreamReader");
 				}
 			};
 
