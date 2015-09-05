@@ -128,9 +128,8 @@ namespace SwdEditor
 
 				// 길게 클릭시 수정 대화창 띄우기
 				rowItem.LongClick += (sender, e) => {
+					View editFieldView = LayoutInflater.From(this).Inflate(Resource.Layout.Editor, null);
 					AlertDialog.Builder dialog = new AlertDialog.Builder(this);
-					LayoutInflater layoutInflater = LayoutInflater.From(this);
-					View editFieldView = layoutInflater.Inflate(Resource.Layout.Editor, null);
 					dialog.SetView(editFieldView);
 
 					//// 텍스트뷰
