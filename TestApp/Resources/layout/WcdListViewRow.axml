@@ -15,7 +15,7 @@
         android:layout_width="0dp"
         android:layout_weight="0.11"
         android:layout_height="wrap_content"
-        android:id="@+id/cbOutputData"
+        android:id="@+id/tvOutputData"
         android:textSize="20dp" />
     <TextView
         android:text="@string/OutputType"

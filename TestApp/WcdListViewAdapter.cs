@@ -52,8 +52,8 @@ namespace ListViewApp
 				row = LayoutInflater.From(mContent).Inflate(Resource.Layout.WcdListViewRow, null, false);
 			}
 
-			TextView cbOutputData = row.FindViewById<TextView>(Resource.Id.cbOutputData);
-			cbOutputData.Text = mItems[position].OutputData;
+			TextView tvOutputData = row.FindViewById<TextView>(Resource.Id.tvOutputData);
+			tvOutputData.Text = mItems[position].OutputData;
 
 			TextView tvOutputType = row.FindViewById<TextView>(Resource.Id.tvOutputType);
 			tvOutputType.Text = mItems[position].OutputType;
