@@ -32,7 +32,7 @@ namespace SwdEditor
 		private const float alphaOff = 0.2f;
 
 		string[] stringTitle = new string[] {
-			//"Output data,Output type,Squeeze force,Move tip clearance,Fixed tip clearence,Pannel thickness,Command offset",
+			//"Output data,Output type,Squeeze force,Move tip clearance,Fixed tip clearance,Pannel thickness,Command offset",
 			//"출력 데이터,출력 타입,가압력,이동극 제거율,고정극 제거율,패널 두께,명령 옵셋",
 			"출력,종류,가압력,이동극 제거율,고정극 제거율,패널 두께,명령 옵셋",
 		};

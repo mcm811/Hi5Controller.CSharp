@@ -1,5 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="Hello">Hello World, Click Me!</string>
-    <string name="ApplicationName">TestApp</string>
+  <string name="ApplicationName">Swd 리스트뷰</string>
+  <string name="OutputData">출력</string>
+  <string name="OutputType">종류</string>
+  <string name="SqueezeForce">가압력</string>
+  <string name="MoveTipClearance">이동극 제거율</string>
+  <string name="FixedTipClearance">고정극 제거율</string>
+  <string name="PannelThickness">패널 두께</string>
+  <string name="CommandOffset">명령 옵셋</string>
 </resources>

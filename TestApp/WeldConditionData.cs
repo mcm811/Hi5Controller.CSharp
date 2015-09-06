@@ -1,6 +1,6 @@
 using System;
 
-namespace SwdEditor
+namespace ListViewApp
 {
 	public class WeldConditionData
 	{
@@ -8,7 +8,7 @@ namespace SwdEditor
 		public int outputType;              // 출력 타입
 		public int squeezeForce;            // 가압력
 		public decimal moveTipClearance;    // 이동극 제거율
-		public decimal fixedTipClearence;   // 고정극 제거율
+		public decimal fixedTipClearance;   // 고정극 제거율
 		public decimal pannelThickness;     // 패널 두께
 		public decimal commandOffset;       // 명령 옵셋
 
@@ -36,9 +36,9 @@ namespace SwdEditor
 			set { moveTipClearance = Convert.ToDecimal(value); }
 		}
 
-		public string FixedTipClearence {
-			get { return string.Format("{0:F1}", fixedTipClearence); }
-			set { fixedTipClearence = Convert.ToDecimal(value); }
+		public string FixedTipClearance {
+			get { return string.Format("{0:F1}", fixedTipClearance); }
+			set { fixedTipClearance = Convert.ToDecimal(value); }
 		}
 
 		public string PannelThickness {
@@ -54,20 +54,28 @@ namespace SwdEditor
 		public string WcdString {
 			get {
 				string format = outputData < 10 ? "\t- {0:D}={0:D},{1:D},{2:D},{3:F1},{4:F1},{5:F1},{6:F1]" : "\t-{0:D}={0:D},{1:D},{2:D},{3:F1},{4:F1},{5:F1},{6:F1]";
-				return string.Format(format, outputData, outputType, squeezeForce, moveTipClearance, fixedTipClearence, pannelThickness, commandOffset);
+				return string.Format(format, outputData, outputType, squeezeForce, moveTipClearance, fixedTipClearance, pannelThickness, commandOffset);
 			}
 			set {
 				string[] ds = value.Trim().Split(new char[] { '=' });
 				if (ds.Length == 2) {
 					string[] data = ds[1].Trim().Split(new char[] { ',', '-' });
 					if (data.Length == 7) {
-						OutputData = data[0].Trim();
-						OutputType = data[1].Trim();
-						SqueezeForce = data[2].Trim();
-						MoveTipClearance = data[3].Trim();
-						FixedTipClearence = data[4].Trim();
-						PannelThickness = data[5].Trim();
-						CommandOffset = data[6].Trim();
+						OutputData = data[0];
+						OutputType = data[1];
+						SqueezeForce = data[2];
+						MoveTipClearance = data[3];
+						FixedTipClearance = data[4];
+						PannelThickness = data[5];
+						CommandOffset = data[6];
+
+						//OutputData = data[0].Trim();
+						//OutputType = data[1].Trim();
+						//SqueezeForce = data[2].Trim();
+						//MoveTipClearance = data[3].Trim();
+						//FixedTipClearance = data[4].Trim();
+						//PannelThickness = data[5].Trim();
+						//CommandOffset = data[6].Trim();
 					}
 				}
 			}
@@ -86,7 +94,7 @@ namespace SwdEditor
 					case 3:
 					return MoveTipClearance;
 					case 4:
-					return FixedTipClearence;
+					return FixedTipClearance;
 					case 5:
 					return PannelThickness;
 					case 6:
@@ -111,7 +119,7 @@ namespace SwdEditor
 					MoveTipClearance = value;
 					break;
 					case 4:
-					FixedTipClearence = value;
+					FixedTipClearance = value;
 					break;
 					case 5:
 					PannelThickness = value;

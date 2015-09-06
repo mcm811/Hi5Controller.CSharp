@@ -5,26 +5,62 @@ using Android.Runtime;
 using Android.Views;
 using Android.Widget;
 using Android.OS;
+using Android.Graphics;
+using Android.Text;
+using System.Collections.Generic;
+using System.Threading.Tasks;
+using System.IO;
+using Android.Util;
+using Java.Util;
+using Android.Support.V7.App;
+using Android.Support.Design.Widget;
+using AlertDialog = Android.Support.V7.App.AlertDialog;
 
-namespace TestApp
+namespace ListViewApp
 {
-	[Activity(Label = "TestApp", MainLauncher = true, Icon = "@drawable/icon")]
-	public class MainActivity : Activity
+	[Activity(Label = "@string/ApplicationName", MainLauncher = true, Icon = "@drawable/icon", Theme = "@style/MyCustomTheme")]
+	public class MainActivity : AppCompatActivity
 	{
-		int count = 1;
-
-		protected override void OnCreate(Bundle bundle) {
+        protected override void OnCreate(Bundle bundle) {
 			base.OnCreate(bundle);
 
-			// Set our view from the "main" layout resource
 			SetContentView(Resource.Layout.Main);
 
-			// Get our button from the layout resource,
-			// and attach an event to it
-			Button button = FindViewById<Button>(Resource.Id.MyButton);
+			//RequestWindowFeature(WindowFeatures.NoTitle);
+			//this.Window.AddFlags(WindowManagerFlags.Fullscreen);
+			//this.Window.ClearFlags(WindowManagerFlags.Fullscreen);
 
-			button.Click += delegate { button.Text = string.Format("{0} clicks!", count++); };
+			ImageButton tp = FindViewById <ImageButton>(Resource.Id.imageButton1);
+			//Button bt = FindViewById<Button>(Resource.Id.openButton);
+			//TextView stv = FindViewById<TextView>(Resource.Id.scrollTextView);
+
+			//if (stv.Text.Length == 0) {
+			//	try {
+			//		StreamReader sr = new StreamReader(Assets.Open("ROBOT.SWD"));
+			//		stv.Text = sr.ReadToEnd();
+			//		sr.Close();
+			//	} catch {
+			//		Log.Error("swd", "Init StreamReader");
+			//	}
+			//}
+
+			tp.Click += (sender, e) => {
+				var intent = new Intent(this, typeof(WcdListViewActivity));
+				//intent.PutStringArrayListExtra("weld_condition_data", SwdFile.GetStringArrayList(stv.Text));
+				StartActivity(intent);
+			};
+
+			//bt.Click += async (sender, e) => {
+			//	try {
+			//		StreamReader sr = new StreamReader(Assets.Open("ROBOT.SWD"));
+			//		stv.Text = await sr.ReadToEndAsync();
+			//		sr.Close();
+			//	} catch {
+			//		Log.Error("swd", "Event Async StreamReader");
+			//	}
+			//};
+
+			//Toast.MakeText(this, "시계를 터치하세요", ToastLength.Long).Show();
 		}
 	}
 }
-

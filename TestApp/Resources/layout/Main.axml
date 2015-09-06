@@ -1,12 +1,32 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical"
-    android:layout_width="fill_parent"
-    android:layout_height="fill_parent">
-    <ListView
-        android:minWidth="25px"
-        android:minHeight="25px"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:id="@+id/linearLayout1">
+    <ImageButton
+        android:src="@drawable/box"
+        android:id="@+id/imageButton1"
+        android:scaleType="center"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:maxHeight="10pt"
+        android:tint="#000000ff" />
+<!--<Button
+        android:text="파일 읽기"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/openButton" />
+    <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:id="@+id/listView1" />
+        android:id="@+id/scrollView1"
+        android:minWidth="25px"
+        android:minHeight="25px">
+        <TextView
+            android:id="@+id/scrollTextView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+    </ScrollView>-->
 </LinearLayout>

@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="horizontal"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:layout_gravity="center"
+    android:minWidth="25px"
+    android:minHeight="25px"
+    android:paddingBottom="2dp"
+    android:paddingTop="2dp"
+    android:paddingLeft="5dp"
+    android:weightSum="1">
+    <TextView
+        android:text="@string/OutputData"
+        android:layout_width="0dp"
+        android:layout_weight="0.11"
+        android:layout_height="wrap_content"
+        android:id="@+id/cbOutputData"
+        android:textSize="20dp" />
+    <TextView
+        android:text="@string/OutputType"
+        android:layout_width="0dp"
+        android:layout_weight="0.07"
+        android:layout_height="wrap_content"
+        android:id="@+id/tvOutputType"
+        android:gravity="center"
+        android:textSize="20dp" />
+    <TextView
+        android:text="@string/SqueezeForce"
+        android:layout_width="0dp"
+        android:layout_weight="0.16"
+        android:layout_height="wrap_content"
+        android:id="@+id/tvSqueezeForce"
+        android:gravity="center"
+        android:textSize="20dp" />
+    <TextView
+        android:text="@string/MoveTipClearance"
+        android:layout_width="0dp"
+        android:layout_weight="0.16"
+        android:layout_height="wrap_content"
+        android:id="@+id/tvMoveTipClearance"
+        android:gravity="center"
+        android:textSize="20dp" />
+    <TextView
+        android:text="@string/FixedTipClearance"
+        android:layout_width="0dp"
+        android:layout_weight="0.16"
+        android:layout_height="wrap_content"
+        android:id="@+id/tvFixedTipClearance"
+        android:gravity="center"
+        android:textSize="20dp" />
+    <TextView
+        android:text="@string/PannelThickness"
+        android:layout_width="0dp"
+        android:layout_weight="0.14"
+        android:layout_height="wrap_content"
+        android:id="@+id/tvPannelThickness"
+        android:gravity="center"
+        android:textSize="20dp" />
+    <TextView
+        android:text="@string/CommandOffset"
+        android:layout_width="0dp"
+        android:layout_weight="0.14"
+        android:layout_height="wrap_content"
+        android:id="@+id/tvCommandOffset"
+        android:gravity="right"
+        android:textSize="20dp" />
+</LinearLayout>
