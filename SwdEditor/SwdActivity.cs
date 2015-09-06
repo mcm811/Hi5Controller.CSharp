@@ -21,7 +21,7 @@ using AlertDialog = Android.Support.V7.App.AlertDialog;
 
 namespace SwdEditor
 {
-	[Activity(Label = "용접 조건 데이터 (Weld condition data)", MainLauncher = false, Icon = "@drawable/icon", Theme = "@style/MyCustomTheme")]
+	[Activity(Label = "용접 조건 데이터 (Weld condition data)", MainLauncher = false, Icon = "@drawable/icon", Theme = "@style/MyCustomTheme", WindowSoftInputMode = SoftInput.AdjustResize)]
 	public class SwdActivity : AppCompatActivity
 	{
 		private TableLayout titleTable;
@@ -31,20 +31,22 @@ namespace SwdEditor
 		private const int textSize = 30;
 		private const float alphaOff = 0.2f;
 
-		string[] stringTitle = new string[] {
-			//"Output data,Output type,Squeeze force,Move tip clearance,Fixed tip clearance,Pannel thickness,Command offset",
-			//"출력 데이터,출력 타입,가압력,이동극 제거율,고정극 제거율,패널 두께,명령 옵셋",
-			"출력,종류,가압력,이동극 제거율,고정극 제거율,패널 두께,명령 옵셋",
-		};
-
-		private bool IsVertical() {
+		private bool IsVertical()
+		{
 			var metrics = Resources.DisplayMetrics;
 			//bool vt = (WindowManager.DefaultDisplay.Rotation == SurfaceOrientation.Rotation0 || WindowManager.DefaultDisplay.Rotation == SurfaceOrientation.Rotation180);
 			//Console.WriteLine("넓이:{0}, 높이:{1}", metrics.WidthPixels, metrics.HeightPixels);
 			return metrics.WidthPixels < metrics.HeightPixels;
 		}
 
-		private TableLayout CreateTitleTable() {
+		private TableLayout CreateTitleTable()
+		{
+			string[] stringTitle = new string[] {
+				//"Output data,Output type,Squeeze force,Move tip clearance,Fixed tip clearance,Pannel thickness,Command offset",
+				//"출력 데이터,출력 타입,가압력,이동극 제거율,고정극 제거율,패널 두께,명령 옵셋",
+				"출력,종류,가압력,이동극 제거율,고정극 제거율,패널 두께,명령 옵셋",
+			};
+
 			bool isVertical = IsVertical();
 			int colWidthPx = columnWidth * Convert.ToInt32(Resources.DisplayMetrics.DensityDpi) / 160;
 			int textDpi = isVertical ? textSize / 2 : textSize;
@@ -65,7 +67,8 @@ namespace SwdEditor
 							view.SetBackgroundColor(Color.DodgerBlue);
 							//view.PaintFlags = PaintFlags.SubpixelText;
 
-							view.Click += (sender, e) => {
+							view.Click += (sender, e) =>
+							{
 								Log.Error("Swd: ============================== IsChecked", view.Checked.ToString());
 								for (int i = 0; i < mainTable.ChildCount; i++) {
 									((CheckBox)((TableRow)mainTable.GetChildAt(i)).GetChildAt(0)).Checked = view.Checked;
@@ -92,7 +95,8 @@ namespace SwdEditor
 			return titleTable;
 		}
 
-		private void CreateMainTable(bool StretchAllColumns = true, bool ShrinkAllColumns = true) {
+		private void CreateMainTable(bool StretchAllColumns = true, bool ShrinkAllColumns = true)
+		{
 			bool isVertical = IsVertical();
 			int colWidthPx = columnWidth * Convert.ToInt32(Resources.DisplayMetrics.DensityDpi) / 160;
 			int textDpi = isVertical ? textSize / 2 : textSize;
@@ -121,13 +125,15 @@ namespace SwdEditor
 				}
 
 				// 클릭시 체크 박스 선택/해제
-				rowItem.Click += (sender, e) => {
+				rowItem.Click += (sender, e) =>
+				{
 					CheckBox cb = (CheckBox)rowItem.GetChildAt(0);
 					cb.Checked = !cb.Checked;
 				};
 
 				// 길게 클릭시 수정 대화창 띄우기
-				rowItem.LongClick += (sender, e) => {
+				rowItem.LongClick += (sender, e) =>
+				{
 					View editFieldView = LayoutInflater.From(this).Inflate(Resource.Layout.Editor, null);
 					AlertDialog.Builder dialog = new AlertDialog.Builder(this);
 					dialog.SetView(editFieldView);
@@ -176,10 +182,12 @@ namespace SwdEditor
 					for (int i = 1; i < editTextList.Count; i++) {
 						EditText et = editTextList[i];
 						et.Alpha = alphaOff;
-						et.Click += (sender1, e1) => {
+						et.Click += (sender1, e1) =>
+						{
 							et.Alpha = et.Alpha == alphaOff ? 1 : alphaOff;
 						};
-						textInputLayoutList[i].Click += (sender1, e1) => {
+						textInputLayoutList[i].Click += (sender1, e1) =>
+						{
 							et.Alpha = et.Alpha == alphaOff ? 1 : alphaOff;
 						};
 					}
@@ -190,7 +198,8 @@ namespace SwdEditor
 					var sampleSeekBar = editFieldView.FindViewById<SeekBar>(Resource.Id.sampleSeekBar);
 					sampleSeekBar.Max = mainTable.ChildCount - 1;
 					sampleSeekBar.Progress = Convert.ToInt32(statusText.Text) - 1;
-					sampleSeekBar.ProgressChanged += (object sender1, SeekBar.ProgressChangedEventArgs e1) => {
+					sampleSeekBar.ProgressChanged += (object sender1, SeekBar.ProgressChangedEventArgs e1) =>
+					{
 						statusText.Text = (e1.Progress + 1).ToString();
 						TableRow tri = (TableRow)mainTable.GetChildAt(sampleSeekBar.Progress);
 						for (int i = 0; i < tri.ChildCount; i++) {
@@ -213,7 +222,8 @@ namespace SwdEditor
 					editTextList[7].SetTextColor(Color.RosyBrown);
 					editTextList[8].SetTextColor(Color.RosyBrown);
 
-					editTextList[7].TextChanged += (object sender1, TextChangedEventArgs e1) => {
+					editTextList[7].TextChanged += (object sender1, TextChangedEventArgs e1) =>
+					{
 						int n = Convert.ToInt32(e1.Text.ToString());
 						if (n > beginSeekBar.Max) {
 							n = beginSeekBar.Max;
@@ -221,7 +231,8 @@ namespace SwdEditor
 						}
 						beginSeekBar.Progress = n;
 					};
-					editTextList[8].TextChanged += (object sender1, TextChangedEventArgs e1) => {
+					editTextList[8].TextChanged += (object sender1, TextChangedEventArgs e1) =>
+					{
 						int n = Convert.ToInt32(e1.Text.ToString());
 						if (n > endSeekBar.Max) {
 							n = endSeekBar.Max;
@@ -230,7 +241,8 @@ namespace SwdEditor
 						endSeekBar.Progress = endSeekBar.Max - n - 1;
 					};
 
-					beginSeekBar.ProgressChanged += (object sender1, SeekBar.ProgressChangedEventArgs e1) => {
+					beginSeekBar.ProgressChanged += (object sender1, SeekBar.ProgressChangedEventArgs e1) =>
+					{
 						if (e1.FromUser) {
 							int sb1Progress = beginSeekBar.Progress;
 							int sb2Progress = endSeekBar.Max - endSeekBar.Progress;
@@ -249,7 +261,8 @@ namespace SwdEditor
 						}
 					};
 
-					endSeekBar.ProgressChanged += (object sender2, SeekBar.ProgressChangedEventArgs e2) => {
+					endSeekBar.ProgressChanged += (object sender2, SeekBar.ProgressChangedEventArgs e2) =>
+					{
 						if (e2.FromUser) {
 							int sb1Progress = beginSeekBar.Progress;
 							int sb2Progress = endSeekBar.Max - endSeekBar.Progress;
@@ -275,7 +288,8 @@ namespace SwdEditor
 						if (cb.Checked) checkCount++;
 					}
 
-					dialog.SetNegativeButton("취소", delegate {
+					dialog.SetNegativeButton("취소", delegate
+					{
 						if (checkCount > 0) {
 							for (int i = 0; i < mainTable.ChildCount; i++) {
 								CheckBox cb = (CheckBox)((TableRow)mainTable.GetChildAt(i)).GetChildAt(0);
@@ -284,7 +298,8 @@ namespace SwdEditor
 						}
 					});
 
-					dialog.SetPositiveButton("확인", delegate {
+					dialog.SetPositiveButton("확인", delegate
+					{
 						var seekBegin = editTextList[7].Alpha == 1 ? Convert.ToInt32(editTextList[7].Text) : 0;
 						var seekEnd = editTextList[8].Alpha == 1 ? Convert.ToInt32(editTextList[8].Text) : 0;
 
@@ -333,47 +348,44 @@ namespace SwdEditor
 			}
 		}
 
-		Task AsyncMainTable() {
-			return Task.Run(() => {
+		Task AsyncMainTable()
+		{
+			return Task.Run(() =>
+			{
 				if (SwdFile.wcdList.Count == 0)
 					SwdFile.WcdIListString = Intent.Extras.GetStringArrayList("weld_condition_data") ?? new string[0];
 				CreateMainTable();
 			});
 		}
 
-		async void GetWCDList() {
-			Log.Error("WCD", "GetWCDList In");
-			TextView stv = new TextView(this);
-			Log.Error("WCD", "Start1");
-			StreamReader sr = new StreamReader(Assets.Open("ROBOT.SWD"));
-			stv.Text = await sr.ReadToEndAsync();
-			sr.Close();
-			//Log.Error("WCD", stv.Text);
-
+		/*
+		string GetWCDList() {
 			StringBuilder sb = new StringBuilder();
-			Log.Error("WCD", "Start111");
+			StreamReader sr = new StreamReader(Assets.Open("ROBOT.SWD"));
+			string swdText = sr.ReadToEnd();
+			sr.Close();
+
 			bool addText = true;
-			Log.Error("WCD", "Start1111");
-			foreach (string swdLine in stv.Text.Split('\n')) {
+			foreach (string swdLine in swdText.Split('\n')) {
 				if (addText == false) {
 					foreach (WeldConditionData wcd in SwdFile.wcdList) {
-						Log.Error("WCD", "44444444444444444444444444444444444");
-						//Log.Error("WCD", wcd.Text());
-						//sb.Append(wcd.Text());
+						sb.Append(wcd.WcdString);
 					}
 				}
-				//if (swdLine.StartsWith("#006"))
-				//	addText = true;
-				//if (addText && swdLine.Trim().Length > 0)
-				//	sb.Append(swdLine);
-				//if (swdLine.StartsWith("#005"))
-				//	addText = false;
+				if (swdLine.StartsWith("#006"))
+					addText = true;
+				if (addText && swdLine.Trim().Length > 0)
+					sb.Append(swdLine);
+				if (swdLine.StartsWith("#005"))
+					addText = false;
 			}
-			var intent = new Intent(this, typeof(MainActivity));
-			StartActivity(intent);
-		}
 
-		protected override async void OnCreate(Bundle bundle) {
+			return sb.ToString();
+		}
+		*/
+
+		protected override async void OnCreate(Bundle bundle)
+		{
 			base.OnCreate(bundle);
 
 			LinearLayout linearLayout = new LinearLayout(this);
@@ -407,6 +419,19 @@ namespace SwdEditor
 			var toast = Toast.MakeText(this, "결과: " + SwdFile.wcdList.Count.ToString() + "개 항목",
 				ToastLength.Long);
 			toast.Show();
+		}
+
+		public override void OnConfigurationChanged(Android.Content.Res.Configuration newConfig)
+		{
+			base.OnConfigurationChanged(newConfig);
+
+			if (newConfig.Orientation == Android.Content.Res.Orientation.Portrait) {
+				//_tv.LayoutParameters = _layoutParamsPortrait;
+				//_tv.Text = "Changed to portrait";
+			} else if (newConfig.Orientation == Android.Content.Res.Orientation.Landscape) {
+				//_tv.LayoutParameters = _layoutParamsLandscape;
+				//_tv.Text = "Changed to landscape";
+			}
 		}
 	}
 }

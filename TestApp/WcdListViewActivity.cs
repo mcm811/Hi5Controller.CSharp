@@ -19,14 +19,19 @@ namespace ListViewApp
 		private List<WeldConditionData> mItems;
 		private ListView mListView;
 
-		private List<WeldConditionData> ReadFile(string filename, List<WeldConditionData> items)
+		private string ReadAssets(string fileName)
 		{
-			StreamReader sr = new StreamReader(Assets.Open("ROBOT.SWD"));
-			string swdText = sr.ReadToEnd();
+			StreamReader sr = new StreamReader(Assets.Open(fileName));
+			string st = sr.ReadToEnd();
 			sr.Close();
 
+			return st;
+		}
+
+		private List<WeldConditionData> ReadFile(string fileName, List<WeldConditionData> items)
+		{
 			bool addText = false;
-			foreach (string swdLine in swdText.Split('\n')) {
+			foreach (string swdLine in ReadAssets(fileName).Split('\n')) {
 				if (swdLine.StartsWith("#006"))
 					break;
 				if (addText && swdLine.Trim().Length > 0)
@@ -36,6 +41,28 @@ namespace ListViewApp
 			}
 
 			return items;
+		}
+
+		private string BuildFile(string fileName, List<WeldConditionData> items)
+		{
+			StringBuilder sb = new StringBuilder();
+
+			bool addText = true;
+			foreach (string swdLine in ReadAssets(fileName).Split('\n')) {
+				if (addText == false) {
+					foreach (WeldConditionData wcd in items) {
+						sb.Append(wcd.WcdString);
+					}
+				}
+				if (swdLine.StartsWith("#006"))
+					addText = true;
+				if (addText && swdLine.Trim().Length > 0)
+					sb.Append(swdLine);
+				if (swdLine.StartsWith("#005"))
+					addText = false;
+			}
+
+			return sb.ToString();
 		}
 
 		protected override void OnCreate(Bundle bundle)

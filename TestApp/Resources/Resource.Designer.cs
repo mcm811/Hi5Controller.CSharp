@@ -1765,9 +1765,6 @@ namespace ListViewApp
 			// aapt resource value: 0x7f0b0032
 			public const int always = 2131427378;
 			
-			// aapt resource value: 0x7f0b0098
-			public const int beginSeekBar = 2131427480;
-			
 			// aapt resource value: 0x7f0b0030
 			public const int beginning = 2131427376;
 			
@@ -1822,41 +1819,11 @@ namespace ListViewApp
 			// aapt resource value: 0x7f0b0025
 			public const int disableHome = 2131427365;
 			
-			// aapt resource value: 0x7f0b0081
-			public const int editText1 = 2131427457;
-			
-			// aapt resource value: 0x7f0b0084
-			public const int editText2 = 2131427460;
-			
-			// aapt resource value: 0x7f0b0087
-			public const int editText3 = 2131427463;
-			
-			// aapt resource value: 0x7f0b008a
-			public const int editText4 = 2131427466;
-			
-			// aapt resource value: 0x7f0b008d
-			public const int editText5 = 2131427469;
-			
-			// aapt resource value: 0x7f0b0090
-			public const int editText6 = 2131427472;
-			
-			// aapt resource value: 0x7f0b0093
-			public const int editText7 = 2131427475;
-			
-			// aapt resource value: 0x7f0b0096
-			public const int editText8 = 2131427478;
-			
-			// aapt resource value: 0x7f0b009b
-			public const int editText9 = 2131427483;
-			
 			// aapt resource value: 0x7f0b0057
 			public const int edit_query = 2131427415;
 			
 			// aapt resource value: 0x7f0b0015
 			public const int end = 2131427349;
-			
-			// aapt resource value: 0x7f0b009d
-			public const int endSeekBar = 2131427485;
 			
 			// aapt resource value: 0x7f0b0074
 			public const int end_padder = 2131427444;
@@ -1866,6 +1833,33 @@ namespace ListViewApp
 			
 			// aapt resource value: 0x7f0b000b
 			public const int enterAlwaysCollapsed = 2131427339;
+			
+			// aapt resource value: 0x7f0b0096
+			public const int etBegin = 2131427478;
+			
+			// aapt resource value: 0x7f0b0093
+			public const int etCommandOffset = 2131427475;
+			
+			// aapt resource value: 0x7f0b009b
+			public const int etEnd = 2131427483;
+			
+			// aapt resource value: 0x7f0b008d
+			public const int etFixedTipClearance = 2131427469;
+			
+			// aapt resource value: 0x7f0b008a
+			public const int etMoveTipClearance = 2131427466;
+			
+			// aapt resource value: 0x7f0b0081
+			public const int etOutputData = 2131427457;
+			
+			// aapt resource value: 0x7f0b0084
+			public const int etOutputType = 2131427460;
+			
+			// aapt resource value: 0x7f0b0090
+			public const int etPannelThickness = 2131427472;
+			
+			// aapt resource value: 0x7f0b0087
+			public const int etSqueezeForce = 2131427463;
 			
 			// aapt resource value: 0x7f0b000c
 			public const int exitUntilCollapsed = 2131427340;
@@ -1974,6 +1968,12 @@ namespace ListViewApp
 			
 			// aapt resource value: 0x7f0b007d
 			public const int sampleSeekBar = 2131427453;
+			
+			// aapt resource value: 0x7f0b0098
+			public const int sbBegin = 2131427480;
+			
+			// aapt resource value: 0x7f0b009d
+			public const int sbEnd = 2131427485;
 			
 			// aapt resource value: 0x7f0b002c
 			public const int screen = 2131427372;

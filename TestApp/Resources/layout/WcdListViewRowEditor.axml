@@ -27,7 +27,7 @@
                 android:layout_height="wrap_content">
                 <EditText
                     android:inputType="none"
-                    android:id="@+id/editText1"
+                    android:id="@+id/etOutputData"
                     android:hint="출력 데이터 (Output data)"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -48,7 +48,7 @@
                 android:layout_height="wrap_content">
                 <EditText
                     android:inputType="number"
-                    android:id="@+id/editText2"
+                    android:id="@+id/etOutputType"
                     android:hint="출력 타입 (Output type)"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -65,7 +65,7 @@
                 android:layout_height="wrap_content">
                 <EditText
                     android:inputType="number"
-                    android:id="@+id/editText3"
+                    android:id="@+id/etSqueezeForce"
                     android:hint="가압력 (Squeeze force)"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -82,7 +82,7 @@
                 android:layout_height="wrap_content">
                 <EditText
                     android:inputType="numberDecimal"
-                    android:id="@+id/editText4"
+                    android:id="@+id/etMoveTipClearance"
                     android:hint="이동극 제거율 (Move tip clearance)"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -99,7 +99,7 @@
                 android:layout_height="wrap_content">
                 <EditText
                     android:inputType="numberDecimal"
-                    android:id="@+id/editText5"
+                    android:id="@+id/etFixedTipClearance"
                     android:hint="고정극 제거율 (Fixed tip clearence)"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -116,7 +116,7 @@
                 android:layout_height="wrap_content">
                 <EditText
                     android:inputType="numberDecimal"
-                    android:id="@+id/editText6"
+                    android:id="@+id/etPannelThickness"
                     android:hint="패널 두께 (Pannel thickness):"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -133,7 +133,7 @@
                 android:layout_height="wrap_content">
                 <EditText
                     android:inputType="numberDecimal"
-                    android:id="@+id/editText7"
+                    android:id="@+id/etCommandOffset"
                     android:hint="명령 옵셋 (Command offset):"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -150,7 +150,7 @@
                 android:layout_height="wrap_content">
                 <EditText
                     android:inputType="number"
-                    android:id="@+id/editText8"
+                    android:id="@+id/etBegin"
                     android:hint="선택 시작"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -163,7 +163,7 @@
         <TableRow
             android:id="@+id/tableRow9">
             <SeekBar
-                android:id="@+id/beginSeekBar"
+                android:id="@+id/sbBegin"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_column="0"
@@ -177,7 +177,7 @@
                 android:layout_height="wrap_content">
                 <EditText
                     android:inputType="number"
-                    android:id="@+id/editText9"
+                    android:id="@+id/etEnd"
                     android:hint="선택 끝"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -190,7 +190,7 @@
         <TableRow
             android:id="@+id/tableRow11">
             <SeekBar
-                android:id="@+id/endSeekBar"
+                android:id="@+id/sbEnd"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_column="0"

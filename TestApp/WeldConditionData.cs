@@ -61,21 +61,21 @@ namespace ListViewApp
 				if (ds.Length == 2) {
 					string[] data = ds[1].Trim().Split(new char[] { ',', '-' });
 					if (data.Length == 7) {
-						OutputData = data[0];
-						OutputType = data[1];
-						SqueezeForce = data[2];
-						MoveTipClearance = data[3];
-						FixedTipClearance = data[4];
-						PannelThickness = data[5];
-						CommandOffset = data[6];
+						//OutputData = data[0];
+						//OutputType = data[1];
+						//SqueezeForce = data[2];
+						//MoveTipClearance = data[3];
+						//FixedTipClearance = data[4];
+						//PannelThickness = data[5];
+						//CommandOffset = data[6];
 
-						//OutputData = data[0].Trim();
-						//OutputType = data[1].Trim();
-						//SqueezeForce = data[2].Trim();
-						//MoveTipClearance = data[3].Trim();
-						//FixedTipClearance = data[4].Trim();
-						//PannelThickness = data[5].Trim();
-						//CommandOffset = data[6].Trim();
+						OutputData = data[0].Trim();
+						OutputType = data[1].Trim();
+						SqueezeForce = data[2].Trim();
+						MoveTipClearance = data[3].Trim();
+						FixedTipClearance = data[4].Trim();
+						PannelThickness = data[5].Trim();
+						CommandOffset = data[6].Trim();
 					}
 				}
 			}
