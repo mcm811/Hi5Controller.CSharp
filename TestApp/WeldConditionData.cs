@@ -53,8 +53,11 @@ namespace ListViewApp
 
 		public string WcdString {
 			get {
-				string format = outputData < 10 ? "\t- {0:D}={0:D},{1:D},{2:D},{3:F1},{4:F1},{5:F1},{6:F1]" : "\t-{0:D}={0:D},{1:D},{2:D},{3:F1},{4:F1},{5:F1},{6:F1]";
-				return string.Format(format, outputData, outputType, squeezeForce, moveTipClearance, fixedTipClearance, pannelThickness, commandOffset);
+				//string format = outputData < 10 ? "\t- {0:D}={0:D},{1:D},{2:D},{3:F1},{4:F1},{5:F1},{6:F1]" : "\t-{0:D}={0:D},{1:D},{2:D},{3:F1},{4:F1},{5:F1},{6:F1]";
+				//return string.Format(format, outputData, outputType, squeezeForce, moveTipClearance, fixedTipClearance, pannelThickness, commandOffset);
+				//string s = string.Format("\t- {0:D}={0:D},{1:D},{2:D},{3:F1},{4:F1},{5:F1},{6:F1]", outputData, outputType, squeezeForce, moveTipClearance, fixedTipClearance, pannelThickness, commandOffset);
+				string s = outputData.ToString() + outputType.ToString() + squeezeForce.ToString() + moveTipClearance.ToString() + fixedTipClearance.ToString() + pannelThickness.ToString() + commandOffset.ToString();
+				return s;
 			}
 			set {
 				string[] ds = value.Trim().Split(new char[] { '=' });

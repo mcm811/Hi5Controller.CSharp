@@ -10,28 +10,22 @@ using Android.Support.V7.App;
 using System.IO;
 using Android.Util;
 using Java.Lang;
+using System.Threading.Tasks;
 
 namespace ListViewApp
 {
-	[Activity(Label = "ListView App", MainLauncher = false, Icon = "@drawable/icon", Theme = "@style/MyCustomTheme")]
+	[Activity(Label = "용접 조건 데이터", MainLauncher = false, Icon = "@drawable/icon", Theme = "@style/MyCustomTheme")]
 	public class WcdListViewActivity : AppCompatActivity
 	{
 		private List<WeldConditionData> mItems;
 		private ListView mListView;
 
-		private string ReadAssets(string fileName)
+		async private Task<List<WeldConditionData>> ReadFile(string fileName, List<WeldConditionData> items)
 		{
 			StreamReader sr = new StreamReader(Assets.Open(fileName));
-			string st = sr.ReadToEnd();
-			sr.Close();
-
-			return st;
-		}
-
-		private List<WeldConditionData> ReadFile(string fileName, List<WeldConditionData> items)
-		{
+			string swdLine = string.Empty;
 			bool addText = false;
-			foreach (string swdLine in ReadAssets(fileName).Split('\n')) {
+            while ((swdLine = await sr.ReadLineAsync()) != null) {
 				if (swdLine.StartsWith("#006"))
 					break;
 				if (addText && swdLine.Trim().Length > 0)
@@ -39,45 +33,51 @@ namespace ListViewApp
 				if (swdLine.StartsWith("#005"))
 					addText = true;
 			}
+			sr.Close();
 
 			return items;
 		}
 
-		private string BuildFile(string fileName, List<WeldConditionData> items)
+		async private Task<string> UpdateFile(string fileName, List<WeldConditionData> items)
 		{
 			StringBuilder sb = new StringBuilder();
-
+			StreamReader sr = new StreamReader(Assets.Open(fileName));
+			string swdLine = string.Empty;
 			bool addText = true;
-			foreach (string swdLine in ReadAssets(fileName).Split('\n')) {
+			while ((swdLine = await sr.ReadLineAsync()) != null) {
+			//foreach (string swdLine in (await ReadAssets(fileName)).Split('\n')) {
 				if (addText == false) {
 					foreach (WeldConditionData wcd in items) {
 						sb.Append(wcd.WcdString);
+						sb.Append("\n");
 					}
 				}
 				if (swdLine.StartsWith("#006"))
 					addText = true;
-				if (addText && swdLine.Trim().Length > 0)
+				if (addText && swdLine.Length > 0) {
 					sb.Append(swdLine);
+					sb.Append("\n");
+				}
 				if (swdLine.StartsWith("#005"))
 					addText = false;
 			}
+			sr.Close();
 
 			return sb.ToString();
 		}
 
-		protected override void OnCreate(Bundle bundle)
+		async protected override void OnCreate(Bundle bundle)
 		{
 			base.OnCreate(bundle);
 			SetContentView(Resource.Layout.WcdListView);
+
 			mListView = FindViewById<ListView>(Resource.Id.myListView);
 
 			mItems = new List<WeldConditionData>();
-			WcdListViewAdapter adapter = new WcdListViewAdapter(this, ReadFile("ROBOT.SWD", mItems));
+			WcdListViewAdapter adapter = new WcdListViewAdapter(this, await ReadFile("ROBOT.SWD", mItems));
 
 			mListView.Adapter = adapter;
 			mListView.ChoiceMode = ChoiceMode.Multiple;
-			//mListView.Selector
-
 			mListView.ItemClick += (object sender, AdapterView.ItemClickEventArgs e) =>
 			{
 				//adapter[e.Position].PannelThickness = (Convert.ToDecimal(adapter[e.Position].PannelThickness) + 1).ToString();
@@ -91,7 +91,7 @@ namespace ListViewApp
 				List<int> positions = new List<int>();
 				for (int i = 0; i < checkedList.Size(); i++) {
 					if (checkedList.ValueAt(i)) {
-                        positions.Add(checkedList.KeyAt(i));
+						positions.Add(checkedList.KeyAt(i));
 					}
 				}
 

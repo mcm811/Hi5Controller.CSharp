@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-  <string name="ApplicationName">Swd 리스트뷰</string>
+  <string name="ApplicationName">JOB, SWD 관리</string>
   <string name="OutputData">출력</string>
   <string name="OutputType">종류</string>
   <string name="SqueezeForce">가압력</string>

@@ -66,6 +66,7 @@
     <Compile Include="WcdListViewAdapter.cs" />
     <Compile Include="Resources\Resource.Designer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="WcdTextViewActivity.cs" />
     <Compile Include="WeldConditionData.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -79,6 +80,9 @@
     </AndroidResource>
     <AndroidResource Include="Resources\layout\Main.axml" />
     <AndroidResource Include="Resources\layout\WcdListViewRowEditor.axml">
+      <SubType>AndroidResource</SubType>
+    </AndroidResource>
+    <AndroidResource Include="Resources\layout\WcdTextView.axml">
       <SubType>AndroidResource</SubType>
     </AndroidResource>
   </ItemGroup>

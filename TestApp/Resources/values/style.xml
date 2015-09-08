@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="UTF-8" ?>
 <resources>
   <!-- Inherit from the light Material Theme -->
-  <style name="MyCustomTheme" parent="Theme.AppCompat.Light">
+  <style name="MyCustomTheme" parent="Theme.AppCompat">
     <item name="windowNoTitle">false</item>
     <item name="windowActionBar">true</item>
 
