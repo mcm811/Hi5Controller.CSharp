@@ -3,8 +3,6 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 14
 VisualStudioVersion = 14.0.23107.0
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SwdEditor", "SwdEditor\SwdEditor.csproj", "{FB1821FC-46BD-460E-AA20-E66FF453E3F6}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ListViewApp", "TestApp\ListViewApp.csproj", "{E96B354D-E4C0-4F53-B2FD-81C794E05621}"
 EndProject
 Global
@@ -13,10 +11,6 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{FB1821FC-46BD-460E-AA20-E66FF453E3F6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{FB1821FC-46BD-460E-AA20-E66FF453E3F6}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{FB1821FC-46BD-460E-AA20-E66FF453E3F6}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
-		{FB1821FC-46BD-460E-AA20-E66FF453E3F6}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E96B354D-E4C0-4F53-B2FD-81C794E05621}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{E96B354D-E4C0-4F53-B2FD-81C794E05621}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E96B354D-E4C0-4F53-B2FD-81C794E05621}.Debug|Any CPU.Deploy.0 = Debug|Any CPU

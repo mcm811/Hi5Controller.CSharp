@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-  <string name="ApplicationName">JOB, SWD 관리</string>
+  <string name="ApplicationName">하이파이브 용접관리</string>
   <string name="OutputData">출력</string>
   <string name="OutputType">종류</string>
   <string name="SqueezeForce">가압력</string>
@@ -8,4 +8,6 @@
   <string name="FixedTipClearance">고정극 제거율</string>
   <string name="PannelThickness">패널 두께</string>
   <string name="CommandOffset">명령 옵셋</string>
+  <string name="app_name">폴더 선택</string>
+  <string name="no_files_or_directories">No files or directories</string>
 </resources>

@@ -22,46 +22,72 @@ namespace ListViewApp
 
 		async private Task<List<WeldConditionData>> ReadFile(string fileName, List<WeldConditionData> items)
 		{
-			StreamReader sr = new StreamReader(Assets.Open(fileName));
-			string swdLine = string.Empty;
-			bool addText = false;
-            while ((swdLine = await sr.ReadLineAsync()) != null) {
-				if (swdLine.StartsWith("#006"))
-					break;
-				if (addText && swdLine.Trim().Length > 0)
-					items.Add(new WeldConditionData(swdLine));
-				if (swdLine.StartsWith("#005"))
-					addText = true;
+			//StreamReader sr = new StreamReader(Assets.Open(fileName));
+			try {
+				using (StreamReader sr = new StreamReader(fileName)) {
+					string swdLine = string.Empty;
+					bool addText = false;
+					while ((swdLine = await sr.ReadLineAsync()) != null) {
+						if (swdLine.StartsWith("#006"))
+							break;
+						if (addText && swdLine.Trim().Length > 0)
+							items.Add(new WeldConditionData(swdLine));
+						if (swdLine.StartsWith("#005"))
+							addText = true;
+					}
+					sr.Close();
+					Toast.MakeText(this, "불러 오기: " + fileName + "", ToastLength.Short).Show();
+				}
+			} catch {
+				Toast.MakeText(this, "파일이 없습니다: " + fileName + "", ToastLength.Short).Show();
+				Finish();
 			}
-			sr.Close();
-
 			return items;
 		}
 
 		async private Task<string> UpdateFile(string fileName, List<WeldConditionData> items)
 		{
+			//StreamReader sr = new StreamReader(Assets.Open(fileName));
 			StringBuilder sb = new StringBuilder();
-			StreamReader sr = new StreamReader(Assets.Open(fileName));
-			string swdLine = string.Empty;
-			bool addText = true;
-			while ((swdLine = await sr.ReadLineAsync()) != null) {
-			//foreach (string swdLine in (await ReadAssets(fileName)).Split('\n')) {
-				if (addText == false) {
-					foreach (WeldConditionData wcd in items) {
-						sb.Append(wcd.WcdString);
-						sb.Append("\n");
+			try {
+				using (StreamReader sr = new StreamReader(fileName)) {
+					string swdLine = string.Empty;
+					bool addText = true;
+					bool wcdText = true;
+					while ((swdLine = await sr.ReadLineAsync()) != null) {
+						if (addText == false && wcdText) {
+							foreach (WeldConditionData wcd in items) {
+								sb.Append(wcd.WcdString);
+								sb.Append("\n");
+							}
+							sb.Append("\n");
+							wcdText = false;
+						}
+						if (swdLine.StartsWith("#006"))
+							addText = true;
+						if (addText /*&& swdLine.Length > 0*/) {
+							sb.Append(swdLine);
+							sb.Append("\n");
+						}
+						if (swdLine.StartsWith("#005"))
+							addText = false;
 					}
+					sr.Close();
 				}
-				if (swdLine.StartsWith("#006"))
-					addText = true;
-				if (addText && swdLine.Length > 0) {
-					sb.Append(swdLine);
-					sb.Append("\n");
-				}
-				if (swdLine.StartsWith("#005"))
-					addText = false;
+			} catch {
+				Toast.MakeText(this, "읽기 실패: " + fileName + "", ToastLength.Short).Show();
 			}
-			sr.Close();
+
+			try {
+				using (var sw = new StreamWriter(fileName)) {
+					await sw.WriteAsync(sb.ToString());
+					sw.Close();
+					Toast.MakeText(this, "저장 완료: " + fileName + "", ToastLength.Short).Show();
+				}
+			} catch {
+				Toast.MakeText(this, "쓰기 실패: " + fileName + "", ToastLength.Short).Show();
+			}
+			//Log.Error("===============", sb.ToString());
 
 			return sb.ToString();
 		}
@@ -71,11 +97,12 @@ namespace ListViewApp
 			base.OnCreate(bundle);
 			SetContentView(Resource.Layout.WcdListView);
 
-			mListView = FindViewById<ListView>(Resource.Id.myListView);
+			string dirPath = Path.Combine(Intent.GetStringExtra("dir_path") ?? "", "ROBOT.SWD");
 
 			mItems = new List<WeldConditionData>();
-			WcdListViewAdapter adapter = new WcdListViewAdapter(this, await ReadFile("ROBOT.SWD", mItems));
+			WcdListViewAdapter adapter = new WcdListViewAdapter(this, await ReadFile(dirPath, mItems));
 
+			mListView = FindViewById<ListView>(Resource.Id.myListView);
 			mListView.Adapter = adapter;
 			mListView.ChoiceMode = ChoiceMode.Multiple;
 			mListView.ItemClick += (object sender, AdapterView.ItemClickEventArgs e) =>
@@ -85,7 +112,7 @@ namespace ListViewApp
 				//Console.WriteLine(e.Position.ToString() + " (" + adapter[e.Position].PannelThickness.ToString() + ")");
 				Toast.MakeText(this, e.Position.ToString() + " (" + mListView.CheckedItemCount.ToString() + ")", ToastLength.Short).Show();
 			};
-			mListView.ItemLongClick += (object sender, AdapterView.ItemLongClickEventArgs e) =>
+			mListView.ItemLongClick += async (object sender, AdapterView.ItemLongClickEventArgs e) =>
 			{
 				SparseBooleanArray checkedList = mListView.CheckedItemPositions;
 				List<int> positions = new List<int>();
@@ -103,6 +130,8 @@ namespace ListViewApp
 					}
 					Toast.MakeText(this, sb.ToString(), ToastLength.Short).Show();
 				}
+
+				await UpdateFile(dirPath, mItems);
 			};
 		}
 	}

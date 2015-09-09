@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -20,10 +20,17 @@ namespace ListViewApp
 	{
 		async private Task<string> ReadFileToString(string fileName)
 		{
-			StreamReader sr = new StreamReader(Assets.Open(fileName));
-			string st = await sr.ReadToEndAsync();
-			sr.Close();
-
+			string st = "";
+			try {
+				using (StreamReader sr = new StreamReader(fileName)) {
+					st = await sr.ReadToEndAsync();
+					sr.Close();
+				}
+			} catch {
+				Toast.MakeText(this, "파일이 없습니다: " + fileName + "", ToastLength.Short).Show();
+				Finish();
+			}
+		
 			return st;
 		}
 
@@ -32,8 +39,13 @@ namespace ListViewApp
 			base.OnCreate(bundle);
 			SetContentView(Resource.Layout.WcdTextView);
 
+			string dirPath = Path.Combine(Intent.GetStringExtra("dir_path") ?? "", "ROBOT.SWD");
+			
+			TextView pathTv = FindViewById<TextView>(Resource.Id.pathTextView);
+			pathTv.Text = dirPath;
+
 			TextView tv = FindViewById<TextView>(Resource.Id.wcdTextView);
-			tv.Text = await ReadFileToString("ROBOT.SWD");
+			tv.Text = await ReadFileToString(dirPath);
 
 			//tv.Click += (object sender, EventArgs e) =>
 			//{ };
