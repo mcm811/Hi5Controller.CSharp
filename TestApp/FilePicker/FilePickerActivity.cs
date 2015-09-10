@@ -6,11 +6,11 @@
 	using Android.Support.V4.App;
 	using Android.Views;
 	using Android.Widget;
-	using ListViewApp;
+	using HI5Controller;
 	using System.IO;
 	using System.Text;
 
-	[Activity(Label = "@string/app_name", MainLauncher = false, Icon = "@drawable/ic_launcher")]
+	[Activity(Label = "@string/app_name", MainLauncher = false, Icon = "@drawable/folder")]
 	public class FilePickerActivity : FragmentActivity
 	{
 		protected override void OnCreate(Bundle bundle)
@@ -51,7 +51,8 @@
 					var prefEditor = prefs.Edit();
 					prefEditor.PutString("dirpath_file", WcdActivity.path);
 					prefEditor.Commit();
-				}			}
+				}
+			}
 		}
 	}
 }

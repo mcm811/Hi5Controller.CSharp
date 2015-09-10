@@ -1,7 +1,7 @@
 using Android.Util;
 using System;
 
-namespace ListViewApp
+namespace HI5Controller
 {
 	public class WeldConditionData
 	{

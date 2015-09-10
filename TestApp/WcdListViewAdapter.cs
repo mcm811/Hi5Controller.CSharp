@@ -10,7 +10,7 @@ using Android.Runtime;
 using Android.Views;
 using Android.Widget;
 
-namespace ListViewApp
+namespace HI5Controller
 {
 	class WcdListViewAdapter : BaseAdapter<WeldConditionData>
 	{

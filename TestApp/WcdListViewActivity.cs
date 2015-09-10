@@ -12,9 +12,9 @@ using Android.Util;
 using Java.Lang;
 using System.Threading.Tasks;
 
-namespace ListViewApp
+namespace HI5Controller
 {
-	[Activity(Label = "용접 조건 데이터", MainLauncher = false, Icon = "@drawable/icon", Theme = "@style/MyCustomTheme")]
+	[Activity(Label = "용접 조건 데이터", MainLauncher = false, Icon = "@drawable/robot_industrial", Theme = "@style/MyCustomTheme")]
 	public class WcdListViewActivity : AppCompatActivity
 	{
 		private List<WeldConditionData> mItems;

@@ -12,9 +12,9 @@ using Android.Widget;
 using System.Threading.Tasks;
 using System.IO;
 
-namespace ListViewApp
+namespace HI5Controller
 {
-	[Activity(Label = "ROBOT.SWD", MainLauncher = false, Icon = "@drawable/icon", Theme = "@style/MyCustomTheme")]
+	[Activity(Label = "ROBOT.SWD", MainLauncher = false, Icon = "@drawable/robot_industrial", Theme = "@style/MyCustomTheme")]
 
 	public class WcdTextViewActivity : Activity
 	{

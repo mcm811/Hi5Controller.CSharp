@@ -19,12 +19,22 @@ using com.xamarin.recipes.filepicker;
 using Android.Support.V4.App;
 using System.Text;
 
-namespace ListViewApp
+namespace HI5Controller
 {
-	[Activity(Label = "@string/ApplicationName", MainLauncher = true, Icon = "@drawable/icon", Theme = "@style/MyCustomTheme")]
+	[Activity(Label = "@string/ApplicationName", MainLauncher = true, Icon = "@drawable/robot_industrial", Theme = "@style/MyCustomTheme")]
 	public class WcdActivity : AppCompatActivity
 	{
 		public static string path = string.Empty;
+
+		private EditText dirPath;
+		private Button folderPickerButton;
+		private Button wcdListViewButton;
+		private Button wcdTextButton;
+
+		private void ToastShow(string str)
+		{
+			Toast.MakeText(this, str, ToastLength.Short).Show();
+		}
 
 		protected override void OnCreate(Bundle bundle)
 		{
@@ -39,10 +49,9 @@ namespace ListViewApp
 			dirPath.TextChanged += (sender, e) =>
 			{
 				WcdActivity.path = e.Text.ToString();
-				//Toast.MakeText(this, WcdActivity.path, ToastLength.Short).Show();
 			};
 
-			Button folderPickerButton = FindViewById<Button>(Resource.Id.folderPickerButton);
+			folderPickerButton = FindViewById<Button>(Resource.Id.folderPickerButton);
 			folderPickerButton.Click += (sender, e) =>
 			{
 				var intent = new Intent(this, typeof(FilePickerActivity));
@@ -50,16 +59,16 @@ namespace ListViewApp
 				StartActivityForResult(intent, 1);
 			};
 
-			Button bt1 = FindViewById<Button>(Resource.Id.button1);
-			bt1.Click += (sender, e) =>
+			wcdListViewButton = FindViewById<Button>(Resource.Id.button1);
+			wcdListViewButton.Click += (sender, e) =>
 			{
 				var intent = new Intent(this, typeof(WcdListViewActivity));
 				intent.PutExtra("dir_path", WcdActivity.path);
 				StartActivity(intent);
 			};
 
-			Button bt2 = FindViewById<Button>(Resource.Id.button2);
-			bt2.Click += (sender, e) =>
+			wcdTextButton = FindViewById<Button>(Resource.Id.button2);
+			wcdTextButton.Click += (sender, e) =>
 			{
 				var intent = new Intent(this, typeof(WcdTextViewActivity));
 				intent.PutExtra("dir_path", WcdActivity.path);
@@ -74,7 +83,8 @@ namespace ListViewApp
 				//}
 				using (var prefs = Application.Context.GetSharedPreferences(Application.PackageName, FileCreationMode.Private)) {
 					dirPath.Text = prefs.GetString("dirpath_file", string.Empty);
-				}			} catch {
+				}
+			} catch {
 				dirPath.Text = Android.OS.Environment.ExternalStorageDirectory.AbsolutePath;
 				Toast.MakeText(this, path, ToastLength.Short).Show();
 			}
@@ -82,17 +92,16 @@ namespace ListViewApp
 
 		protected override void OnActivityResult(int requestCode, [GeneratedEnum] Result resultCode, Intent data)
 		{
-			TextView dirPath = FindViewById<TextView>(Resource.Id.dirPathTextView);
 			base.OnActivityResult(requestCode, resultCode, data);
 			if (resultCode == Result.Ok) {
 				if (requestCode == 1) {
 					dirPath.Text = data.GetStringExtra("dir_path") ?? path;
+					ToastShow(resultCode.ToString() + ", " + requestCode.ToString());
 				}
 			} else {
-				//Toast.MakeText(this, resultCode.ToString() + ", " + requestCode.ToString(), ToastLength.Short).Show();
 				dirPath.Text = path;
 			}
-			Toast.MakeText(this, path, ToastLength.Short).Show();
+			ToastShow(path);
 		}
 	}
 }

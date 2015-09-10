@@ -26,33 +26,50 @@
         android:text="폴더 선택"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_weight="25"
+        android:layout_weight="20"
         android:id="@+id/folderPickerButton"
         android:layout_marginLeft="20dp"
         android:layout_marginRight="20dp"
         android:layout_marginTop="20dp"
-        android:background="@color/my_purple"
-        android:textSize="20dp" />
+        android:background="@drawable/button_folder_style"
+        android:textSize="20dp"
+        android:drawableLeft="@drawable/button_folder" />
     <Button
         android:text="용접 조건 데이터"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_weight="25"
+        android:layout_weight="20"
         android:id="@+id/button1"
         android:layout_marginLeft="20dp"
         android:layout_marginRight="20dp"
         android:layout_marginTop="20dp"
-        android:background="@color/my_blue"
-        android:textSize="20dp" />
+        android:background="@drawable/button_wcdlist_style"
+        android:textSize="20dp"
+        android:drawableLeft="@drawable/button_wcdlist" />
     <Button
         android:text="ROBOT.SWD"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_weight="25"
+        android:layout_weight="20"
         android:id="@+id/button2"
         android:layout_marginLeft="20dp"
         android:layout_marginRight="20dp"
         android:layout_marginTop="20dp"
-        android:background="@color/my_green"
-        android:textSize="20dp" />
+        android:background="@drawable/button_robot_style"
+        android:textSize="20dp"
+        android:drawableLeft="@drawable/button_robot" />
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="35"
+        android:minWidth="25px"
+        android:minHeight="25px">
+        <ProgressBar
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/progressBar1"
+            android:background="@drawable/ProgressBarStyle"
+            android:layout_centerInParent="true"
+            android:indeterminate="true" />
+    </RelativeLayout>
 </LinearLayout>
