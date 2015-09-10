@@ -18,6 +18,9 @@ namespace HI5Controller
 
 	public class WcdTextViewActivity : Activity
 	{
+		private TextView pathTv;
+		private TextView wcdTv;
+
 		async private Task<string> ReadFileToString(string fileName)
 		{
 			string st = "";
@@ -30,7 +33,7 @@ namespace HI5Controller
 				Toast.MakeText(this, "파일이 없습니다: " + fileName + "", ToastLength.Short).Show();
 				Finish();
 			}
-		
+
 			return st;
 		}
 
@@ -40,12 +43,12 @@ namespace HI5Controller
 			SetContentView(Resource.Layout.WcdTextView);
 
 			string dirPath = Path.Combine(Intent.GetStringExtra("dir_path") ?? "", "ROBOT.SWD");
-			
-			TextView pathTv = FindViewById<TextView>(Resource.Id.pathTextView);
+
+			pathTv = FindViewById<TextView>(Resource.Id.pathTextView);
 			pathTv.Text = dirPath;
 
-			TextView tv = FindViewById<TextView>(Resource.Id.wcdTextView);
-			tv.Text = await ReadFileToString(dirPath);
+			wcdTv = FindViewById<TextView>(Resource.Id.wcdTextView);
+			wcdTv.Text = await ReadFileToString(dirPath);
 
 			//tv.Click += (object sender, EventArgs e) =>
 			//{ };

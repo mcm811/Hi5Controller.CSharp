@@ -45,7 +45,7 @@ namespace HI5Controller
 			base.OnCreate(bundle);
 			SetContentView(Resource.Layout.Wcd);
 
-			EditText dirPath = FindViewById<EditText>(Resource.Id.dirPathTextView);
+			dirPath = FindViewById<EditText>(Resource.Id.dirPathTextView);
 			dirPath.TextChanged += (sender, e) =>
 			{
 				WcdActivity.path = e.Text.ToString();

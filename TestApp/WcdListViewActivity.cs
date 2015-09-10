@@ -19,6 +19,7 @@ namespace HI5Controller
 	{
 		private List<WeldConditionData> mItems;
 		private ListView mListView;
+		WcdListViewAdapter adapter;
 
 		async private Task<List<WeldConditionData>> ReadFile(string fileName, List<WeldConditionData> items)
 		{
@@ -100,7 +101,7 @@ namespace HI5Controller
 			string dirPath = Path.Combine(Intent.GetStringExtra("dir_path") ?? "", "ROBOT.SWD");
 
 			mItems = new List<WeldConditionData>();
-			WcdListViewAdapter adapter = new WcdListViewAdapter(this, await ReadFile(dirPath, mItems));
+			adapter = new WcdListViewAdapter(this, await ReadFile(dirPath, mItems));
 
 			mListView = FindViewById<ListView>(Resource.Id.myListView);
 			mListView.Adapter = adapter;
