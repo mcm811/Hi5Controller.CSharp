@@ -14,7 +14,7 @@ using System.IO;
 
 namespace HI5Controller
 {
-	[Activity(Label = "ROBOT.SWD", MainLauncher = false, Icon = "@drawable/robot_industrial", Theme = "@style/MyCustomTheme")]
+	[Activity(Label = "ROBOT.SWD", MainLauncher = false, Icon = "@drawable/robot_industrial", Theme = "@style/MyTheme")]
 
 	public class WcdTextViewActivity : Activity
 	{
@@ -52,6 +52,15 @@ namespace HI5Controller
 
 			//tv.Click += (object sender, EventArgs e) =>
 			//{ };
+
+			Button button = FindViewById<Button>(Resource.Id.btnWcdOk);
+			button.Click += (object sender, System.EventArgs e) =>
+			{
+				//Intent intent = new Intent(this, typeof(FilePickerActivity));
+				//intent.PutExtra("dir_path", WcdActivity.path);
+				//SetResult(Result.Ok, intent);
+				Finish();
+			};
 		}
 	}
 }

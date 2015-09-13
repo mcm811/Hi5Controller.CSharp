@@ -10,6 +10,7 @@
     android:paddingTop="2dp"
     android:paddingLeft="5dp"
     android:weightSum="1">
+<!--android:background="@drawable/listviewrow_bg"-->
     <TextView
         android:text="@string/OutputData"
         android:layout_width="0dp"

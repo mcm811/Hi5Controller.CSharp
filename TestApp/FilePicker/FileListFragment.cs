@@ -21,33 +21,29 @@ namespace com.xamarin.recipes.filepicker
 	/// </remarks>
 	public class FileListFragment : ListFragment
 	{
-		public static readonly string DefaultInitialDirectory = "/";
 		private FileListAdapter _adapter;
 		private DirectoryInfo _directory;
+
+		public string DirPath
+		{
+			get { return _directory.FullName; }
+			set { _directory = new DirectoryInfo(value); }
+		}
 
 		public override void OnCreate(Bundle savedInstanceState)
 		{
 			base.OnCreate(savedInstanceState);
 			_adapter = new FileListAdapter(Activity, new FileSystemInfo[0]);
 			ListAdapter = _adapter;
+			//DirPath = Arguments.GetString("dir_path");
 		}
-		
-		//public override void OnListItemLongClick(ListView l, View v, int position, long id)
-		//{
-		//	base.OnListItemLongClick(l, v, position, id);
-		//}
 
 		public override void OnListItemClick(ListView l, View v, int position, long id)
 		{
 			var fileSystemInfo = _adapter.GetItem(position);
-			if (fileSystemInfo.IsFile()) {
-				// Do something with the file.  In this case we just pop some toast.
-				Log.Verbose("FileListFragment", "The file {0} was clicked.", fileSystemInfo.FullName);
-				//Toast.MakeText(Activity, "You selected file " + fileSystemInfo.FullName, ToastLength.Short).Show();
-			} else {
-				// Dig into this directory, and display it's contents
-				WcdActivity.path = fileSystemInfo.FullName;
-				//Toast.MakeText(Activity, "You selected " + fileSystemInfo.FullName, ToastLength.Short).Show();
+			if (position == 0) {
+				RefreshFilesList(Path.GetDirectoryName(fileSystemInfo.FullName));
+			} else if (fileSystemInfo.IsDirectory()) {
 				RefreshFilesList(fileSystemInfo.FullName);
 			}
 			base.OnListItemClick(l, v, position, id);
@@ -56,36 +52,31 @@ namespace com.xamarin.recipes.filepicker
 		public override void OnResume()
 		{
 			base.OnResume();
-			//RefreshFilesList(DefaultInitialDirectory);
 
-			string dirPath = Android.OS.Environment.ExternalStorageDirectory.AbsolutePath;
-			//string dirPath = Android.OS.Environment.GetExternalStoragePublicDirectory(Android.OS.Environment.DirectoryDownloads).ToString();
-			if (dirPath.Length == 0)
-				dirPath = DefaultInitialDirectory;
+			if (DirPath.Length == 0) {
+				//DirPath = Android.OS.Environment.GetExternalStoragePublicDirectory(Android.OS.Environment.DirectoryDownloads).ToString();
+				DirPath = Android.OS.Environment.ExternalStorageDirectory.AbsolutePath;
+			}
 
-			WcdActivity.path = dirPath;
-			//Toast.MakeText(Activity, dirPath, ToastLength.Short).Show();
-
-			RefreshFilesList(dirPath);
+			RefreshFilesList(DirPath);
 		}
 
 		public void RefreshFilesList(string directory)
 		{
 			IList<FileSystemInfo> visibleThings = new List<FileSystemInfo>();
-			var dir = new DirectoryInfo(directory);
-
 			try {
-				foreach (var item in dir.GetFileSystemInfos().Where(item => item.IsVisible())) {
+				//visibleThings.Add(new DirectoryInfo(directory == "/" ? "/" : Path.GetDirectoryName(directory)));
+				var dir = new DirectoryInfo(directory);
+				visibleThings.Add(dir);
+                foreach (var item in dir.GetFileSystemInfos().Where(item => item.IsVisible())) {
 					visibleThings.Add(item);
 				}
+				_directory = dir;
 			} catch (Exception ex) {
 				Log.Error("FileListFragment", "Couldn't access the directory " + _directory.FullName + "; " + ex);
 				//Toast.MakeText(Activity, "Problem retrieving contents of " + directory, ToastLength.Long).Show();
 				return;
 			}
-
-			_directory = dir;
-
 			_adapter.AddDirectoryContents(visibleThings);
 
 			// If we don't do this, then the ListView will not update itself when then data set 

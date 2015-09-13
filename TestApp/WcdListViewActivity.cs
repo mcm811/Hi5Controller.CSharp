@@ -11,15 +11,19 @@ using System.IO;
 using Android.Util;
 using Java.Lang;
 using System.Threading.Tasks;
+using Android.Graphics;
 
 namespace HI5Controller
 {
-	[Activity(Label = "용접 조건 데이터", MainLauncher = false, Icon = "@drawable/robot_industrial", Theme = "@style/MyCustomTheme")]
+	[Activity(Label = "용접 조건 데이터", MainLauncher = false, Icon = "@drawable/robot_industrial", Theme = "@style/MyTheme")]
 	public class WcdListViewActivity : AppCompatActivity
 	{
 		private List<WeldConditionData> mItems;
 		private ListView mListView;
-		WcdListViewAdapter adapter;
+		private WcdListViewAdapter adapter;
+
+		private readonly Color defaultBackgroundColor = Color.Transparent;
+		private readonly Color selectedBackGroundColor = Color.LightGray;
 
 		async private Task<List<WeldConditionData>> ReadFile(string fileName, List<WeldConditionData> items)
 		{
@@ -93,12 +97,17 @@ namespace HI5Controller
 			return sb.ToString();
 		}
 
+		private Color GetArgb(int argb)
+		{
+			return Color.Argb(Color.GetAlphaComponent(argb), Color.GetRedComponent(argb), Color.GetGreenComponent(argb), Color.GetBlueComponent(argb));
+		}
+
 		async protected override void OnCreate(Bundle bundle)
 		{
 			base.OnCreate(bundle);
-			SetContentView(Resource.Layout.WcdListView);
+			SetContentView(Resource.Layout.WcdListViewCard);
 
-			string dirPath = Path.Combine(Intent.GetStringExtra("dir_path") ?? "", "ROBOT.SWD");
+			string dirPath = System.IO.Path.Combine(Intent.GetStringExtra("dir_path") ?? "", "ROBOT.SWD");
 
 			mItems = new List<WeldConditionData>();
 			adapter = new WcdListViewAdapter(this, await ReadFile(dirPath, mItems));
@@ -111,7 +120,13 @@ namespace HI5Controller
 				//adapter[e.Position].PannelThickness = (Convert.ToDecimal(adapter[e.Position].PannelThickness) + 1).ToString();
 				//adapter.NotifyDataSetChanged();
 				//Console.WriteLine(e.Position.ToString() + " (" + adapter[e.Position].PannelThickness.ToString() + ")");
-				Toast.MakeText(this, e.Position.ToString() + " (" + mListView.CheckedItemCount.ToString() + ")", ToastLength.Short).Show();
+
+				if (mListView.IsItemChecked(e.Position)) {
+					e.View.SetBackgroundColor(selectedBackGroundColor);
+				} else {
+					e.View.SetBackgroundColor(defaultBackgroundColor);	// 기본 백그라운드 색깔
+				}
+				//Toast.MakeText(this, e.Position.ToString() + " (" + mListView.CheckedItemCount.ToString() + ")", ToastLength.Short).Show();
 			};
 			mListView.ItemLongClick += async (object sender, AdapterView.ItemLongClickEventArgs e) =>
 			{
@@ -133,6 +148,15 @@ namespace HI5Controller
 				}
 
 				await UpdateFile(dirPath, mItems);
+			};
+
+			Button button = FindViewById<Button>(Resource.Id.btnWcdEdit);
+			button.Click += (object sender, System.EventArgs e) =>
+			{
+				//Intent intent = new Intent(this, typeof(FilePickerActivity));
+				//intent.PutExtra("dir_path", WcdActivity.path);
+				//SetResult(Result.Ok, intent);
+				Finish();
 			};
 		}
 	}
