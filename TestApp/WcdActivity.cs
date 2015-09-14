@@ -1,30 +1,24 @@
-﻿using System;
-using Android.App;
+﻿using Android.App;
 using Android.Content;
 using Android.Runtime;
 using Android.Views;
 using Android.Widget;
 using Android.OS;
-using Android.Graphics;
-using Android.Text;
-using System.Collections.Generic;
-using System.Threading.Tasks;
-using System.IO;
-using Android.Util;
-using Java.Util;
+using Android.Support.V4.Widget;
 using Android.Support.V7.App;
 using Android.Support.Design.Widget;
-using AlertDialog = Android.Support.V7.App.AlertDialog;
 using Toolbar = Android.Support.V7.Widget.Toolbar;
 using com.xamarin.recipes.filepicker;
-using Android.Support.V4.App;
-using System.Text;
 
 namespace HI5Controller
 {
 	[Activity(Label = "@string/ApplicationName", MainLauncher = true, Icon = "@drawable/robot_industrial", Theme = "@style/MyTheme")]
 	public class WcdActivity : AppCompatActivity
 	{
+		private Toolbar toolbar;
+		private DrawerLayout drawerLayout;
+		private NavigationView navigationView;
+
 		private EditText dirPath;
 		private Button folderPickerButton;
 		private Button wcdListViewButton;
@@ -77,10 +71,45 @@ namespace HI5Controller
 			base.OnCreate(bundle);
 			SetContentView(Resource.Layout.Wcd);
 
+			// 액션바
+			toolbar = FindViewById<Toolbar>(Resource.Id.toolbar);
+			SetSupportActionBar(toolbar);
+			SupportActionBar.SetHomeAsUpIndicator(Resource.Drawable.ic_menu_white);
+			SupportActionBar.SetDisplayHomeAsUpEnabled(true);
+			SupportActionBar.Title = Resources.GetString(Resource.String.ApplicationName);
+
+			// 서랍 메뉴
+			drawerLayout = FindViewById<DrawerLayout>(Resource.Id.drawer_layout);
+			navigationView = FindViewById<NavigationView>(Resource.Id.nav_view);
+			navigationView.NavigationItemSelected += (sender, e) =>
+			{
+				e.MenuItem.SetChecked(true);
+				Intent intent;
+				switch (e.MenuItem.ItemId) {
+					case Resource.Id.nav_workpathconfig:
+					intent = new Intent(this, typeof(FilePickerActivity));
+					intent.PutExtra("dir_path", dirPath.Text);
+					StartActivityForResult(intent, 1);
+					break;
+					case Resource.Id.nav_wcd:
+					intent = new Intent(this, typeof(WcdListViewActivity));
+					intent.PutExtra("dir_path", dirPath.Text);
+					StartActivity(intent);
+					break;
+					case Resource.Id.nav_robot:
+					intent = new Intent(this, typeof(WcdTextViewActivity));
+					intent.PutExtra("dir_path", dirPath.Text);
+					StartActivity(intent);
+					break;
+					case Resource.Id.nav_settings:
+					break;
+				}
+				drawerLayout.CloseDrawers();
+			};
+
+			// 기본 화면 구성
 			dirPath = FindViewById<EditText>(Resource.Id.dirPathTextView);
 			dirPath.Text = DirPath;
-			//dirPath.TextChanged += (sender, e) =>
-			//{ };
 
 			folderPickerButton = FindViewById<Button>(Resource.Id.folderPickerButton);
 			folderPickerButton.Click += (sender, e) =>
@@ -121,6 +150,24 @@ namespace HI5Controller
 			if (DirPath != dirPath.Text)
 				DirPath = dirPath.Text;
 			base.OnStop();
+		}
+
+		// 액션바 우측 옵션
+		public override bool OnCreateOptionsMenu(IMenu menu)
+		{
+			MenuInflater.Inflate(Resource.Menu.home, menu);
+			return base.OnCreateOptionsMenu(menu);
+		}
+
+		// 액션바 옵션 선택시 처리
+		public override bool OnOptionsItemSelected(IMenuItem item)
+		{
+			switch (item.ItemId) {
+				case Android.Resource.Id.Home:
+				drawerLayout.OpenDrawer(Android.Support.V4.View.GravityCompat.Start);
+				return true;
+			}
+			return base.OnOptionsItemSelected(item);
 		}
 	}
 }

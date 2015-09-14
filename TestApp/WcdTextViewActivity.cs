@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-
 using Android.App;
 using Android.Content;
 using Android.OS;
@@ -11,15 +10,26 @@ using Android.Views;
 using Android.Widget;
 using System.Threading.Tasks;
 using System.IO;
+using Android.Support.V4.Widget;
+using Android.Support.V7.App;
+using Android.Support.Design.Widget;
+using Toolbar = Android.Support.V7.Widget.Toolbar;
+using com.xamarin.recipes.filepicker;
 
 namespace HI5Controller
 {
 	[Activity(Label = "ROBOT.SWD", MainLauncher = false, Icon = "@drawable/robot_industrial", Theme = "@style/MyTheme")]
-
-	public class WcdTextViewActivity : Activity
+	public class WcdTextViewActivity : AppCompatActivity
 	{
+		private Toolbar toolbar;
+		private DrawerLayout drawerLayout;
+		private NavigationView navigationView;
+		private string dirPath = string.Empty;
+
 		private TextView pathTv;
 		private TextView wcdTv;
+		private Button btnOk;
+
 
 		async private Task<string> ReadFileToString(string fileName)
 		{
@@ -42,25 +52,73 @@ namespace HI5Controller
 			base.OnCreate(bundle);
 			SetContentView(Resource.Layout.WcdTextView);
 
-			string dirPath = Path.Combine(Intent.GetStringExtra("dir_path") ?? "", "ROBOT.SWD");
+			// 액션바
+			toolbar = FindViewById<Toolbar>(Resource.Id.toolbar);
+			SetSupportActionBar(toolbar);
+			SupportActionBar.SetHomeAsUpIndicator(Resource.Drawable.ic_menu_white);
+			SupportActionBar.SetDisplayHomeAsUpEnabled(true);
+			SupportActionBar.Title = Resources.GetString(Resource.String.WcdTextViewName);
 
-			pathTv = FindViewById<TextView>(Resource.Id.pathTextView);
-			pathTv.Text = dirPath;
+			// 서랍 메뉴
+			dirPath = Intent.GetStringExtra("dir_path") ?? "";
+			drawerLayout = FindViewById<DrawerLayout>(Resource.Id.drawer_layout);
+			navigationView = FindViewById<NavigationView>(Resource.Id.nav_view);
+			navigationView.NavigationItemSelected += (sender, e) =>
+			{
+				e.MenuItem.SetChecked(true);
+				Intent intent;
+				switch (e.MenuItem.ItemId) {
+					case Resource.Id.nav_workpathconfig:
+					intent = new Intent(this, typeof(FilePickerActivity));
+					intent.PutExtra("dir_path", dirPath);
+					StartActivityForResult(intent, 1);
+					break;
+					case Resource.Id.nav_wcd:
+					intent = new Intent(this, typeof(WcdListViewActivity));
+					intent.PutExtra("dir_path", dirPath);
+					StartActivity(intent);
+					break;
+					case Resource.Id.nav_robot:
+					intent = new Intent(this, typeof(WcdTextViewActivity));
+					intent.PutExtra("dir_path", dirPath);
+					StartActivity(intent);
+					break;
+					case Resource.Id.nav_settings:
+					break;
+				}
+				drawerLayout.CloseDrawers();
+			};
+
+			string robotPath = System.IO.Path.Combine(dirPath, "ROBOT.SWD");
+            pathTv = FindViewById<TextView>(Resource.Id.pathTextView);
+			pathTv.Text = robotPath;
 
 			wcdTv = FindViewById<TextView>(Resource.Id.wcdTextView);
-			wcdTv.Text = await ReadFileToString(dirPath);
+			wcdTv.Text = await ReadFileToString(robotPath);
 
-			//tv.Click += (object sender, EventArgs e) =>
-			//{ };
-
-			Button button = FindViewById<Button>(Resource.Id.btnWcdOk);
-			button.Click += (object sender, System.EventArgs e) =>
+			btnOk = FindViewById<Button>(Resource.Id.btnWcdOk);
+			btnOk.Click += (object sender, System.EventArgs e) =>
 			{
-				//Intent intent = new Intent(this, typeof(FilePickerActivity));
-				//intent.PutExtra("dir_path", WcdActivity.path);
-				//SetResult(Result.Ok, intent);
 				Finish();
 			};
+		}
+
+		// 액션바 우측 옵션
+		public override bool OnCreateOptionsMenu(IMenu menu)
+		{
+			MenuInflater.Inflate(Resource.Menu.home, menu);
+			return base.OnCreateOptionsMenu(menu);
+		}
+
+		// 액션바 옵션 선택시 처리
+		public override bool OnOptionsItemSelected(IMenuItem item)
+		{
+			switch (item.ItemId) {
+				case Android.Resource.Id.Home:
+				drawerLayout.OpenDrawer(Android.Support.V4.View.GravityCompat.Start);
+				return true;
+			}
+			return base.OnOptionsItemSelected(item);
 		}
 	}
 }

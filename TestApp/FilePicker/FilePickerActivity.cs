@@ -1,15 +1,19 @@
-﻿namespace com.xamarin.recipes.filepicker
-{
-	using Android.App;
-	using Android.Content;
-	using Android.OS;
-	using Android.Support.V4.App;
-	using Android.Views;
-	using Android.Widget;
-	using HI5Controller;
-	using System.IO;
-	using System.Text;
+﻿using Android.App;
+using Android.Content;
+using Android.OS;
+using Android.Support.V4.App;
+using Android.Views;
+using Android.Widget;
+using HI5Controller;
+using System.IO;
+using System.Text;
+using Android.Support.V4.Widget;
+using Android.Support.V7.App;
+using Android.Support.Design.Widget;
+using Toolbar = Android.Support.V7.Widget.Toolbar;
 
+namespace com.xamarin.recipes.filepicker
+{
 	[Activity(Label = "@string/app_name", MainLauncher = false, Icon = "@drawable/folder", Theme = "@style/MyTheme")]
 	public class FilePickerActivity : FragmentActivity
 	{
@@ -42,14 +46,20 @@
 				SetResult(Result.Ok, intent);
 				Finish();
 			};
-        }
-		
+		}
+
 		public override void OnBackPressed()
 		{
 			if (fileList.DirPath != "/")
 				fileList.RefreshFilesList(Path.GetDirectoryName(fileList.DirPath));
 			else
 				base.OnBackPressed();
+		}
+
+		protected override void OnStop()
+		{
+			Finish();
+			base.OnStop();
 		}
 
 		protected override void OnDestroy()

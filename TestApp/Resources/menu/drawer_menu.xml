@@ -1,0 +1,23 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+  <group android:checkableBehavior="single">
+    <item
+      android:id="@+id/nav_workpathconfig"
+      android:icon="@drawable/ic_sd_storage"
+      android:title="@string/WorkPathConfigButton" />
+    <item
+      android:id="@+id/nav_wcd"
+      android:icon="@drawable/ic_view_list"
+      android:title="@string/WcdButton" />
+    <item
+      android:id="@+id/nav_robot"
+      android:icon="@drawable/ic_android"
+      android:title="@string/RobotButton" />
+  </group>
+  <group android:checkableBehavior="single">
+    <item
+      android:id="@+id/nav_settings"
+      android:icon="@drawable/ic_settings"
+      android:title="Settings" />
+  </group>
+</menu>

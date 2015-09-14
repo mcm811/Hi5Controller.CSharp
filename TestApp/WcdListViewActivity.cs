@@ -1,12 +1,15 @@
-﻿using System;
-using Android.App;
+﻿using Android.App;
 using Android.Content;
-using Android.Runtime;
 using Android.Views;
 using Android.Widget;
 using Android.OS;
 using System.Collections.Generic;
+using Android.Support.V4.Widget;
 using Android.Support.V7.App;
+using Android.Support.Design.Widget;
+using Toolbar = Android.Support.V7.Widget.Toolbar;
+using com.xamarin.recipes.filepicker;
+
 using System.IO;
 using Android.Util;
 using Java.Lang;
@@ -18,6 +21,11 @@ namespace HI5Controller
 	[Activity(Label = "용접 조건 데이터", MainLauncher = false, Icon = "@drawable/robot_industrial", Theme = "@style/MyTheme")]
 	public class WcdListViewActivity : AppCompatActivity
 	{
+		private Toolbar toolbar;
+		private DrawerLayout drawerLayout;
+		private NavigationView navigationView;
+		private string dirPath = string.Empty;
+
 		private List<WeldConditionData> mItems;
 		private ListView mListView;
 		private WcdListViewAdapter adapter;
@@ -41,7 +49,7 @@ namespace HI5Controller
 							addText = true;
 					}
 					sr.Close();
-					Toast.MakeText(this, "불러 오기: " + fileName + "", ToastLength.Short).Show();
+					//Toast.MakeText(this, "불러 오기: " + fileName + "", ToastLength.Short).Show();
 				}
 			} catch {
 				Toast.MakeText(this, "파일이 없습니다: " + fileName + "", ToastLength.Short).Show();
@@ -107,10 +115,46 @@ namespace HI5Controller
 			base.OnCreate(bundle);
 			SetContentView(Resource.Layout.WcdListViewCard);
 
-			string dirPath = System.IO.Path.Combine(Intent.GetStringExtra("dir_path") ?? "", "ROBOT.SWD");
+			// 액션바
+			toolbar = FindViewById<Toolbar>(Resource.Id.toolbar);
+			SetSupportActionBar(toolbar);
+			SupportActionBar.SetHomeAsUpIndicator(Resource.Drawable.ic_menu_white);
+			SupportActionBar.SetDisplayHomeAsUpEnabled(true);
+			SupportActionBar.Title = Resources.GetString(Resource.String.WcdListViewName);
 
+			// 서랍 메뉴
+			dirPath = Intent.GetStringExtra("dir_path") ?? "";
+			drawerLayout = FindViewById<DrawerLayout>(Resource.Id.drawer_layout);
+			navigationView = FindViewById<NavigationView>(Resource.Id.nav_view);
+			navigationView.NavigationItemSelected += (sender, e) =>
+			{
+				e.MenuItem.SetChecked(true);
+				Intent intent;
+				switch (e.MenuItem.ItemId) {
+					case Resource.Id.nav_workpathconfig:
+					intent = new Intent(this, typeof(FilePickerActivity));
+					intent.PutExtra("dir_path", dirPath);
+					StartActivityForResult(intent, 1);
+					break;
+					case Resource.Id.nav_wcd:
+					intent = new Intent(this, typeof(WcdListViewActivity));
+					intent.PutExtra("dir_path", dirPath);
+					StartActivity(intent);
+					break;
+					case Resource.Id.nav_robot:
+					intent = new Intent(this, typeof(WcdTextViewActivity));
+					intent.PutExtra("dir_path", dirPath);
+					StartActivity(intent);
+					break;
+					case Resource.Id.nav_settings:
+					break;
+				}
+				drawerLayout.CloseDrawers();
+			};
+
+			string robotPath = System.IO.Path.Combine(dirPath, "ROBOT.SWD");
 			mItems = new List<WeldConditionData>();
-			adapter = new WcdListViewAdapter(this, await ReadFile(dirPath, mItems));
+			adapter = new WcdListViewAdapter(this, await ReadFile(robotPath, mItems));
 
 			mListView = FindViewById<ListView>(Resource.Id.myListView);
 			mListView.Adapter = adapter;
@@ -124,7 +168,7 @@ namespace HI5Controller
 				if (mListView.IsItemChecked(e.Position)) {
 					e.View.SetBackgroundColor(selectedBackGroundColor);
 				} else {
-					e.View.SetBackgroundColor(defaultBackgroundColor);	// 기본 백그라운드 색깔
+					e.View.SetBackgroundColor(defaultBackgroundColor);  // 기본 백그라운드 색깔
 				}
 				//Toast.MakeText(this, e.Position.ToString() + " (" + mListView.CheckedItemCount.ToString() + ")", ToastLength.Short).Show();
 			};
@@ -158,6 +202,24 @@ namespace HI5Controller
 				//SetResult(Result.Ok, intent);
 				Finish();
 			};
+		}
+
+		// 액션바 우측 옵션
+		public override bool OnCreateOptionsMenu(IMenu menu)
+		{
+			MenuInflater.Inflate(Resource.Menu.home, menu);
+			return base.OnCreateOptionsMenu(menu);
+		}
+
+		// 액션바 옵션 선택시 처리
+		public override bool OnOptionsItemSelected(IMenuItem item)
+		{
+			switch (item.ItemId) {
+				case Android.Resource.Id.Home:
+				drawerLayout.OpenDrawer(Android.Support.V4.View.GravityCompat.Start);
+				return true;
+			}
+			return base.OnOptionsItemSelected(item);
 		}
 	}
 }
