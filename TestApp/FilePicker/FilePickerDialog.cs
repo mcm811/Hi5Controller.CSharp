@@ -27,9 +27,9 @@ namespace com.xamarin.recipes.filepicker
 			set { dirPath = value; }
 		}
 
-		public OnFilePickEventArgs(string dirPath)
+		public OnFilePickEventArgs(string path)
 		{
-			DirPath = dirPath;
+			DirPath = path;
 		}
 	}
 
@@ -45,42 +45,28 @@ namespace com.xamarin.recipes.filepicker
 		public override View OnCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
 		{
 			base.OnCreateView(inflater, container, savedInstanceState);
-			var view = inflater.Inflate(Resource.Layout.FIlePicker, container, false);	
+			var view = inflater.Inflate(Resource.Layout.FIlePicker, container, false);
 
 			//fileList = (FileListFragment)SupportFragmentManager.FindFragmentById(Resource.Id.file_list_fragment);
+			//fileList = (FileListFragment)view.FindFragmentById(Resource.Id.file_list_fragment);
 			//fileList.DirPath = Intent.GetStringExtra("dir_path");
 
 			fab = view.FindViewById<FloatingActionButton>(Resource.Id.fab);
 			fab.Click += (object sender, System.EventArgs e) =>
 			{
-				//Intent intent = new Intent(this, typeof(FilePickerDialog));
-				//intent.PutExtra("dir_path", fileList.DirPath);
-				//SetResult(Result.Ok, intent);
-				//Finish();
-				onFIlePickComplete.Invoke(this, new OnFilePickEventArgs(dirPath));
+				dirPath = Android.OS.Environment.ExternalStorageDirectory.AbsolutePath;
+                onFIlePickComplete.Invoke(this, new OnFilePickEventArgs(dirPath));
 				this.Dismiss();
 			};
 
 			return view;
 		}
 
-		//public override void OnBackPressed()
-		//{
-		//	if (fileList.DirPath != "/")
-		//		fileList.RefreshFilesList(Path.GetDirectoryName(fileList.DirPath));
-		//	else
-		//		base.OnBackPressed();
-		//}
-		//
-		//protected override void OnStop()
-		//{
-		//	Finish();
-		//	base.OnStop();
-		//}
-		//
-		//protected override void OnDestroy()
-		//{
-		//	base.OnDestroy();
-		//}
+		public override void OnActivityCreated(Bundle savedInstanceState)
+		{
+			Dialog.Window.RequestFeature(WindowFeatures.NoTitle); // Set the title bar to invisible
+			base.OnActivityCreated(savedInstanceState);
+			//Dialog.Window.Attributes.WindowAnimations = Resource.Style.dialog_animation;
+		}
 	}
 }

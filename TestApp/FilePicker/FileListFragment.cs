@@ -36,6 +36,8 @@ namespace com.xamarin.recipes.filepicker
 			_adapter = new FileListAdapter(Activity, new FileSystemInfo[0]);
 			ListAdapter = _adapter;
 			//DirPath = Arguments.GetString("dir_path");
+			//DirPath = Android.OS.Environment.GetExternalStoragePublicDirectory(Android.OS.Environment.DirectoryDownloads).ToString();
+			DirPath = Android.OS.Environment.ExternalStorageDirectory.AbsolutePath;
 		}
 
 		public override void OnListItemClick(ListView l, View v, int position, long id)
@@ -52,11 +54,6 @@ namespace com.xamarin.recipes.filepicker
 		public override void OnResume()
 		{
 			base.OnResume();
-
-			if (DirPath.Length == 0) {
-				//DirPath = Android.OS.Environment.GetExternalStoragePublicDirectory(Android.OS.Environment.DirectoryDownloads).ToString();
-				DirPath = Android.OS.Environment.ExternalStorageDirectory.AbsolutePath;
-			}
 
 			RefreshFilesList(DirPath);
 		}

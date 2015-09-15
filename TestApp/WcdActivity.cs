@@ -126,19 +126,17 @@ namespace HI5Controller
 
 			// 떠 있는 액션버튼
 			fab = FindViewById<FloatingActionButton>(Resource.Id.fab);
+			fab.Elevation = 6;
 			fab.Click += (sender, e) =>
 			{
 				var intent = new Intent(this, typeof(FilePickerActivity));
 				intent.PutExtra("dir_path", dirPath.Text);
 				StartActivityForResult(intent, 1);
-			};
 
-			//folderPickerButton = FindViewById<Button>(Resource.Id.folderPickerButton);
-			//folderPickerButton.Click += (sender, e) =>
-			//{
-			//	FilePickerDialog filePickerDialog = new FilePickerDialog();
-			//	filePickerDialog.Show(FragmentManager, "dialog fragment");
-			//};
+				//Android.Support.V4.App.FragmentTransaction transaction = SupportFragmentManager.BeginTransaction();
+				//FilePickerDialog filePickerDialog = new FilePickerDialog();
+				//filePickerDialog.Show(transaction, "dialog fragment");
+			};
 
 			wcdListViewButton = FindViewById<Button>(Resource.Id.button1);
 			wcdListViewButton.Click += (sender, e) =>
