@@ -9,6 +9,7 @@ using Android.OS;
 using Android.Runtime;
 using Android.Views;
 using Android.Widget;
+using Android.Graphics;
 
 namespace HI5Controller
 {
@@ -16,6 +17,9 @@ namespace HI5Controller
 	{
 		private List<WeldConditionData> mItems;
 		private Context mContent;
+
+		private readonly Color defaultBackgroundColor = Color.Transparent;
+		private readonly Color selectedBackGroundColor = Color.LightGray;
 
 		public WcdListViewAdapter(Context context, List<WeldConditionData> items)
 		{
@@ -50,6 +54,12 @@ namespace HI5Controller
 
 			if (row == null) {
 				row = LayoutInflater.From(mContent).Inflate(Resource.Layout.WcdListViewRow, null, false);
+			}
+
+			if (mItems[position].ItemChecked) {
+				row.SetBackgroundColor(selectedBackGroundColor);
+			} else {
+				row.SetBackgroundColor(defaultBackgroundColor);
 			}
 
 			TextView tvOutputData = row.FindViewById<TextView>(Resource.Id.tvOutputData);

@@ -5,13 +5,20 @@ namespace HI5Controller
 {
 	public class WeldConditionData
 	{
-		public int outputData;              // 출력 데이터
-		public int outputType;              // 출력 타입
-		public int squeezeForce;            // 가압력
-		public decimal moveTipClearance;    // 이동극 제거율
-		public decimal fixedTipClearance;   // 고정극 제거율
-		public decimal pannelThickness;     // 패널 두께
-		public decimal commandOffset;       // 명령 옵셋
+		private bool itemChecked;
+		private int outputData;              // 출력 데이터
+		private int outputType;              // 출력 타입
+		private int squeezeForce;            // 가압력
+		private decimal moveTipClearance;    // 이동극 제거율
+		private decimal fixedTipClearance;   // 고정극 제거율
+		private decimal pannelThickness;     // 패널 두께
+		private decimal commandOffset;       // 명령 옵셋
+
+        public bool ItemChecked
+		{
+			get { return itemChecked; }
+			set { itemChecked = value; }
+		}
 
 		public int Count {
 			get { return 7; }
