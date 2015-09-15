@@ -115,6 +115,7 @@ namespace HI5Controller
 			dirPath = FindViewById<EditText>(Resource.Id.dirPathTextView);
 			dirPath.Text = DirPath;
 
+			// 떠 있는 액션버튼
 			fab = FindViewById<FloatingActionButton>(Resource.Id.fab);
 			fab.Click += (sender, e) =>
 			{

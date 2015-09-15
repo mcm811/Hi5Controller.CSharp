@@ -11,10 +11,14 @@ using Android.Widget;
 using System.Threading.Tasks;
 using System.IO;
 using Android.Support.V4.Widget;
+using Android.Support.V4.App;
 using Android.Support.V7.App;
 using Android.Support.Design.Widget;
 using Toolbar = Android.Support.V7.Widget.Toolbar;
+using DialogFragment = Android.Support.V4.App.DialogFragment;
+using FloatingActionButton = Android.Support.Design.Widget.FloatingActionButton;
 using com.xamarin.recipes.filepicker;
+
 
 namespace HI5Controller
 {
@@ -24,12 +28,12 @@ namespace HI5Controller
 		private Toolbar toolbar;
 		private DrawerLayout drawerLayout;
 		private NavigationView navigationView;
-		private string dirPath = string.Empty;
+		private FloatingActionButton fabDone;
 
 		private TextView pathTv;
 		private TextView wcdTv;
-		private Button btnOk;
 
+		private string dirPath = string.Empty;
 
 		async private Task<string> ReadFileToString(string fileName)
 		{
@@ -89,18 +93,19 @@ namespace HI5Controller
 				drawerLayout.CloseDrawers();
 			};
 
+			// 떠 있는 액션버튼
+			fabDone = FindViewById<FloatingActionButton>(Resource.Id.fab_done);
+			fabDone.Click += (sender, e) =>
+			{
+				Finish();
+			};
+
 			string robotPath = System.IO.Path.Combine(dirPath, "ROBOT.SWD");
             pathTv = FindViewById<TextView>(Resource.Id.pathTextView);
 			pathTv.Text = robotPath;
 
 			wcdTv = FindViewById<TextView>(Resource.Id.wcdTextView);
 			wcdTv.Text = await ReadFileToString(robotPath);
-
-			btnOk = FindViewById<Button>(Resource.Id.btnWcdOk);
-			btnOk.Click += (object sender, System.EventArgs e) =>
-			{
-				Finish();
-			};
 		}
 
 		// 액션바 우측 옵션

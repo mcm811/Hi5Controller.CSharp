@@ -1741,79 +1741,82 @@ namespace HI5Controller
 			public const int ic_dashboard = 2130837583;
 			
 			// aapt resource value: 0x7f020050
-			public const int ic_edit = 2130837584;
+			public const int ic_done = 2130837584;
 			
 			// aapt resource value: 0x7f020051
-			public const int ic_edit_white = 2130837585;
+			public const int ic_edit = 2130837585;
 			
 			// aapt resource value: 0x7f020052
-			public const int ic_event = 2130837586;
+			public const int ic_edit_white = 2130837586;
 			
 			// aapt resource value: 0x7f020053
-			public const int ic_file_upload = 2130837587;
+			public const int ic_event = 2130837587;
 			
 			// aapt resource value: 0x7f020054
-			public const int ic_folder = 2130837588;
+			public const int ic_file_upload = 2130837588;
 			
 			// aapt resource value: 0x7f020055
-			public const int ic_folder_open = 2130837589;
+			public const int ic_folder = 2130837589;
 			
 			// aapt resource value: 0x7f020056
-			public const int ic_forum = 2130837590;
+			public const int ic_folder_open = 2130837590;
 			
 			// aapt resource value: 0x7f020057
-			public const int ic_headset = 2130837591;
+			public const int ic_forum = 2130837591;
 			
 			// aapt resource value: 0x7f020058
-			public const int ic_help = 2130837592;
+			public const int ic_headset = 2130837592;
 			
 			// aapt resource value: 0x7f020059
-			public const int ic_info = 2130837593;
+			public const int ic_help = 2130837593;
 			
 			// aapt resource value: 0x7f02005a
-			public const int ic_insert_drive_file = 2130837594;
+			public const int ic_info = 2130837594;
 			
 			// aapt resource value: 0x7f02005b
-			public const int ic_insert_drive_file_white = 2130837595;
+			public const int ic_insert_drive_file = 2130837595;
 			
 			// aapt resource value: 0x7f02005c
-			public const int ic_menu = 2130837596;
+			public const int ic_insert_drive_file_white = 2130837596;
 			
 			// aapt resource value: 0x7f02005d
-			public const int ic_menu_gallery = 2130837597;
+			public const int ic_menu = 2130837597;
 			
 			// aapt resource value: 0x7f02005e
-			public const int ic_menu_white = 2130837598;
+			public const int ic_menu_gallery = 2130837598;
 			
 			// aapt resource value: 0x7f02005f
-			public const int ic_mode_edit_white = 2130837599;
+			public const int ic_menu_white = 2130837599;
 			
 			// aapt resource value: 0x7f020060
-			public const int ic_sd_storage = 2130837600;
+			public const int ic_mode_edit_white = 2130837600;
 			
 			// aapt resource value: 0x7f020061
-			public const int ic_settings = 2130837601;
+			public const int ic_sd_storage = 2130837601;
 			
 			// aapt resource value: 0x7f020062
-			public const int ic_settings_applications = 2130837602;
+			public const int ic_settings = 2130837602;
 			
 			// aapt resource value: 0x7f020063
-			public const int ic_storage = 2130837603;
+			public const int ic_settings_applications = 2130837603;
 			
 			// aapt resource value: 0x7f020064
-			public const int ic_view_list = 2130837604;
+			public const int ic_storage = 2130837604;
 			
 			// aapt resource value: 0x7f020065
-			public const int listviewrow_bg = 2130837605;
-			
-			// aapt resource value: 0x7f020068
-			public const int notification_template_icon_bg = 2130837608;
+			public const int ic_view_list = 2130837605;
 			
 			// aapt resource value: 0x7f020066
-			public const int ProgressBarStyle = 2130837606;
+			public const int listviewrow_bg = 2130837606;
+			
+			// aapt resource value: 0x7f020069
+			public const int notification_template_icon_bg = 2130837609;
 			
 			// aapt resource value: 0x7f020067
-			public const int robot_industrial = 2130837607;
+			public const int ProgressBarStyle = 2130837607;
+			
+			// aapt resource value: 0x7f020068
+			public const int robot_industrial = 2130837608;
 			
 			static Drawable()
 			{
@@ -1893,9 +1896,6 @@ namespace HI5Controller
 			
 			// aapt resource value: 0x7f0b008b
 			public const int btnWcdEdit = 2131427467;
-			
-			// aapt resource value: 0x7f0b00b0
-			public const int btnWcdOk = 2131427504;
 			
 			// aapt resource value: 0x7f0b007f
 			public const int button1 = 2131427455;
@@ -2010,6 +2010,9 @@ namespace HI5Controller
 			
 			// aapt resource value: 0x7f0b0081
 			public const int fab = 2131427457;
+			
+			// aapt resource value: 0x7f0b00b0
+			public const int fab_done = 2131427504;
 			
 			// aapt resource value: 0x7f0b006a
 			public const int file_list_fragment = 2131427434;
