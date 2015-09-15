@@ -65,6 +65,7 @@
     <Compile Include="FilePicker\FileListFragment.cs" />
     <Compile Include="FilePicker\FileListRowViewHolder.cs" />
     <Compile Include="FilePicker\FilePickerActivity.cs" />
+    <Compile Include="FilePicker\FilePickerDialog.cs" />
     <Compile Include="FilePicker\Helpers.cs" />
     <Compile Include="WcdActivity.cs" />
     <Compile Include="WcdListViewActivity.cs" />
@@ -256,6 +257,15 @@
   </ItemGroup>
   <ItemGroup>
     <AndroidResource Include="Resources\drawable\ic_storage.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable\ic_edit.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable\ic_mode_edit_white.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable\ic_edit_white.png" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\Android\Xamarin.Android.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

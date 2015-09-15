@@ -5,9 +5,12 @@ using Android.Views;
 using Android.Widget;
 using Android.OS;
 using Android.Support.V4.Widget;
+using Android.Support.V4.App;
 using Android.Support.V7.App;
 using Android.Support.Design.Widget;
 using Toolbar = Android.Support.V7.Widget.Toolbar;
+using DialogFragment = Android.Support.V4.App.DialogFragment;
+using FloatingActionButton = Android.Support.Design.Widget.FloatingActionButton;
 using com.xamarin.recipes.filepicker;
 
 namespace HI5Controller
@@ -18,6 +21,7 @@ namespace HI5Controller
 		private Toolbar toolbar;
 		private DrawerLayout drawerLayout;
 		private NavigationView navigationView;
+		private FloatingActionButton fab;
 
 		private EditText dirPath;
 		private Button folderPickerButton;
@@ -111,6 +115,14 @@ namespace HI5Controller
 			dirPath = FindViewById<EditText>(Resource.Id.dirPathTextView);
 			dirPath.Text = DirPath;
 
+			fab = FindViewById<FloatingActionButton>(Resource.Id.fab);
+			fab.Click += (sender, e) =>
+			{
+				var intent = new Intent(this, typeof(FilePickerActivity));
+				intent.PutExtra("dir_path", dirPath.Text);
+				StartActivityForResult(intent, 1);
+			};
+
 			folderPickerButton = FindViewById<Button>(Resource.Id.folderPickerButton);
 			folderPickerButton.Click += (sender, e) =>
 			{
@@ -118,6 +130,9 @@ namespace HI5Controller
 				intent.PutExtra("dir_path", dirPath.Text);
 				StartActivityForResult(intent, 1);
 			};
+			
+			//FilePickerDialog filePickerDialog = new FilePickerDialog();
+			//filePickerDialog.Show(FragmentManager, "dialog fragment");
 
 			wcdListViewButton = FindViewById<Button>(Resource.Id.button1);
 			wcdListViewButton.Click += (sender, e) =>

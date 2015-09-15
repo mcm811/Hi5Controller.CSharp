@@ -8,6 +8,7 @@ using Android.Support.V4.Widget;
 using Android.Support.V7.App;
 using Android.Support.Design.Widget;
 using Toolbar = Android.Support.V7.Widget.Toolbar;
+using FloatingActionButton = Android.Support.Design.Widget.FloatingActionButton;
 using com.xamarin.recipes.filepicker;
 
 using System.IO;
@@ -15,6 +16,7 @@ using Android.Util;
 using Java.Lang;
 using System.Threading.Tasks;
 using Android.Graphics;
+using System;
 
 namespace HI5Controller
 {
@@ -24,6 +26,9 @@ namespace HI5Controller
 		private Toolbar toolbar;
 		private DrawerLayout drawerLayout;
 		private NavigationView navigationView;
+		private FloatingActionButton wcdFab;
+		private Button wcdButton;
+
 		private string dirPath = string.Empty;
 
 		private List<WeldConditionData> mItems;
@@ -33,7 +38,7 @@ namespace HI5Controller
 		private readonly Color defaultBackgroundColor = Color.Transparent;
 		private readonly Color selectedBackGroundColor = Color.LightGray;
 
-		async private Task<List<WeldConditionData>> ReadFile(string fileName, List<WeldConditionData> items)
+		async private Task<List<WeldConditionData>> ReadFileAsync(string fileName, List<WeldConditionData> items)
 		{
 			//StreamReader sr = new StreamReader(Assets.Open(fileName));
 			try {
@@ -58,7 +63,7 @@ namespace HI5Controller
 			return items;
 		}
 
-		async private Task<string> UpdateFile(string fileName, List<WeldConditionData> items)
+		async private Task<string> UpdateFileAsync(string fileName, List<WeldConditionData> items)
 		{
 			//StreamReader sr = new StreamReader(Assets.Open(fileName));
 			StringBuilder sb = new StringBuilder();
@@ -94,6 +99,78 @@ namespace HI5Controller
 			try {
 				using (var sw = new StreamWriter(fileName)) {
 					await sw.WriteAsync(sb.ToString());
+					sw.Close();
+					Toast.MakeText(this, "저장 완료: " + fileName + "", ToastLength.Short).Show();
+				}
+			} catch {
+				Toast.MakeText(this, "쓰기 실패: " + fileName + "", ToastLength.Short).Show();
+			}
+			//Log.Error("===============", sb.ToString());
+
+			return sb.ToString();
+		}
+
+		private List<WeldConditionData> ReadFile(string fileName, List<WeldConditionData> items)
+		{
+			//StreamReader sr = new StreamReader(Assets.Open(fileName));
+			try {
+				using (StreamReader sr = new StreamReader(fileName)) {
+					string swdLine = string.Empty;
+					bool addText = false;
+					while ((swdLine = sr.ReadLine()) != null) {
+						if (swdLine.StartsWith("#006"))
+							break;
+						if (addText && swdLine.Trim().Length > 0)
+							items.Add(new WeldConditionData(swdLine));
+						if (swdLine.StartsWith("#005"))
+							addText = true;
+					}
+					sr.Close();
+					//Toast.MakeText(this, "불러 오기: " + fileName + "", ToastLength.Short).Show();
+				}
+			} catch {
+				Toast.MakeText(this, "파일이 없습니다: " + fileName + "", ToastLength.Short).Show();
+				Finish();
+			}
+			return items;
+		}
+
+		private string UpdateFile(string fileName, List<WeldConditionData> items)
+		{
+			//StreamReader sr = new StreamReader(Assets.Open(fileName));
+			StringBuilder sb = new StringBuilder();
+			try {
+				using (StreamReader sr = new StreamReader(fileName)) {
+					string swdLine = string.Empty;
+					bool addText = true;
+					bool wcdText = true;
+					while ((swdLine = sr.ReadLine()) != null) {
+						if (addText == false && wcdText) {
+							foreach (WeldConditionData wcd in items) {
+								sb.Append(wcd.WcdString);
+								sb.Append("\n");
+							}
+							sb.Append("\n");
+							wcdText = false;
+						}
+						if (swdLine.StartsWith("#006"))
+							addText = true;
+						if (addText /*&& swdLine.Length > 0*/) {
+							sb.Append(swdLine);
+							sb.Append("\n");
+						}
+						if (swdLine.StartsWith("#005"))
+							addText = false;
+					}
+					sr.Close();
+				}
+			} catch {
+				Toast.MakeText(this, "읽기 실패: " + fileName + "", ToastLength.Short).Show();
+			}
+
+			try {
+				using (var sw = new StreamWriter(fileName)) {
+					sw.Write(sb.ToString());
 					sw.Close();
 					Toast.MakeText(this, "저장 완료: " + fileName + "", ToastLength.Short).Show();
 				}
@@ -152,9 +229,11 @@ namespace HI5Controller
 				drawerLayout.CloseDrawers();
 			};
 
+
 			string robotPath = System.IO.Path.Combine(dirPath, "ROBOT.SWD");
 			mItems = new List<WeldConditionData>();
-			adapter = new WcdListViewAdapter(this, await ReadFile(robotPath, mItems));
+			adapter = new WcdListViewAdapter(this, await ReadFileAsync(robotPath, mItems));
+			//adapter = new WcdListViewAdapter(this, ReadFile(robotPath, mItems));
 
 			mListView = FindViewById<ListView>(Resource.Id.myListView);
 			mListView.Adapter = adapter;
@@ -172,7 +251,8 @@ namespace HI5Controller
 				}
 				//Toast.MakeText(this, e.Position.ToString() + " (" + mListView.CheckedItemCount.ToString() + ")", ToastLength.Short).Show();
 			};
-			mListView.ItemLongClick += async (object sender, AdapterView.ItemLongClickEventArgs e) =>
+			//mListView.ItemLongClick += async (object sender, AdapterView.ItemLongClickEventArgs e) =>
+			mListView.ItemLongClick += (object sender, AdapterView.ItemLongClickEventArgs e) =>
 			{
 				SparseBooleanArray checkedList = mListView.CheckedItemPositions;
 				List<int> positions = new List<int>();
@@ -191,17 +271,23 @@ namespace HI5Controller
 					Toast.MakeText(this, sb.ToString(), ToastLength.Short).Show();
 				}
 
-				await UpdateFile(dirPath, mItems);
+				UpdateFile(dirPath, mItems);
 			};
 
-			Button button = FindViewById<Button>(Resource.Id.btnWcdEdit);
-			button.Click += (object sender, System.EventArgs e) =>
+			wcdButton = FindViewById<Button>(Resource.Id.btnWcdEdit);
+			wcdButton.Click += (object sender, EventArgs e) =>
 			{
 				//Intent intent = new Intent(this, typeof(FilePickerActivity));
 				//intent.PutExtra("dir_path", WcdActivity.path);
 				//SetResult(Result.Ok, intent);
 				Finish();
 			};
+
+			//wcdFAButton = FindViewById<FloatingActionButton>(Resource.Id.wcd_fab);
+			//wcdFAButton.Click += (object sender, EventArgs e) =>
+			//{
+			//	Finish();
+			//};
 		}
 
 		// 액션바 우측 옵션

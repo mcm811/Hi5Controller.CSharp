@@ -5,73 +5,84 @@
     android:layout_height="match_parent"
     android:id="@+id/drawer_layout"
     android:fitsSystemWindows="true">
-    <LinearLayout xmlns:tools="http://schemas.android.com/tools"
-        android:id="@+id/main_parent_view"
+    <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:focusable="true"
-        android:focusableInTouchMode="true"
-        android:weightSum="100"
-        android:orientation="vertical"
-        android:fitsSystemWindows="true">
-        <include
-            android:id="@+id/toolbar"
-            layout="@layout/toolbar" />
-        <android.support.design.widget.TextInputLayout
-            android:id="@+id/textInputLayout1"
-            android:layout_marginTop="20dp"
+        android:layout_height="match_parent">
+        <LinearLayout xmlns:tools="http://schemas.android.com/tools"
+            android:id="@+id/main_parent_view"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-            <EditText
-                android:textAppearance="?android:attr/textAppearanceSmall"
-                android:hint="작업 경로"
-                android:singleLine="true"
+            android:layout_height="match_parent"
+            android:focusable="true"
+            android:focusableInTouchMode="true"
+            android:weightSum="100"
+            android:orientation="vertical"
+            android:fitsSystemWindows="true">
+            <include
+                android:id="@+id/toolbar"
+                layout="@layout/toolbar" />
+            <android.support.design.widget.TextInputLayout
+                android:id="@+id/textInputLayout1"
+                android:layout_marginTop="20dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <EditText
+                    android:textAppearance="?android:attr/textAppearanceSmall"
+                    android:hint="작업 경로"
+                    android:singleLine="true"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginRight="20dp"
+                    android:id="@+id/dirPathTextView" />
+            </android.support.design.widget.TextInputLayout>
+            <Button
+                android:text="@string/WorkPathConfigButton"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:id="@+id/folderPickerButton"
                 android:layout_marginLeft="20dp"
                 android:layout_marginRight="20dp"
-                android:id="@+id/dirPathTextView" />
-        </android.support.design.widget.TextInputLayout>
-        <Button
-            android:text="@string/WorkPathConfigButton"
-            android:layout_width="match_parent"
+                android:layout_marginTop="20dp"
+                android:layout_weight="15"
+                android:gravity="left"
+                android:background="@drawable/button_folder_style"
+                android:textSize="20dp"
+                android:drawableLeft="@drawable/button_folder" />
+            <Button
+                android:text="@string/WcdButton"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/button1"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
+                android:layout_marginTop="20dp"
+                android:layout_weight="15"
+                android:gravity="left"
+                android:background="@drawable/button_wcdlist_style"
+                android:textSize="20dp"
+                android:drawableLeft="@drawable/button_wcdlist" />
+            <Button
+                android:text="@string/RobotButton"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/button2"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
+                android:layout_marginTop="20dp"
+                android:layout_weight="15"
+                android:gravity="left"
+                android:background="@drawable/button_robot_style"
+                android:textSize="20dp"
+                android:drawableLeft="@drawable/button_robot" />
+        </LinearLayout>
+        <android.support.design.widget.FloatingActionButton
+            android:id="@+id/fab"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/folderPickerButton"
-            android:layout_marginLeft="20dp"
-            android:layout_marginRight="20dp"
-            android:layout_marginTop="20dp"
-            android:layout_weight="15"
-            android:gravity="left"
-            android:background="@drawable/button_folder_style"
-            android:textSize="20dp"
-            android:drawableLeft="@drawable/button_folder" />
-        <Button
-            android:text="@string/WcdButton"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/button1"
-            android:layout_marginLeft="20dp"
-            android:layout_marginRight="20dp"
-            android:layout_marginTop="20dp"
-            android:layout_weight="15"
-            android:gravity="left"
-            android:background="@drawable/button_wcdlist_style"
-            android:textSize="20dp"
-            android:drawableLeft="@drawable/button_wcdlist" />
-        <Button
-            android:text="@string/RobotButton"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/button2"
-            android:layout_marginLeft="20dp"
-            android:layout_marginRight="20dp"
-            android:layout_marginTop="20dp"
-            android:layout_weight="15"
-            android:gravity="left"
-            android:background="@drawable/button_robot_style"
-            android:textSize="20dp"
-            android:drawableLeft="@drawable/button_robot" />
-    </LinearLayout>
+            android:layout_gravity="bottom|right"
+            android:layout_margin="16dp"
+            android:src="@drawable/ic_action_content_save" />
+    </FrameLayout>
     <android.support.design.widget.NavigationView
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
