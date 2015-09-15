@@ -62,6 +62,7 @@ namespace HI5Controller
 			SupportActionBar.SetHomeAsUpIndicator(Resource.Drawable.ic_menu_white);
 			SupportActionBar.SetDisplayHomeAsUpEnabled(true);
 			SupportActionBar.Title = Resources.GetString(Resource.String.WcdTextViewName);
+			SupportActionBar.Hide();
 
 			// 서랍 메뉴
 			dirPath = Intent.GetStringExtra("dir_path") ?? "";
@@ -86,8 +87,6 @@ namespace HI5Controller
 					intent = new Intent(this, typeof(WcdTextViewActivity));
 					intent.PutExtra("dir_path", dirPath);
 					StartActivity(intent);
-					break;
-					case Resource.Id.nav_settings:
 					break;
 				}
 				drawerLayout.CloseDrawers();

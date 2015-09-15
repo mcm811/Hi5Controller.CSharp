@@ -92,12 +92,12 @@
     <AndroidResource Include="Resources\layout\FIlePicker.axml">
       <SubType>Designer</SubType>
     </AndroidResource>
-    <AndroidResource Include="Resources\layout\WcdListViewRowCard.axml">
+    <AndroidResource Include="Resources\layout\WcdListViewRow.axml">
       <SubType>AndroidResource</SubType>
     </AndroidResource>
-    <AndroidResource Include="Resources\layout\WcdListViewCard.axml" />
-    <AndroidResource Include="Resources\layout-land\WcdListViewRowCard.axml" />
-    <AndroidResource Include="Resources\layout-land\WcdListViewCard.axml" />
+    <AndroidResource Include="Resources\layout\WcdListView.axml" />
+    <AndroidResource Include="Resources\layout-land\WcdListViewRow.axml" />
+    <AndroidResource Include="Resources\layout-land\WcdListView.axml" />
     <AndroidResource Include="Resources\layout\toolbar.axml">
       <SubType>AndroidResource</SubType>
     </AndroidResource>
@@ -127,10 +127,10 @@
     <AndroidResource Include="Resources\drawable\ProgressBarStyle.xml" />
   </ItemGroup>
   <ItemGroup>
-    <AndroidResource Include="Resources\drawable\button_folder_style.xml" />
+    <AndroidResource Include="Resources\drawable\button_wcdlist_style.xml" />
   </ItemGroup>
   <ItemGroup>
-    <AndroidResource Include="Resources\drawable\button_wcdlist_style.xml" />
+    <AndroidResource Include="Resources\drawable\button_folder_style.xml" />
   </ItemGroup>
   <ItemGroup>
     <AndroidResource Include="Resources\drawable\button_robot_style.xml" />
@@ -269,6 +269,12 @@
   </ItemGroup>
   <ItemGroup>
     <AndroidResource Include="Resources\drawable\ic_done.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable\ic_settings_white.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable\ic_done_white.png" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\Android\Xamarin.Android.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

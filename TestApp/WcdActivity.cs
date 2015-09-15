@@ -24,9 +24,9 @@ namespace HI5Controller
 		private FloatingActionButton fab;
 
 		private EditText dirPath;
-		private Button folderPickerButton;
 		private Button wcdListViewButton;
 		private Button wcdTextButton;
+		//private Button folderPickerButton;
 
 		private string DirPath
 		{
@@ -81,6 +81,8 @@ namespace HI5Controller
 			SupportActionBar.SetHomeAsUpIndicator(Resource.Drawable.ic_menu_white);
 			SupportActionBar.SetDisplayHomeAsUpEnabled(true);
 			SupportActionBar.Title = Resources.GetString(Resource.String.ApplicationName);
+			SupportActionBar.Elevation = 4;
+			SupportActionBar.Show();
 
 			// 서랍 메뉴
 			drawerLayout = FindViewById<DrawerLayout>(Resource.Id.drawer_layout);
@@ -90,11 +92,6 @@ namespace HI5Controller
 				e.MenuItem.SetChecked(true);
 				Intent intent;
 				switch (e.MenuItem.ItemId) {
-					case Resource.Id.nav_workpathconfig:
-					intent = new Intent(this, typeof(FilePickerActivity));
-					intent.PutExtra("dir_path", dirPath.Text);
-					StartActivityForResult(intent, 1);
-					break;
 					case Resource.Id.nav_wcd:
 					intent = new Intent(this, typeof(WcdListViewActivity));
 					intent.PutExtra("dir_path", dirPath.Text);
@@ -105,7 +102,10 @@ namespace HI5Controller
 					intent.PutExtra("dir_path", dirPath.Text);
 					StartActivity(intent);
 					break;
-					case Resource.Id.nav_settings:
+					case Resource.Id.nav_workpathconfig:
+					intent = new Intent(this, typeof(FilePickerActivity));
+					intent.PutExtra("dir_path", dirPath.Text);
+					StartActivityForResult(intent, 1);
 					break;
 				}
 				drawerLayout.CloseDrawers();
@@ -124,16 +124,12 @@ namespace HI5Controller
 				StartActivityForResult(intent, 1);
 			};
 
-			folderPickerButton = FindViewById<Button>(Resource.Id.folderPickerButton);
-			folderPickerButton.Click += (sender, e) =>
-			{
-				var intent = new Intent(this, typeof(FilePickerActivity));
-				intent.PutExtra("dir_path", dirPath.Text);
-				StartActivityForResult(intent, 1);
-			};
-			
-			//FilePickerDialog filePickerDialog = new FilePickerDialog();
-			//filePickerDialog.Show(FragmentManager, "dialog fragment");
+			//folderPickerButton = FindViewById<Button>(Resource.Id.folderPickerButton);
+			//folderPickerButton.Click += (sender, e) =>
+			//{
+			//	FilePickerDialog filePickerDialog = new FilePickerDialog();
+			//	filePickerDialog.Show(FragmentManager, "dialog fragment");
+			//};
 
 			wcdListViewButton = FindViewById<Button>(Resource.Id.button1);
 			wcdListViewButton.Click += (sender, e) =>
@@ -178,9 +174,15 @@ namespace HI5Controller
 		// 액션바 옵션 선택시 처리
 		public override bool OnOptionsItemSelected(IMenuItem item)
 		{
+			//ToastShow(item.ItemId.ToString());
 			switch (item.ItemId) {
 				case Android.Resource.Id.Home:
 				drawerLayout.OpenDrawer(Android.Support.V4.View.GravityCompat.Start);
+				return true;
+				case Resource.Id.menu_settings:
+				var intent = new Intent(this, typeof(FilePickerActivity));
+				intent.PutExtra("dir_path", dirPath.Text);
+				StartActivityForResult(intent, 1);
 				return true;
 			}
 			return base.OnOptionsItemSelected(item);

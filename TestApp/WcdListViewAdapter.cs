@@ -49,7 +49,7 @@ namespace HI5Controller
 			View row = convertView;
 
 			if (row == null) {
-				row = LayoutInflater.From(mContent).Inflate(Resource.Layout.WcdListViewRowCard, null, false);
+				row = LayoutInflater.From(mContent).Inflate(Resource.Layout.WcdListViewRow, null, false);
 			}
 
 			TextView tvOutputData = row.FindViewById<TextView>(Resource.Id.tvOutputData);

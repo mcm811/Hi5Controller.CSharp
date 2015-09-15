@@ -2,10 +2,6 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
   <group android:checkableBehavior="single">
     <item
-      android:id="@+id/nav_workpathconfig"
-      android:icon="@drawable/ic_sd_storage"
-      android:title="@string/WorkPathConfigButton" />
-    <item
       android:id="@+id/nav_wcd"
       android:icon="@drawable/ic_view_list"
       android:title="@string/WcdButton" />
@@ -14,10 +10,14 @@
       android:icon="@drawable/ic_android"
       android:title="@string/RobotButton" />
   </group>
-  <group android:checkableBehavior="single">
-    <item
-      android:id="@+id/nav_settings"
+  <item
+      android:id="@+id/navigation_subheader"
+      android:title="@string/Settings">
+    <menu>
+      <item
+      android:id="@+id/nav_workpathconfig"
       android:icon="@drawable/ic_settings"
-      android:title="Settings" />
-  </group>
+      android:title="@string/WorkPathConfigButton" />
+    </menu>
+  </item>
 </menu>

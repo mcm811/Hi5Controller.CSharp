@@ -5,9 +5,11 @@ using Android.Widget;
 using Android.OS;
 using System.Collections.Generic;
 using Android.Support.V4.Widget;
+using Android.Support.V4.App;
 using Android.Support.V7.App;
 using Android.Support.Design.Widget;
 using Toolbar = Android.Support.V7.Widget.Toolbar;
+using DialogFragment = Android.Support.V4.App.DialogFragment;
 using FloatingActionButton = Android.Support.Design.Widget.FloatingActionButton;
 using com.xamarin.recipes.filepicker;
 
@@ -26,8 +28,7 @@ namespace HI5Controller
 		private Toolbar toolbar;
 		private DrawerLayout drawerLayout;
 		private NavigationView navigationView;
-		private FloatingActionButton wcdFab;
-		private Button wcdButton;
+		private FloatingActionButton fabWcd;
 
 		private string dirPath = string.Empty;
 
@@ -190,7 +191,7 @@ namespace HI5Controller
 		async protected override void OnCreate(Bundle bundle)
 		{
 			base.OnCreate(bundle);
-			SetContentView(Resource.Layout.WcdListViewCard);
+			SetContentView(Resource.Layout.WcdListView);
 
 			// 액션바
 			toolbar = FindViewById<Toolbar>(Resource.Id.toolbar);
@@ -198,6 +199,7 @@ namespace HI5Controller
 			SupportActionBar.SetHomeAsUpIndicator(Resource.Drawable.ic_menu_white);
 			SupportActionBar.SetDisplayHomeAsUpEnabled(true);
 			SupportActionBar.Title = Resources.GetString(Resource.String.WcdListViewName);
+			SupportActionBar.Hide();
 
 			// 서랍 메뉴
 			dirPath = Intent.GetStringExtra("dir_path") ?? "";
@@ -223,12 +225,32 @@ namespace HI5Controller
 					intent.PutExtra("dir_path", dirPath);
 					StartActivity(intent);
 					break;
-					case Resource.Id.nav_settings:
-					break;
 				}
 				drawerLayout.CloseDrawers();
 			};
 
+			// 떠 있는 액션버튼
+			fabWcd = FindViewById<FloatingActionButton>(Resource.Id.fab_wcd);
+			fabWcd.Click += (object sender, EventArgs e) =>
+			{
+				SparseBooleanArray checkedList = mListView.CheckedItemPositions;
+				List<int> positions = new List<int>();
+				for (int i = 0; i < checkedList.Size(); i++) {
+					if (checkedList.ValueAt(i)) {
+						positions.Add(checkedList.KeyAt(i));
+					}
+				}
+
+				if (positions.Count > 0) {
+					StringBuilder sb = new StringBuilder();
+					foreach (int pos in positions) {
+						sb.Append(pos);
+						sb.Append(" ");
+					}
+					Toast.MakeText(this, "선택: " + sb.ToString(), ToastLength.Short).Show();
+				}
+				Finish();
+			};
 
 			string robotPath = System.IO.Path.Combine(dirPath, "ROBOT.SWD");
 			mItems = new List<WeldConditionData>();
@@ -236,6 +258,7 @@ namespace HI5Controller
 			//adapter = new WcdListViewAdapter(this, ReadFile(robotPath, mItems));
 
 			mListView = FindViewById<ListView>(Resource.Id.myListView);
+			mListView.FastScrollEnabled = true;
 			mListView.Adapter = adapter;
 			mListView.ChoiceMode = ChoiceMode.Multiple;
 			mListView.ItemClick += (object sender, AdapterView.ItemClickEventArgs e) =>
@@ -252,41 +275,26 @@ namespace HI5Controller
 				//Toast.MakeText(this, e.Position.ToString() + " (" + mListView.CheckedItemCount.ToString() + ")", ToastLength.Short).Show();
 			};
 			//mListView.ItemLongClick += async (object sender, AdapterView.ItemLongClickEventArgs e) =>
-			mListView.ItemLongClick += (object sender, AdapterView.ItemLongClickEventArgs e) =>
-			{
-				SparseBooleanArray checkedList = mListView.CheckedItemPositions;
-				List<int> positions = new List<int>();
-				for (int i = 0; i < checkedList.Size(); i++) {
-					if (checkedList.ValueAt(i)) {
-						positions.Add(checkedList.KeyAt(i));
-					}
-				}
-
-				if (positions.Count > 0) {
-					StringBuilder sb = new StringBuilder();
-					foreach (int pos in positions) {
-						sb.Append(pos);
-						sb.Append(" ");
-					}
-					Toast.MakeText(this, sb.ToString(), ToastLength.Short).Show();
-				}
-
-				UpdateFile(dirPath, mItems);
-			};
-
-			wcdButton = FindViewById<Button>(Resource.Id.btnWcdEdit);
-			wcdButton.Click += (object sender, EventArgs e) =>
-			{
-				//Intent intent = new Intent(this, typeof(FilePickerActivity));
-				//intent.PutExtra("dir_path", WcdActivity.path);
-				//SetResult(Result.Ok, intent);
-				Finish();
-			};
-
-			//wcdFAButton = FindViewById<FloatingActionButton>(Resource.Id.wcd_fab);
-			//wcdFAButton.Click += (object sender, EventArgs e) =>
+			//mListView.ItemLongClick += (object sender, AdapterView.ItemLongClickEventArgs e) =>
 			//{
-			//	Finish();
+			//	SparseBooleanArray checkedList = mListView.CheckedItemPositions;
+			//	List<int> positions = new List<int>();
+			//	for (int i = 0; i < checkedList.Size(); i++) {
+			//		if (checkedList.ValueAt(i)) {
+			//			positions.Add(checkedList.KeyAt(i));
+			//		}
+			//	}
+
+			//	if (positions.Count > 0) {
+			//		StringBuilder sb = new StringBuilder();
+			//		foreach (int pos in positions) {
+			//			sb.Append(pos);
+			//			sb.Append(" ");
+			//		}
+			//		Toast.MakeText(this, sb.ToString(), ToastLength.Short).Show();
+			//	}
+
+			//	UpdateFile(dirPath, mItems);
 			//};
 		}
 
