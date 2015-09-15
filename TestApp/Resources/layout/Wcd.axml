@@ -66,6 +66,8 @@
         </LinearLayout>
         <android.support.design.widget.FloatingActionButton
             android:id="@+id/fab"
+            app:elevation="6dp"
+            app:borderWidth="0dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="bottom|right"

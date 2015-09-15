@@ -91,7 +91,14 @@ namespace HI5Controller
 				}
 				drawerLayout.CloseDrawers();
 			};
-
+			View header = navigationView.InflateHeaderView(Resource.Layout.drawer_header_layout);
+			RelativeLayout drawerHeader = header.FindViewById<RelativeLayout>(Resource.Id.drawerHeader);
+			drawerHeader.Click += (sender, e) =>
+			{
+				var intent = new Intent(this, typeof(WcdActivity));
+				StartActivity(intent);
+			};
+			
 			// 떠 있는 액션버튼
 			fabDone = FindViewById<FloatingActionButton>(Resource.Id.fab_done);
 			fabDone.Click += (sender, e) =>

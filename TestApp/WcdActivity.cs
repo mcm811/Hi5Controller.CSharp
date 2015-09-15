@@ -12,6 +12,7 @@ using Toolbar = Android.Support.V7.Widget.Toolbar;
 using DialogFragment = Android.Support.V4.App.DialogFragment;
 using FloatingActionButton = Android.Support.Design.Widget.FloatingActionButton;
 using com.xamarin.recipes.filepicker;
+using Android.Util;
 
 namespace HI5Controller
 {
@@ -89,8 +90,9 @@ namespace HI5Controller
 			navigationView = FindViewById<NavigationView>(Resource.Id.nav_view);
 			navigationView.NavigationItemSelected += (sender, e) =>
 			{
-				e.MenuItem.SetChecked(true);
+				//ToastShow(e.MenuItem.ItemId.ToString());
 				Intent intent;
+				e.MenuItem.SetChecked(true);
 				switch (e.MenuItem.ItemId) {
 					case Resource.Id.nav_wcd:
 					intent = new Intent(this, typeof(WcdListViewActivity));
@@ -110,6 +112,13 @@ namespace HI5Controller
 				}
 				drawerLayout.CloseDrawers();
 			};
+			//View header = navigationView.InflateHeaderView(Resource.Layout.drawer_header_layout);
+			//RelativeLayout drawerHeader = header.FindViewById<RelativeLayout>(Resource.Id.drawerHeader);
+			//drawerHeader.Click += (sender, e) =>
+			//{
+			//	var intent = new Intent(this, typeof(WcdActivity));
+			//	StartActivity(intent);
+			//};
 
 			// 기본 화면 구성
 			dirPath = FindViewById<EditText>(Resource.Id.dirPathTextView);
@@ -175,6 +184,8 @@ namespace HI5Controller
 		public override bool OnOptionsItemSelected(IMenuItem item)
 		{
 			//ToastShow(item.ItemId.ToString());
+			//Log.Debug("NavigatoinView", item.ItemId.ToString());
+
 			switch (item.ItemId) {
 				case Android.Resource.Id.Home:
 				drawerLayout.OpenDrawer(Android.Support.V4.View.GravityCompat.Start);

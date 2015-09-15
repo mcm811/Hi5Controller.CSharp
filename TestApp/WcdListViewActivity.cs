@@ -228,6 +228,57 @@ namespace HI5Controller
 				}
 				drawerLayout.CloseDrawers();
 			};
+			View header = navigationView.InflateHeaderView(Resource.Layout.drawer_header_layout);
+			RelativeLayout drawerHeader = header.FindViewById<RelativeLayout>(Resource.Id.drawerHeader);
+			drawerHeader.Click += (sender, e) =>
+			{
+				var intent = new Intent(this, typeof(WcdActivity));
+				StartActivity(intent);
+			};
+
+			string robotPath = System.IO.Path.Combine(dirPath, "ROBOT.SWD");
+			mItems = new List<WeldConditionData>();
+			adapter = new WcdListViewAdapter(this, await ReadFileAsync(robotPath, mItems));
+
+			mListView = FindViewById<ListView>(Resource.Id.myListView);
+			mListView.FastScrollEnabled = true;
+			mListView.Adapter = adapter;
+			mListView.ChoiceMode = ChoiceMode.Multiple;
+			mListView.ItemClick += (object sender, AdapterView.ItemClickEventArgs e) =>
+			{
+				if (mListView.IsItemChecked(e.Position)) {
+					e.View.SetBackgroundColor(selectedBackGroundColor);
+				} else {
+					e.View.SetBackgroundColor(defaultBackgroundColor);  // 기본 백그라운드 색깔
+				}
+				//내용 수정 방법
+				//adapter[e.Position].PannelThickness = (Convert.ToDecimal(adapter[e.Position].PannelThickness) + 1).ToString();
+				//adapter.NotifyDataSetChanged();
+				//Console.WriteLine(e.Position.ToString() + " (" + adapter[e.Position].PannelThickness.ToString() + ")");
+				//Toast.MakeText(this, e.Position.ToString() + " (" + mListView.CheckedItemCount.ToString() + ")", ToastLength.Short).Show();
+			};
+			//mListView.ItemLongClick += (object sender, AdapterView.ItemLongClickEventArgs e) =>
+			mListView.ItemLongClick += async (object sender, AdapterView.ItemLongClickEventArgs e) =>
+			{
+				SparseBooleanArray checkedList = mListView.CheckedItemPositions;
+				List<int> positions = new List<int>();
+				for (int i = 0; i < checkedList.Size(); i++) {
+					if (checkedList.ValueAt(i)) {
+						positions.Add(checkedList.KeyAt(i));
+					}
+				}
+
+				if (positions.Count > 0) {
+					StringBuilder sb = new StringBuilder();
+					foreach (int pos in positions) {
+						sb.Append(pos);
+						sb.Append(" ");
+					}
+					Toast.MakeText(this, sb.ToString(), ToastLength.Short).Show();
+				}
+
+				await UpdateFileAsync(dirPath, mItems);
+			};
 
 			// 떠 있는 액션버튼
 			fabWcd = FindViewById<FloatingActionButton>(Resource.Id.fab_wcd);
@@ -251,51 +302,6 @@ namespace HI5Controller
 				}
 				Finish();
 			};
-
-			string robotPath = System.IO.Path.Combine(dirPath, "ROBOT.SWD");
-			mItems = new List<WeldConditionData>();
-			adapter = new WcdListViewAdapter(this, await ReadFileAsync(robotPath, mItems));
-			//adapter = new WcdListViewAdapter(this, ReadFile(robotPath, mItems));
-
-			mListView = FindViewById<ListView>(Resource.Id.myListView);
-			mListView.FastScrollEnabled = true;
-			mListView.Adapter = adapter;
-			mListView.ChoiceMode = ChoiceMode.Multiple;
-			mListView.ItemClick += (object sender, AdapterView.ItemClickEventArgs e) =>
-			{
-				//adapter[e.Position].PannelThickness = (Convert.ToDecimal(adapter[e.Position].PannelThickness) + 1).ToString();
-				//adapter.NotifyDataSetChanged();
-				//Console.WriteLine(e.Position.ToString() + " (" + adapter[e.Position].PannelThickness.ToString() + ")");
-
-				if (mListView.IsItemChecked(e.Position)) {
-					e.View.SetBackgroundColor(selectedBackGroundColor);
-				} else {
-					e.View.SetBackgroundColor(defaultBackgroundColor);  // 기본 백그라운드 색깔
-				}
-				//Toast.MakeText(this, e.Position.ToString() + " (" + mListView.CheckedItemCount.ToString() + ")", ToastLength.Short).Show();
-			};
-			//mListView.ItemLongClick += async (object sender, AdapterView.ItemLongClickEventArgs e) =>
-			//mListView.ItemLongClick += (object sender, AdapterView.ItemLongClickEventArgs e) =>
-			//{
-			//	SparseBooleanArray checkedList = mListView.CheckedItemPositions;
-			//	List<int> positions = new List<int>();
-			//	for (int i = 0; i < checkedList.Size(); i++) {
-			//		if (checkedList.ValueAt(i)) {
-			//			positions.Add(checkedList.KeyAt(i));
-			//		}
-			//	}
-
-			//	if (positions.Count > 0) {
-			//		StringBuilder sb = new StringBuilder();
-			//		foreach (int pos in positions) {
-			//			sb.Append(pos);
-			//			sb.Append(" ");
-			//		}
-			//		Toast.MakeText(this, sb.ToString(), ToastLength.Short).Show();
-			//	}
-
-			//	UpdateFile(dirPath, mItems);
-			//};
 		}
 
 		// 액션바 우측 옵션

@@ -13,6 +13,7 @@ using Android.Support.V7.App;
 using Android.Support.Design.Widget;
 using Toolbar = Android.Support.V7.Widget.Toolbar;
 using DialogFragment = Android.Support.V4.App.DialogFragment;
+using FloatingActionButton = Android.Support.Design.Widget.FloatingActionButton;
 
 namespace com.xamarin.recipes.filepicker
 {
@@ -34,12 +35,12 @@ namespace com.xamarin.recipes.filepicker
 
 	public class FilePickerDialog : DialogFragment
 	{
+		private FloatingActionButton fab;
+
 		private FileListFragment fileList;
-		private Button button;
 		private string dirPath;
 
 		public event EventHandler<OnFilePickEventArgs> onFIlePickComplete;
-
 
 		public override View OnCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
 		{
@@ -49,8 +50,8 @@ namespace com.xamarin.recipes.filepicker
 			//fileList = (FileListFragment)SupportFragmentManager.FindFragmentById(Resource.Id.file_list_fragment);
 			//fileList.DirPath = Intent.GetStringExtra("dir_path");
 
-			button = view.FindViewById<Button>(Resource.Id.btnFolderSelect);
-			button.Click += (object sender, System.EventArgs e) =>
+			fab = view.FindViewById<FloatingActionButton>(Resource.Id.fab);
+			fab.Click += (object sender, System.EventArgs e) =>
 			{
 				//Intent intent = new Intent(this, typeof(FilePickerDialog));
 				//intent.PutExtra("dir_path", fileList.DirPath);

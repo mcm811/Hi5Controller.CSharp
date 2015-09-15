@@ -1,24 +1,26 @@
 ﻿using Android.App;
 using Android.Content;
 using Android.OS;
-using Android.Support.V4.App;
 using Android.Views;
 using Android.Widget;
 using HI5Controller;
 using System.IO;
 using System.Text;
 using Android.Support.V4.Widget;
+using Android.Support.V4.App;
 using Android.Support.V7.App;
 using Android.Support.Design.Widget;
 using Toolbar = Android.Support.V7.Widget.Toolbar;
+using DialogFragment = Android.Support.V4.App.DialogFragment;
+using FloatingActionButton = Android.Support.Design.Widget.FloatingActionButton;
 
 namespace com.xamarin.recipes.filepicker
 {
 	[Activity(Label = "@string/app_name", MainLauncher = false, Icon = "@drawable/folder", Theme = "@style/MyTheme")]
 	public class FilePickerActivity : FragmentActivity
 	{
+		private FloatingActionButton fab;
 		private FileListFragment fileList;
-		private Button button;
 
 		protected override void OnCreate(Bundle bundle)
 		{
@@ -38,8 +40,9 @@ namespace com.xamarin.recipes.filepicker
 			fileList = (FileListFragment)SupportFragmentManager.FindFragmentById(Resource.Id.file_list_fragment);
 			fileList.DirPath = Intent.GetStringExtra("dir_path");
 
-			button = FindViewById<Button>(Resource.Id.btnFolderSelect);
-			button.Click += (object sender, System.EventArgs e) =>
+			// 떠 있는 액션버튼
+			fab = FindViewById<FloatingActionButton>(Resource.Id.fab);
+			fab.Click += (sender, e) =>
 			{
 				Intent intent = new Intent(this, typeof(FilePickerActivity));
 				intent.PutExtra("dir_path", fileList.DirPath);
