@@ -5,45 +5,50 @@
     android:layout_height="match_parent"
     android:id="@+id/drawer_layout"
     android:fitsSystemWindows="true">
-    <LinearLayout
-        android:orientation="vertical"
-        android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
-        android:minWidth="25px"
-        android:minHeight="25px">
-        <include
-            android:id="@+id/toolbar"
-            layout="@layout/toolbar" />
-        <TextView
-            android:text="ROBOT.SWD"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/pathTextView"
-            android:background="@color/my_green" />
-        <ScrollView
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
             android:minWidth="25px"
-            android:minHeight="25px"
-            android:layout_weight="1"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/scrollView1">
+            android:minHeight="25px">
+            <include
+                android:id="@+id/toolbar"
+                layout="@layout/toolbar" />
             <TextView
-                android:text=""
+                android:text="ROBOT.SWD"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:id="@+id/wcdTextView" />
-        </ScrollView>
-        <Button
-            android:text="@string/wcd_ok"
-            android:layout_width="match_parent"
+                android:id="@+id/pathTextView"
+                android:background="@color/my_green" />
+            <ScrollView
+                android:minWidth="25px"
+                android:minHeight="25px"
+                android:layout_weight="1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/scrollView1">
+                <TextView
+                    android:text=""
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/wcdTextView" />
+            </ScrollView>
+        </LinearLayout>
+        <android.support.design.widget.FloatingActionButton
+            android:id="@+id/fab_done"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/btnWcdOk" />
-    </LinearLayout>
+            android:layout_gravity="bottom|right"
+            android:layout_margin="16dp"
+            android:src="@drawable/ic_done_white" />
+    </FrameLayout>
     <android.support.design.widget.NavigationView
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:layout_gravity="start"
         android:id="@+id/nav_view"
-        app:headerLayout="@layout/drawer_header_layout"
         app:menu="@menu/drawer_menu" />
 </android.support.v4.widget.DrawerLayout>

@@ -36,19 +36,6 @@
                     android:id="@+id/dirPathTextView" />
             </android.support.design.widget.TextInputLayout>
             <Button
-                android:text="@string/WorkPathConfigButton"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:id="@+id/folderPickerButton"
-                android:layout_marginLeft="20dp"
-                android:layout_marginRight="20dp"
-                android:layout_marginTop="20dp"
-                android:layout_weight="15"
-                android:gravity="left"
-                android:background="@drawable/button_folder_style"
-                android:textSize="20dp"
-                android:drawableLeft="@drawable/button_folder" />
-            <Button
                 android:text="@string/WcdButton"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -57,9 +44,10 @@
                 android:layout_marginRight="20dp"
                 android:layout_marginTop="20dp"
                 android:layout_weight="15"
-                android:gravity="left"
+                android:gravity="left|center_vertical"
                 android:background="@drawable/button_wcdlist_style"
-                android:textSize="20dp"
+                android:textSize="30dp"
+                android:textColor="@color/my_white"
                 android:drawableLeft="@drawable/button_wcdlist" />
             <Button
                 android:text="@string/RobotButton"
@@ -70,18 +58,21 @@
                 android:layout_marginRight="20dp"
                 android:layout_marginTop="20dp"
                 android:layout_weight="15"
-                android:gravity="left"
+                android:gravity="left|center_vertical"
                 android:background="@drawable/button_robot_style"
-                android:textSize="20dp"
+                android:textSize="30dp"
+                android:textColor="@color/my_white"
                 android:drawableLeft="@drawable/button_robot" />
         </LinearLayout>
         <android.support.design.widget.FloatingActionButton
             android:id="@+id/fab"
+            app:elevation="6dp"
+            app:borderWidth="0dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="bottom|right"
             android:layout_margin="16dp"
-            android:src="@drawable/ic_action_content_save" />
+            android:src="@drawable/ic_settings_white" />
     </FrameLayout>
     <android.support.design.widget.NavigationView
         android:layout_width="wrap_content"

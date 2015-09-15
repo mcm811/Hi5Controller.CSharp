@@ -12,6 +12,7 @@ using Toolbar = Android.Support.V7.Widget.Toolbar;
 using DialogFragment = Android.Support.V4.App.DialogFragment;
 using FloatingActionButton = Android.Support.Design.Widget.FloatingActionButton;
 using com.xamarin.recipes.filepicker;
+using Android.Util;
 
 namespace HI5Controller
 {
@@ -24,9 +25,9 @@ namespace HI5Controller
 		private FloatingActionButton fab;
 
 		private EditText dirPath;
-		private Button folderPickerButton;
 		private Button wcdListViewButton;
 		private Button wcdTextButton;
+		//private Button folderPickerButton;
 
 		private string DirPath
 		{
@@ -81,20 +82,18 @@ namespace HI5Controller
 			SupportActionBar.SetHomeAsUpIndicator(Resource.Drawable.ic_menu_white);
 			SupportActionBar.SetDisplayHomeAsUpEnabled(true);
 			SupportActionBar.Title = Resources.GetString(Resource.String.ApplicationName);
+			SupportActionBar.Elevation = 4;
+			SupportActionBar.Show();
 
 			// 서랍 메뉴
 			drawerLayout = FindViewById<DrawerLayout>(Resource.Id.drawer_layout);
 			navigationView = FindViewById<NavigationView>(Resource.Id.nav_view);
 			navigationView.NavigationItemSelected += (sender, e) =>
 			{
-				e.MenuItem.SetChecked(true);
+				//ToastShow(e.MenuItem.ItemId.ToString());
 				Intent intent;
+				e.MenuItem.SetChecked(true);
 				switch (e.MenuItem.ItemId) {
-					case Resource.Id.nav_workpathconfig:
-					intent = new Intent(this, typeof(FilePickerActivity));
-					intent.PutExtra("dir_path", dirPath.Text);
-					StartActivityForResult(intent, 1);
-					break;
 					case Resource.Id.nav_wcd:
 					intent = new Intent(this, typeof(WcdListViewActivity));
 					intent.PutExtra("dir_path", dirPath.Text);
@@ -105,34 +104,39 @@ namespace HI5Controller
 					intent.PutExtra("dir_path", dirPath.Text);
 					StartActivity(intent);
 					break;
-					case Resource.Id.nav_settings:
+					case Resource.Id.nav_workpathconfig:
+					intent = new Intent(this, typeof(FilePickerActivity));
+					intent.PutExtra("dir_path", dirPath.Text);
+					StartActivityForResult(intent, 1);
 					break;
 				}
 				drawerLayout.CloseDrawers();
 			};
+			//View header = navigationView.InflateHeaderView(Resource.Layout.drawer_header_layout);
+			//RelativeLayout drawerHeader = header.FindViewById<RelativeLayout>(Resource.Id.drawerHeader);
+			//drawerHeader.Click += (sender, e) =>
+			//{
+			//	var intent = new Intent(this, typeof(WcdActivity));
+			//	StartActivity(intent);
+			//};
 
 			// 기본 화면 구성
 			dirPath = FindViewById<EditText>(Resource.Id.dirPathTextView);
 			dirPath.Text = DirPath;
 
+			// 떠 있는 액션버튼
 			fab = FindViewById<FloatingActionButton>(Resource.Id.fab);
+			fab.Elevation = 6;
 			fab.Click += (sender, e) =>
 			{
 				var intent = new Intent(this, typeof(FilePickerActivity));
 				intent.PutExtra("dir_path", dirPath.Text);
 				StartActivityForResult(intent, 1);
-			};
 
-			folderPickerButton = FindViewById<Button>(Resource.Id.folderPickerButton);
-			folderPickerButton.Click += (sender, e) =>
-			{
-				var intent = new Intent(this, typeof(FilePickerActivity));
-				intent.PutExtra("dir_path", dirPath.Text);
-				StartActivityForResult(intent, 1);
+				//Android.Support.V4.App.FragmentTransaction transaction = SupportFragmentManager.BeginTransaction();
+				//FilePickerDialog filePickerDialog = new FilePickerDialog();
+				//filePickerDialog.Show(transaction, "dialog fragment");
 			};
-			
-			//FilePickerDialog filePickerDialog = new FilePickerDialog();
-			//filePickerDialog.Show(FragmentManager, "dialog fragment");
 
 			wcdListViewButton = FindViewById<Button>(Resource.Id.button1);
 			wcdListViewButton.Click += (sender, e) =>
@@ -177,9 +181,17 @@ namespace HI5Controller
 		// 액션바 옵션 선택시 처리
 		public override bool OnOptionsItemSelected(IMenuItem item)
 		{
+			//ToastShow(item.ItemId.ToString());
+			//Log.Debug("NavigatoinView", item.ItemId.ToString());
+
 			switch (item.ItemId) {
 				case Android.Resource.Id.Home:
 				drawerLayout.OpenDrawer(Android.Support.V4.View.GravityCompat.Start);
+				return true;
+				case Resource.Id.menu_settings:
+				var intent = new Intent(this, typeof(FilePickerActivity));
+				intent.PutExtra("dir_path", dirPath.Text);
+				StartActivityForResult(intent, 1);
 				return true;
 			}
 			return base.OnOptionsItemSelected(item);

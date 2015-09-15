@@ -11,10 +11,14 @@ using Android.Widget;
 using System.Threading.Tasks;
 using System.IO;
 using Android.Support.V4.Widget;
+using Android.Support.V4.App;
 using Android.Support.V7.App;
 using Android.Support.Design.Widget;
 using Toolbar = Android.Support.V7.Widget.Toolbar;
+using DialogFragment = Android.Support.V4.App.DialogFragment;
+using FloatingActionButton = Android.Support.Design.Widget.FloatingActionButton;
 using com.xamarin.recipes.filepicker;
+
 
 namespace HI5Controller
 {
@@ -24,12 +28,12 @@ namespace HI5Controller
 		private Toolbar toolbar;
 		private DrawerLayout drawerLayout;
 		private NavigationView navigationView;
-		private string dirPath = string.Empty;
+		private FloatingActionButton fabDone;
 
 		private TextView pathTv;
 		private TextView wcdTv;
-		private Button btnOk;
 
+		private string dirPath = string.Empty;
 
 		async private Task<string> ReadFileToString(string fileName)
 		{
@@ -58,6 +62,7 @@ namespace HI5Controller
 			SupportActionBar.SetHomeAsUpIndicator(Resource.Drawable.ic_menu_white);
 			SupportActionBar.SetDisplayHomeAsUpEnabled(true);
 			SupportActionBar.Title = Resources.GetString(Resource.String.WcdTextViewName);
+			SupportActionBar.Hide();
 
 			// 서랍 메뉴
 			dirPath = Intent.GetStringExtra("dir_path") ?? "";
@@ -83,10 +88,22 @@ namespace HI5Controller
 					intent.PutExtra("dir_path", dirPath);
 					StartActivity(intent);
 					break;
-					case Resource.Id.nav_settings:
-					break;
 				}
 				drawerLayout.CloseDrawers();
+			};
+			View header = navigationView.InflateHeaderView(Resource.Layout.drawer_header_layout);
+			RelativeLayout drawerHeader = header.FindViewById<RelativeLayout>(Resource.Id.drawerHeader);
+			drawerHeader.Click += (sender, e) =>
+			{
+				var intent = new Intent(this, typeof(WcdActivity));
+				StartActivity(intent);
+			};
+			
+			// 떠 있는 액션버튼
+			fabDone = FindViewById<FloatingActionButton>(Resource.Id.fab_done);
+			fabDone.Click += (sender, e) =>
+			{
+				Finish();
 			};
 
 			string robotPath = System.IO.Path.Combine(dirPath, "ROBOT.SWD");
@@ -95,12 +112,6 @@ namespace HI5Controller
 
 			wcdTv = FindViewById<TextView>(Resource.Id.wcdTextView);
 			wcdTv.Text = await ReadFileToString(robotPath);
-
-			btnOk = FindViewById<Button>(Resource.Id.btnWcdOk);
-			btnOk.Click += (object sender, System.EventArgs e) =>
-			{
-				Finish();
-			};
 		}
 
 		// 액션바 우측 옵션
