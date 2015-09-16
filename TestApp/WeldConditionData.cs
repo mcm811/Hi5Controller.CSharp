@@ -5,7 +5,6 @@ namespace HI5Controller
 {
 	public class WeldConditionData
 	{
-		private bool itemChecked;
 		private int outputData;              // 출력 데이터
 		private int outputType;              // 출력 타입
 		private int squeezeForce;            // 가압력
@@ -13,6 +12,8 @@ namespace HI5Controller
 		private decimal fixedTipClearance;   // 고정극 제거율
 		private decimal pannelThickness;     // 패널 두께
 		private decimal commandOffset;       // 명령 옵셋
+
+		private bool itemChecked;
 
         public bool ItemChecked
 		{

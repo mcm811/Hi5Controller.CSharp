@@ -58,9 +58,7 @@ namespace HI5Controller
 
 		private void ToastShow(string str)
 		{
-			Toast
-				.MakeText(this, str, ToastLength.Short)
-				.Show();
+			Toast.MakeText(this, str, ToastLength.Short).Show();
 			//Snackbar
 			//	.Make(parentLayout, "Message sent", Snackbar.LengthLong)
 			//	.SetAction("Undo", (view) => { /*Undo message sending here.*/ })

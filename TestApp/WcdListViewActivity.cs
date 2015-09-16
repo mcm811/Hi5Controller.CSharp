@@ -12,6 +12,7 @@ using Toolbar = Android.Support.V7.Widget.Toolbar;
 using DialogFragment = Android.Support.V4.App.DialogFragment;
 using FloatingActionButton = Android.Support.Design.Widget.FloatingActionButton;
 using AlertDialog = Android.Support.V7.App.AlertDialog;
+using EditText = Android.Support.V7.Widget.AppCompatEditText;
 using com.xamarin.recipes.filepicker;
 
 using System.IO;
@@ -194,6 +195,15 @@ namespace HI5Controller
 			return Color.Argb(Color.GetAlphaComponent(argb), Color.GetRedComponent(argb), Color.GetGreenComponent(argb), Color.GetBlueComponent(argb));
 		}
 
+		private void ToastShow(string str)
+		{
+			Toast.MakeText(this, str, ToastLength.Short).Show();
+			//Snackbar
+			//	.Make(parentLayout, "Message sent", Snackbar.LengthLong)
+			//	.SetAction("Undo", (view) => { /*Undo message sending here.*/ })
+			//	.Show(); // Don’t forget to show!
+		}
+
 		async protected override void OnCreate(Bundle bundle)
 		{
 			base.OnCreate(bundle);
@@ -259,23 +269,15 @@ namespace HI5Controller
 				} else {
 					e.View.SetBackgroundColor(defaultBackgroundColor);  // 기본 백그라운드 색깔
 				}
-
-				//내용 수정 방법
-				//adapter[e.Position].PannelThickness = (Convert.ToDecimal(adapter[e.Position].PannelThickness) + 1).ToString();
-				//adapter.NotifyDataSetChanged();
-				//Console.WriteLine(e.Position.ToString() + " (" + adapter[e.Position].PannelThickness.ToString() + ")");
-				//Toast.MakeText(this, e.Position.ToString() + " (" + mListView.CheckedItemCount.ToString() + ")", ToastLength.Short).Show();
 			};
 			mListView.ItemLongClick += (object sender, AdapterView.ItemLongClickEventArgs e) =>
 			{
 				lastPosition = e.Position;
 				FabWcd_Click(sender, e);
 			};
-
 			// 떠 있는 액션버튼
 			fabWcd = FindViewById<FloatingActionButton>(Resource.Id.fab_wcd);
 			fabWcd.Click += FabWcd_Click;
-			//fabWcd.Click += (object sender, EventArgs e) => { };
 		}
 
 		private void FabWcd_Click(object sender, EventArgs e)
@@ -303,58 +305,31 @@ namespace HI5Controller
 			editTextList.Add(editFieldView.FindViewById<EditText>(Resource.Id.etFixedTipClearance));
 			editTextList.Add(editFieldView.FindViewById<EditText>(Resource.Id.etPannelThickness));
 			editTextList.Add(editFieldView.FindViewById<EditText>(Resource.Id.etCommandOffset));
-			editTextList.Add(editFieldView.FindViewById<EditText>(Resource.Id.etBegin));
-			editTextList.Add(editFieldView.FindViewById<EditText>(Resource.Id.etEnd));
-			int[] etMax = { 1000, 100, 350, 500, 500, 500, 500, 1000, 1000 };
 
-			IList<TextInputLayout> textInputLayoutList = new List<TextInputLayout>();
-			textInputLayoutList.Add(editFieldView.FindViewById<TextInputLayout>(Resource.Id.textInputLayout1));
-			textInputLayoutList.Add(editFieldView.FindViewById<TextInputLayout>(Resource.Id.textInputLayout2));
-			textInputLayoutList.Add(editFieldView.FindViewById<TextInputLayout>(Resource.Id.textInputLayout3));
-			textInputLayoutList.Add(editFieldView.FindViewById<TextInputLayout>(Resource.Id.textInputLayout4));
-			textInputLayoutList.Add(editFieldView.FindViewById<TextInputLayout>(Resource.Id.textInputLayout5));
-			textInputLayoutList.Add(editFieldView.FindViewById<TextInputLayout>(Resource.Id.textInputLayout6));
-			textInputLayoutList.Add(editFieldView.FindViewById<TextInputLayout>(Resource.Id.textInputLayout7));
-			textInputLayoutList.Add(editFieldView.FindViewById<TextInputLayout>(Resource.Id.textInputLayout8));
-			textInputLayoutList.Add(editFieldView.FindViewById<TextInputLayout>(Resource.Id.textInputLayout9));
-
-			//adapter[e.Position].PannelThickness = (Convert.ToDecimal(adapter[e.Position].PannelThickness) + 1).ToString();
-			//adapter.NotifyDataSetChanged();
-			//Console.WriteLine(e.Position.ToString() + " (" + adapter[e.Position].PannelThickness.ToString() + ")");
-			//Toast.MakeText(this, e.Position.ToString() + " (" + mListView.CheckedItemCount.ToString() + ")", ToastLength.Short).Show();
-
-			// 기본으로 에디트텍스트를 안보이게 하고 텍스트뷰를 선택시 에디트텍스트가 보이게 이벤트 처리
+			int[] etMax = { 1000, 100, 350, 500, 500, 500, 500, 1000, 1000 };   // 임계치
 			for (int i = 0; i < editTextList.Count; i++) {
 				EditText et = editTextList[i];
-				// 기본선택된 자료값 가져오기
-				if (i < adapter[lastPosition].Count) {
-					et.Text = adapter[lastPosition][i];
-					et.SetTextColor(Color.RosyBrown);
-					int maxValue = etMax[i];
-					et.TextChanged += (object sender1, TextChangedEventArgs e1) =>
-					{
-						// 임계치 설정
-						int n = Convert.ToInt32(e1.Text.ToString());
+				et.SetTextSize(ComplexUnitType.Sp, 10);
+				if (i == 0)                                                 // outputData
+					et.Text = adapter[lastPosition][i];                     // 기본선택된 자료값 가져오기
+				int maxValue = etMax[i];                                    // 임계치 설정
+				et.TextChanged += (object sender1, TextChangedEventArgs e1) =>
+				{
+					int n;
+					try {
+						n = Convert.ToInt32(e1.Text.ToString());
 						if (n > maxValue) {
 							n = maxValue;
 							et.Text = n.ToString();
 						}
-					};
-				}
-				et.SetTextSize(ComplexUnitType.Sp, 10);
-				//textInputLayoutList[i].ScaleX = 0.9f;
-				//textInputLayoutList[i].ScaleY = 0.9f;
-				if (i == 0)
-					continue;
-				if (i != 2)
-					et.Alpha = alphaOff;
-				et.Click += (sender1, e1) =>
-				{
-					et.Alpha = et.Alpha == alphaOff ? 1 : alphaOff;
-				};
-				textInputLayoutList[i].Click += (sender1, e1) =>
-				{
-					et.Alpha = et.Alpha == alphaOff ? 1 : alphaOff;
+					} catch {       // Convert는 다른 타입이 들어오면 예외가 발생 된다
+						if (Int32.TryParse(e1.Text.ToString(), out n)) {
+							if (n > maxValue) {
+								n = maxValue;
+								et.Text = n.ToString();
+							}
+						}
+					}
 				};
 			}
 
@@ -363,10 +338,12 @@ namespace HI5Controller
 			if (positions.Count > 0) {
 				StringBuilder sb = new StringBuilder();
 				foreach (int pos in positions) {
-					sb.Append(pos);
+					sb.Append(pos + 1);
 					sb.Append(" ");
 				}
-				statusText.Text = sb.ToString();
+				statusText.Text = "수정 항목: " + sb.ToString().TrimEnd();
+			} else {
+				statusText.Text = "수정 항목: " + (lastPosition + 1).ToString();
 			}
 
 			var sampleSeekBar = editFieldView.FindViewById<SeekBar>(Resource.Id.sampleSeekBar);
@@ -374,84 +351,113 @@ namespace HI5Controller
 			sampleSeekBar.Progress = Convert.ToInt32(adapter[lastPosition][0]) - 1;
 			sampleSeekBar.ProgressChanged += (object sender1, SeekBar.ProgressChangedEventArgs e1) =>
 			{
-				//statusText.Text = (e1.Progress + 1).ToString();
 				for (int i = 0; i < adapter[sampleSeekBar.Progress].Count; i++) {
-					editTextList[i].Text = adapter[sampleSeekBar.Progress][i];
-					editTextList[i].SetTextColor(Color.RosyBrown);
+					if (editTextList[i].Text != "")
+						editTextList[i].Text = adapter[sampleSeekBar.Progress][i];
+				}
+				if (positions.Count == 0) {
+					lastPosition = sampleSeekBar.Progress;
+					statusText.Text = "수정 항목: " + (lastPosition + 1).ToString();
 				}
 			};
-
-			var beginSeekBar = editFieldView.FindViewById<SeekBar>(Resource.Id.sbBegin);
-			var endSeekBar = editFieldView.FindViewById<SeekBar>(Resource.Id.sbEnd);
-
-			beginSeekBar.Max = adapter.Count;
-			beginSeekBar.Progress = beginSeekBar.Max / 2;
-
-			endSeekBar.Max = adapter.Count;
-			endSeekBar.Progress = endSeekBar.Max / 2;
 
 			// 선택 시작
-			editTextList[7].Text = string.Format("{0}", beginSeekBar.Progress + 1);
-			editTextList[7].SetTextColor(Color.RosyBrown);
+			var beginSeekBar = editFieldView.FindViewById<SeekBar>(Resource.Id.sbBegin);
+			beginSeekBar.Max = adapter.Count - 1;
+			beginSeekBar.Progress = 0;
+
 			// 선택 끝
-			editTextList[8].Text = string.Format("{0}", endSeekBar.Progress + 1);
-			editTextList[8].SetTextColor(Color.RosyBrown);
+			var endSeekBar = editFieldView.FindViewById<SeekBar>(Resource.Id.sbEnd);
+			endSeekBar.Max = adapter.Count - 1;
+			endSeekBar.Progress = endSeekBar.Max;
 
-			editTextList[7].TextChanged += (object sender1, TextChangedEventArgs e1) =>
-			{
-				int n = Convert.ToInt32(e1.Text.ToString());
-				if (n > beginSeekBar.Max) {
-					n = beginSeekBar.Max;
-					editTextList[7].Text = n.ToString();
-				}
-				beginSeekBar.Progress = n;
-			};
-			editTextList[8].TextChanged += (object sender1, TextChangedEventArgs e1) =>
-			{
-				int n = Convert.ToInt32(e1.Text.ToString());
-				if (n > endSeekBar.Max) {
-					n = endSeekBar.Max;
-					editTextList[8].Text = n.ToString();
-				}
-				endSeekBar.Progress = endSeekBar.Max - n - 1;
-			};
-
+			//editTextList[7].TextChanged += (object sender1, TextChangedEventArgs e1) =>
+			//{
+			//	int n;
+			//	try {
+			//		n = Convert.ToInt32(e1.Text.ToString());
+			//		if (n > beginSeekBar.Max) {
+			//			n = beginSeekBar.Max;
+			//			editTextList[7].Text = n.ToString();
+			//		}
+			//		beginSeekBar.Progress = n;
+			//	} catch {
+			//		if (Int32.TryParse(e1.Text.ToString(), out n)) {
+			//			if (n > beginSeekBar.Max) {
+			//				n = beginSeekBar.Max;
+			//				editTextList[7].Text = n.ToString();
+			//			}
+			//			beginSeekBar.Progress = n;
+			//		}
+			//	}
+			//};
+			//editTextList[8].TextChanged += (object sender1, TextChangedEventArgs e1) =>
+			//{
+			//	int n;
+			//	try {
+			//		n = Convert.ToInt32(e1.Text.ToString());
+			//		if (n > endSeekBar.Max) {
+			//			n = endSeekBar.Max;
+			//			editTextList[8].Text = n.ToString();
+			//		}
+			//		endSeekBar.Progress = endSeekBar.Max - n - 1;
+			//	} catch {
+			//		if (Int32.TryParse(e1.Text.ToString(), out n)) {
+			//			if (n > endSeekBar.Max) {
+			//				n = endSeekBar.Max;
+			//				editTextList[8].Text = n.ToString();
+			//			}
+			//			endSeekBar.Progress = endSeekBar.Max - n - 1;
+			//		}
+			//	}
+			//};
 			beginSeekBar.ProgressChanged += (object sender1, SeekBar.ProgressChangedEventArgs e1) =>
 			{
 				if (e1.FromUser) {
 					int sb1Progress = beginSeekBar.Progress;
 					int sb2Progress = endSeekBar.Max - endSeekBar.Progress;
-					editTextList[7].Text = string.Format("{0}", sb1Progress + 1);
 					if (sb1Progress > sb2Progress) {
-						endSeekBar.Progress = endSeekBar.Max - beginSeekBar.Progress;
-						editTextList[8].Text = string.Format("{0}", sb1Progress + 1);
+						sb2Progress = sb1Progress;
+						endSeekBar.Progress = endSeekBar.Max - sb1Progress;
 					}
-					if (sb1Progress == 1 && sb2Progress == 1 || sb1Progress == beginSeekBar.Max && sb2Progress == endSeekBar.Max) {
-						editTextList[7].Alpha = alphaOff;
-						editTextList[8].Alpha = alphaOff;
+					if (sb1Progress == 0 && sb2Progress == 0 || sb1Progress == beginSeekBar.Max && sb2Progress == endSeekBar.Max) {
+						if (positions.Count > 0) {
+							StringBuilder sb = new StringBuilder();
+							foreach (int pos in positions) {
+								sb.Append(pos + 1);
+								sb.Append(" ");
+							}
+							statusText.Text = "수정 항목: " + sb.ToString().TrimEnd();
+						} else {
+							statusText.Text = "수정 항목: " + (lastPosition + 1).ToString();
+						}
 					} else {
-						editTextList[7].Alpha = 1;
-						editTextList[8].Alpha = 1;
+						statusText.Text = "수정 범위: " + string.Format("{0}", sb1Progress + 1) + " ~ " + string.Format("{0}", sb2Progress + 1);
 					}
 				}
 			};
-
 			endSeekBar.ProgressChanged += (object sender2, SeekBar.ProgressChangedEventArgs e2) =>
 			{
 				if (e2.FromUser) {
 					int sb1Progress = beginSeekBar.Progress;
 					int sb2Progress = endSeekBar.Max - endSeekBar.Progress;
-					editTextList[8].Text = string.Format("{0}", sb2Progress + 1);
-					if (sb1Progress > sb2Progress) {
+					if (sb2Progress < sb1Progress) {
+						sb1Progress = sb2Progress;
 						beginSeekBar.Progress = sb2Progress;
-						editTextList[7].Text = string.Format("{0}", sb2Progress + 1);
 					}
-					if (sb1Progress <= 1 && sb2Progress <= 1 || sb1Progress >= beginSeekBar.Max && sb2Progress >= endSeekBar.Max) {
-						editTextList[7].Alpha = alphaOff;
-						editTextList[8].Alpha = alphaOff;
+					if (sb1Progress == 0 && sb2Progress == 0 || sb1Progress == beginSeekBar.Max && sb2Progress == endSeekBar.Max) {
+						if (positions.Count > 0) {
+							StringBuilder sb = new StringBuilder();
+							foreach (int pos in positions) {
+								sb.Append(pos + 1);
+								sb.Append(" ");
+							}
+							statusText.Text = "수정 항목: " + sb.ToString().TrimEnd();
+						} else {
+							statusText.Text = "수정 항목: " + (lastPosition + 1).ToString();
+						}
 					} else {
-						editTextList[7].Alpha = 1;
-						editTextList[8].Alpha = 1;
+						statusText.Text = "수정 범위: " + string.Format("{0}", sb1Progress + 1) + " ~ " + string.Format("{0}", sb2Progress + 1);
 					}
 				}
 			};
@@ -463,46 +469,36 @@ namespace HI5Controller
 						mListView.SetItemChecked(pos, false);
 						adapter[pos].ItemChecked = false;
 					}
+					adapter.NotifyDataSetChanged();
 				}
 			});
 
 			dialog.SetPositiveButton("확인", async delegate
 			{
-				var seekBegin = editTextList[7].Alpha == 1 ? Convert.ToInt32(editTextList[7].Text) : 0;
-				var seekEnd = editTextList[8].Alpha == 1 ? Convert.ToInt32(editTextList[8].Text) : 0;
+				int seekBegin = beginSeekBar.Progress + 1;
+				int seekEnd = endSeekBar.Max - endSeekBar.Progress + 1;
+				bool isSeek = !((seekBegin == 1 && seekEnd == 1) || (seekBegin == beginSeekBar.Max + 1 && seekEnd == endSeekBar.Max + 1));
+				bool isUpdate = false;
 
-				if (seekBegin > 0 && seekEnd > seekBegin) {
+				if (positions.Count == 0)
+					positions.Add(lastPosition);
+				if (isSeek) {
+					positions.Clear();
 					for (int rowNum = seekBegin - 1; rowNum < seekEnd; rowNum++) {
-						for (int colNum = 1; colNum < adapter[rowNum].Count; colNum++) {
-							if (editTextList[colNum].Text != "" && editTextList[colNum].Alpha == 1) {
-								adapter[rowNum][colNum] = editTextList[colNum].Text;
-							}
-						}
-						mListView.SetItemChecked(rowNum, false);
-						adapter[rowNum].ItemChecked = false;
+						positions.Add(rowNum);
 					}
-					adapter.NotifyDataSetChanged();
-					await UpdateFileAsync(robotPath, mItems);
-				} else if (positions.Count > 0) {
-					foreach (int rowNum in positions) {
-						for (int colNum = 1; colNum < adapter[rowNum].Count; colNum++) {
-							if (editTextList[colNum].Text != "" && editTextList[colNum].Alpha == 1) {
-								adapter[rowNum][colNum] = editTextList[colNum].Text;
-							}
-						}
-						mListView.SetItemChecked(rowNum, false);
-						adapter[rowNum].ItemChecked = false;
-					}
-					adapter.NotifyDataSetChanged();
-					await UpdateFileAsync(robotPath, mItems);
-				} else {
-					int rowNum = lastPosition;
-					if (editTextList[0].Alpha == 1) rowNum = Convert.ToInt32(editTextList[0].Text) - 1;
+				}
+				foreach (int rowNum in positions) {
 					for (int colNum = 1; colNum < adapter[rowNum].Count; colNum++) {
-						if (editTextList[colNum].Text != "" && editTextList[colNum].Alpha == 1) {
+						if (editTextList[colNum].Text != "") {
 							adapter[rowNum][colNum] = editTextList[colNum].Text;
+							isUpdate = true;
 						}
 					}
+					mListView.SetItemChecked(rowNum, false);
+					adapter[rowNum].ItemChecked = false;
+				}
+				if (isUpdate) {
 					adapter.NotifyDataSetChanged();
 					await UpdateFileAsync(robotPath, mItems);
 				}
