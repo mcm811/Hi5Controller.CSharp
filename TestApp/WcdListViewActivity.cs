@@ -296,22 +296,37 @@ namespace HI5Controller
 			AlertDialog.Builder dialog = new AlertDialog.Builder(this);
 			dialog.SetView(editFieldView);
 
+			//IList<TextInputLayout> tilList = new List<TextInputLayout>();
+			//tilList.Add(editFieldView.FindViewById<TextInputLayout>(Resource.Id.textInputLayout1));
+			//tilList.Add(editFieldView.FindViewById<TextInputLayout>(Resource.Id.textInputLayout2));
+			//tilList.Add(editFieldView.FindViewById<TextInputLayout>(Resource.Id.textInputLayout3));
+			//tilList.Add(editFieldView.FindViewById<TextInputLayout>(Resource.Id.textInputLayout4));
+			//tilList.Add(editFieldView.FindViewById<TextInputLayout>(Resource.Id.textInputLayout5));
+			//tilList.Add(editFieldView.FindViewById<TextInputLayout>(Resource.Id.textInputLayout6));
+			//tilList.Add(editFieldView.FindViewById<TextInputLayout>(Resource.Id.textInputLayout7));
+
 			// 에디트텍스트
-			IList<EditText> editTextList = new List<EditText>();
-			editTextList.Add(editFieldView.FindViewById<EditText>(Resource.Id.etOutputData));
-			editTextList.Add(editFieldView.FindViewById<EditText>(Resource.Id.etOutputType));
-			editTextList.Add(editFieldView.FindViewById<EditText>(Resource.Id.etSqueezeForce));
-			editTextList.Add(editFieldView.FindViewById<EditText>(Resource.Id.etMoveTipClearance));
-			editTextList.Add(editFieldView.FindViewById<EditText>(Resource.Id.etFixedTipClearance));
-			editTextList.Add(editFieldView.FindViewById<EditText>(Resource.Id.etPannelThickness));
-			editTextList.Add(editFieldView.FindViewById<EditText>(Resource.Id.etCommandOffset));
+			IList<EditText> etList = new List<EditText>();
+			etList.Add(editFieldView.FindViewById<EditText>(Resource.Id.etOutputData));
+			etList.Add(editFieldView.FindViewById<EditText>(Resource.Id.etOutputType));
+			etList.Add(editFieldView.FindViewById<EditText>(Resource.Id.etSqueezeForce));
+			etList.Add(editFieldView.FindViewById<EditText>(Resource.Id.etMoveTipClearance));
+			etList.Add(editFieldView.FindViewById<EditText>(Resource.Id.etFixedTipClearance));
+			etList.Add(editFieldView.FindViewById<EditText>(Resource.Id.etPannelThickness));
+			etList.Add(editFieldView.FindViewById<EditText>(Resource.Id.etCommandOffset));
 
 			int[] etMax = { 1000, 100, 350, 500, 500, 500, 500, 1000, 1000 };   // 임계치
-			for (int i = 0; i < editTextList.Count; i++) {
-				EditText et = editTextList[i];
-				et.SetTextSize(ComplexUnitType.Sp, 10);
+			for (int i = 0; i < etList.Count; i++) {
+				EditText et = etList[i];
+				//et.SetTextSize(ComplexUnitType.Sp, 12);
+				//et.ScaleX = 0.8f;
+				//et.ScaleY = 0.8f;
+				//tilList[i].ScaleX = 0.8f;
+				//tilList[i].ScaleY = 0.8f;
+
 				if (i == 0)                                                 // outputData
 					et.Text = adapter[lastPosition][i];                     // 기본선택된 자료값 가져오기
+
 				int maxValue = etMax[i];                                    // 임계치 설정
 				et.TextChanged += (object sender1, TextChangedEventArgs e1) =>
 				{
@@ -352,8 +367,8 @@ namespace HI5Controller
 			sampleSeekBar.ProgressChanged += (object sender1, SeekBar.ProgressChangedEventArgs e1) =>
 			{
 				for (int i = 0; i < adapter[sampleSeekBar.Progress].Count; i++) {
-					if (editTextList[i].Text != "")
-						editTextList[i].Text = adapter[sampleSeekBar.Progress][i];
+					if (etList[i].Text != "")
+						etList[i].Text = adapter[sampleSeekBar.Progress][i];
 				}
 				if (positions.Count == 0) {
 					lastPosition = sampleSeekBar.Progress;
@@ -371,41 +386,41 @@ namespace HI5Controller
 			endSeekBar.Max = adapter.Count - 1;
 			endSeekBar.Progress = endSeekBar.Max;
 
-			//editTextList[7].TextChanged += (object sender1, TextChangedEventArgs e1) =>
+			//etList[7].TextChanged += (object sender1, TextChangedEventArgs e1) =>
 			//{
 			//	int n;
 			//	try {
 			//		n = Convert.ToInt32(e1.Text.ToString());
 			//		if (n > beginSeekBar.Max) {
 			//			n = beginSeekBar.Max;
-			//			editTextList[7].Text = n.ToString();
+			//			etList[7].Text = n.ToString();
 			//		}
 			//		beginSeekBar.Progress = n;
 			//	} catch {
 			//		if (Int32.TryParse(e1.Text.ToString(), out n)) {
 			//			if (n > beginSeekBar.Max) {
 			//				n = beginSeekBar.Max;
-			//				editTextList[7].Text = n.ToString();
+			//				etList[7].Text = n.ToString();
 			//			}
 			//			beginSeekBar.Progress = n;
 			//		}
 			//	}
 			//};
-			//editTextList[8].TextChanged += (object sender1, TextChangedEventArgs e1) =>
+			//etList[8].TextChanged += (object sender1, TextChangedEventArgs e1) =>
 			//{
 			//	int n;
 			//	try {
 			//		n = Convert.ToInt32(e1.Text.ToString());
 			//		if (n > endSeekBar.Max) {
 			//			n = endSeekBar.Max;
-			//			editTextList[8].Text = n.ToString();
+			//			etList[8].Text = n.ToString();
 			//		}
 			//		endSeekBar.Progress = endSeekBar.Max - n - 1;
 			//	} catch {
 			//		if (Int32.TryParse(e1.Text.ToString(), out n)) {
 			//			if (n > endSeekBar.Max) {
 			//				n = endSeekBar.Max;
-			//				editTextList[8].Text = n.ToString();
+			//				etList[8].Text = n.ToString();
 			//			}
 			//			endSeekBar.Progress = endSeekBar.Max - n - 1;
 			//		}
@@ -490,8 +505,8 @@ namespace HI5Controller
 				}
 				foreach (int rowNum in positions) {
 					for (int colNum = 1; colNum < adapter[rowNum].Count; colNum++) {
-						if (editTextList[colNum].Text != "") {
-							adapter[rowNum][colNum] = editTextList[colNum].Text;
+						if (etList[colNum].Text != "") {
+							adapter[rowNum][colNum] = etList[colNum].Text;
 							isUpdate = true;
 						}
 					}

@@ -33,13 +33,14 @@
         android:hint="@string/CommandOffset"
         android:layout_height="wrap_content"
         android:id="@+id/tvCommandOffset"
-        android:gravity="right"
+        android:gravity="right|bottom"
         android:textSize="15dp"
         android:layout_width="wrap_content"
         android:layout_marginLeft="30dp"
         android:layout_below="@id/tvPannelThickness"
         android:layout_alignParentRight="true"
-        android:layout_marginRight="10dp" />
+        android:layout_marginRight="10dp"
+        android:layout_alignParentBottom="true" />
     <TextView
         android:text="@string/MoveTipClearance"
         android:hint="@string/MoveTipClearance"
@@ -75,10 +76,11 @@
         android:hint="@string/FixedTipClearance"
         android:layout_height="wrap_content"
         android:id="@+id/tvFixedTipClearance"
-        android:gravity="right"
+        android:gravity="right|bottom"
         android:textSize="15dp"
         android:layout_width="wrap_content"
         android:layout_toLeftOf="@id/tvCommandOffset"
         android:layout_below="@id/tvMoveTipClearance"
-        android:layout_marginLeft="30dp" />
+        android:layout_marginLeft="30dp"
+        android:layout_alignParentBottom="true" />
 </RelativeLayout>

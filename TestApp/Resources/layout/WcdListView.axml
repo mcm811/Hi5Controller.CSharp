@@ -52,36 +52,37 @@
                     android:layout_height="wrap_content"
                     android:id="@+id/tvPannelThickness"
                     android:gravity="right"
-                    android:textSize="12dp"
+                    android:textSize="10dp"
                     android:textColor="@color/my_white"
                     android:layout_width="wrap_content"
                     android:layout_alignParentRight="true"
-                    android:layout_marginLeft="5dp"
-                    android:layout_marginRight="5dp" />
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp" />
                 <TextView
                     android:text="@string/CommandOffset"
                     android:hint="@string/CommandOffset"
                     android:layout_height="wrap_content"
                     android:id="@+id/tvCommandOffset"
-                    android:gravity="right"
-                    android:textSize="12dp"
+                    android:textSize="10dp"
                     android:textColor="@color/my_white"
                     android:layout_width="wrap_content"
-                    android:layout_marginLeft="5dp"
                     android:layout_below="@id/tvPannelThickness"
                     android:layout_alignParentRight="true"
-                    android:layout_marginRight="5dp" />
+                    android:gravity="right|bottom"
+                    android:layout_marginTop="2dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp" />
                 <TextView
                     android:text="@string/MoveTipClearance"
                     android:hint="@string/MoveTipClearance"
                     android:layout_height="wrap_content"
                     android:id="@+id/tvMoveTipClearance"
                     android:gravity="right"
-                    android:textSize="12dp"
+                    android:textSize="10dp"
                     android:textColor="@color/my_white"
                     android:layout_width="wrap_content"
                     android:layout_toLeftOf="@id/tvPannelThickness"
-                    android:layout_marginLeft="5dp" />
+                    android:layout_marginLeft="10dp" />
                 <TextView
                     android:text="@string/OutputType"
                     android:hint="@string/OutputType"
@@ -130,13 +131,14 @@
                     android:hint="@string/FixedTipClearance"
                     android:layout_height="wrap_content"
                     android:id="@+id/tvFixedTipClearance"
-                    android:gravity="right"
-                    android:textSize="12dp"
+                    android:gravity="right|bottom"
+                    android:textSize="10dp"
                     android:textColor="@color/my_white"
                     android:layout_width="wrap_content"
                     android:layout_toLeftOf="@id/tvCommandOffset"
                     android:layout_below="@id/tvMoveTipClearance"
-                    android:layout_marginLeft="5dp" />
+                    android:layout_marginTop="2dp"
+                    android:layout_marginLeft="10dp" />
             </RelativeLayout>
             <ListView
                 android:minWidth="25px"
