@@ -2,11 +2,6 @@
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 using Android.App;
-using Android.Support.V4.App;
-using Android.Support.V7.App;
-using Android.Support.V4.Widget;
-using Android.Support.Design.Widget;
-using Android.Gms.Ads;
 
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information

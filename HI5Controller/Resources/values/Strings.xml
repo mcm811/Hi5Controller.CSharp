@@ -23,7 +23,8 @@
   <string name="Settings">설정</string>
   <string name="Share">공유</string>
   <string name="Save">저장</string>
-  <string name="tab1_text">용접 조건</string>
-  <string name="tab2_text">계열 수정</string>
-  <string name="tab3_text">스팟 카운트</string>
+  <string name="wcd_tab1_text">작업 경로</string>
+  <string name="wcd_tab2_text">용접 조건</string>
+  <string name="wcd_tab3_text">Robot.swd</string>
+  <string name="wcd_tab4_text">경로 선택</string>
 </resources>
