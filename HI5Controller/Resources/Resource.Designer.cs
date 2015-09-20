@@ -913,185 +913,185 @@ namespace Com.Changmin.HI5Controller
 		public partial class Color
 		{
 			
-			// aapt resource value: 0x7f050051
-			public const int abc_background_cache_hint_selector_material_dark = 2131034193;
+			// aapt resource value: 0x7f050060
+			public const int abc_background_cache_hint_selector_material_dark = 2131034208;
 			
-			// aapt resource value: 0x7f050052
-			public const int abc_background_cache_hint_selector_material_light = 2131034194;
+			// aapt resource value: 0x7f050061
+			public const int abc_background_cache_hint_selector_material_light = 2131034209;
 			
-			// aapt resource value: 0x7f050053
-			public const int abc_color_highlight_material = 2131034195;
+			// aapt resource value: 0x7f050062
+			public const int abc_color_highlight_material = 2131034210;
 			
-			// aapt resource value: 0x7f050017
-			public const int abc_input_method_navigation_guard = 2131034135;
+			// aapt resource value: 0x7f050026
+			public const int abc_input_method_navigation_guard = 2131034150;
 			
-			// aapt resource value: 0x7f050054
-			public const int abc_primary_text_disable_only_material_dark = 2131034196;
+			// aapt resource value: 0x7f050063
+			public const int abc_primary_text_disable_only_material_dark = 2131034211;
 			
-			// aapt resource value: 0x7f050055
-			public const int abc_primary_text_disable_only_material_light = 2131034197;
+			// aapt resource value: 0x7f050064
+			public const int abc_primary_text_disable_only_material_light = 2131034212;
 			
-			// aapt resource value: 0x7f050056
-			public const int abc_primary_text_material_dark = 2131034198;
+			// aapt resource value: 0x7f050065
+			public const int abc_primary_text_material_dark = 2131034213;
 			
-			// aapt resource value: 0x7f050057
-			public const int abc_primary_text_material_light = 2131034199;
+			// aapt resource value: 0x7f050066
+			public const int abc_primary_text_material_light = 2131034214;
 			
-			// aapt resource value: 0x7f050058
-			public const int abc_search_url_text = 2131034200;
+			// aapt resource value: 0x7f050067
+			public const int abc_search_url_text = 2131034215;
 			
-			// aapt resource value: 0x7f050018
-			public const int abc_search_url_text_normal = 2131034136;
+			// aapt resource value: 0x7f050027
+			public const int abc_search_url_text_normal = 2131034151;
 			
-			// aapt resource value: 0x7f050019
-			public const int abc_search_url_text_pressed = 2131034137;
+			// aapt resource value: 0x7f050028
+			public const int abc_search_url_text_pressed = 2131034152;
 			
-			// aapt resource value: 0x7f05001a
-			public const int abc_search_url_text_selected = 2131034138;
+			// aapt resource value: 0x7f050029
+			public const int abc_search_url_text_selected = 2131034153;
 			
-			// aapt resource value: 0x7f050059
-			public const int abc_secondary_text_material_dark = 2131034201;
+			// aapt resource value: 0x7f050068
+			public const int abc_secondary_text_material_dark = 2131034216;
 			
-			// aapt resource value: 0x7f05005a
-			public const int abc_secondary_text_material_light = 2131034202;
+			// aapt resource value: 0x7f050069
+			public const int abc_secondary_text_material_light = 2131034217;
 			
 			// aapt resource value: 0x7f050009
 			public const int accent = 2131034121;
 			
-			// aapt resource value: 0x7f05001b
-			public const int accent_material_dark = 2131034139;
-			
-			// aapt resource value: 0x7f05001c
-			public const int accent_material_light = 2131034140;
-			
-			// aapt resource value: 0x7f05001d
-			public const int background_floating_material_dark = 2131034141;
-			
-			// aapt resource value: 0x7f05001e
-			public const int background_floating_material_light = 2131034142;
-			
-			// aapt resource value: 0x7f05001f
-			public const int background_material_dark = 2131034143;
-			
-			// aapt resource value: 0x7f050020
-			public const int background_material_light = 2131034144;
-			
-			// aapt resource value: 0x7f050021
-			public const int bright_foreground_disabled_material_dark = 2131034145;
-			
-			// aapt resource value: 0x7f050022
-			public const int bright_foreground_disabled_material_light = 2131034146;
-			
-			// aapt resource value: 0x7f050023
-			public const int bright_foreground_inverse_material_dark = 2131034147;
-			
-			// aapt resource value: 0x7f050024
-			public const int bright_foreground_inverse_material_light = 2131034148;
-			
-			// aapt resource value: 0x7f050025
-			public const int bright_foreground_material_dark = 2131034149;
-			
-			// aapt resource value: 0x7f050026
-			public const int bright_foreground_material_light = 2131034150;
-			
-			// aapt resource value: 0x7f050027
-			public const int button_material_dark = 2131034151;
-			
-			// aapt resource value: 0x7f050028
-			public const int button_material_light = 2131034152;
-			
-			// aapt resource value: 0x7f05000e
-			public const int design_fab_shadow_end_color = 2131034126;
-			
-			// aapt resource value: 0x7f05000f
-			public const int design_fab_shadow_mid_color = 2131034127;
-			
-			// aapt resource value: 0x7f050010
-			public const int design_fab_shadow_start_color = 2131034128;
-			
-			// aapt resource value: 0x7f050011
-			public const int design_fab_stroke_end_inner_color = 2131034129;
-			
-			// aapt resource value: 0x7f050012
-			public const int design_fab_stroke_end_outer_color = 2131034130;
-			
-			// aapt resource value: 0x7f050013
-			public const int design_fab_stroke_top_inner_color = 2131034131;
-			
-			// aapt resource value: 0x7f050014
-			public const int design_fab_stroke_top_outer_color = 2131034132;
-			
-			// aapt resource value: 0x7f050015
-			public const int design_snackbar_background_color = 2131034133;
-			
-			// aapt resource value: 0x7f050016
-			public const int design_textinput_error_color = 2131034134;
-			
-			// aapt resource value: 0x7f050029
-			public const int dim_foreground_disabled_material_dark = 2131034153;
-			
 			// aapt resource value: 0x7f05002a
-			public const int dim_foreground_disabled_material_light = 2131034154;
+			public const int accent_material_dark = 2131034154;
 			
 			// aapt resource value: 0x7f05002b
-			public const int dim_foreground_material_dark = 2131034155;
+			public const int accent_material_light = 2131034155;
 			
 			// aapt resource value: 0x7f05002c
-			public const int dim_foreground_material_light = 2131034156;
+			public const int background_floating_material_dark = 2131034156;
 			
 			// aapt resource value: 0x7f05002d
-			public const int foreground_material_dark = 2131034157;
+			public const int background_floating_material_light = 2131034157;
 			
 			// aapt resource value: 0x7f05002e
-			public const int foreground_material_light = 2131034158;
+			public const int background_material_dark = 2131034158;
 			
 			// aapt resource value: 0x7f05002f
-			public const int highlighted_text_material_dark = 2131034159;
+			public const int background_material_light = 2131034159;
 			
 			// aapt resource value: 0x7f050030
-			public const int highlighted_text_material_light = 2131034160;
+			public const int bright_foreground_disabled_material_dark = 2131034160;
 			
 			// aapt resource value: 0x7f050031
-			public const int hint_foreground_material_dark = 2131034161;
+			public const int bright_foreground_disabled_material_light = 2131034161;
 			
 			// aapt resource value: 0x7f050032
-			public const int hint_foreground_material_light = 2131034162;
+			public const int bright_foreground_inverse_material_dark = 2131034162;
 			
 			// aapt resource value: 0x7f050033
-			public const int material_blue_grey_800 = 2131034163;
+			public const int bright_foreground_inverse_material_light = 2131034163;
 			
 			// aapt resource value: 0x7f050034
-			public const int material_blue_grey_900 = 2131034164;
+			public const int bright_foreground_material_dark = 2131034164;
 			
 			// aapt resource value: 0x7f050035
-			public const int material_blue_grey_950 = 2131034165;
+			public const int bright_foreground_material_light = 2131034165;
 			
 			// aapt resource value: 0x7f050036
-			public const int material_deep_teal_200 = 2131034166;
+			public const int button_material_dark = 2131034166;
 			
 			// aapt resource value: 0x7f050037
-			public const int material_deep_teal_500 = 2131034167;
+			public const int button_material_light = 2131034167;
+			
+			// aapt resource value: 0x7f05001d
+			public const int design_fab_shadow_end_color = 2131034141;
+			
+			// aapt resource value: 0x7f05001e
+			public const int design_fab_shadow_mid_color = 2131034142;
+			
+			// aapt resource value: 0x7f05001f
+			public const int design_fab_shadow_start_color = 2131034143;
+			
+			// aapt resource value: 0x7f050020
+			public const int design_fab_stroke_end_inner_color = 2131034144;
+			
+			// aapt resource value: 0x7f050021
+			public const int design_fab_stroke_end_outer_color = 2131034145;
+			
+			// aapt resource value: 0x7f050022
+			public const int design_fab_stroke_top_inner_color = 2131034146;
+			
+			// aapt resource value: 0x7f050023
+			public const int design_fab_stroke_top_outer_color = 2131034147;
+			
+			// aapt resource value: 0x7f050024
+			public const int design_snackbar_background_color = 2131034148;
+			
+			// aapt resource value: 0x7f050025
+			public const int design_textinput_error_color = 2131034149;
 			
 			// aapt resource value: 0x7f050038
-			public const int material_grey_100 = 2131034168;
+			public const int dim_foreground_disabled_material_dark = 2131034168;
 			
 			// aapt resource value: 0x7f050039
-			public const int material_grey_300 = 2131034169;
+			public const int dim_foreground_disabled_material_light = 2131034169;
 			
 			// aapt resource value: 0x7f05003a
-			public const int material_grey_50 = 2131034170;
+			public const int dim_foreground_material_dark = 2131034170;
 			
 			// aapt resource value: 0x7f05003b
-			public const int material_grey_600 = 2131034171;
+			public const int dim_foreground_material_light = 2131034171;
 			
 			// aapt resource value: 0x7f05003c
-			public const int material_grey_800 = 2131034172;
+			public const int foreground_material_dark = 2131034172;
 			
 			// aapt resource value: 0x7f05003d
-			public const int material_grey_850 = 2131034173;
+			public const int foreground_material_light = 2131034173;
 			
 			// aapt resource value: 0x7f05003e
-			public const int material_grey_900 = 2131034174;
+			public const int highlighted_text_material_dark = 2131034174;
+			
+			// aapt resource value: 0x7f05003f
+			public const int highlighted_text_material_light = 2131034175;
+			
+			// aapt resource value: 0x7f050040
+			public const int hint_foreground_material_dark = 2131034176;
+			
+			// aapt resource value: 0x7f050041
+			public const int hint_foreground_material_light = 2131034177;
+			
+			// aapt resource value: 0x7f050042
+			public const int material_blue_grey_800 = 2131034178;
+			
+			// aapt resource value: 0x7f050043
+			public const int material_blue_grey_900 = 2131034179;
+			
+			// aapt resource value: 0x7f050044
+			public const int material_blue_grey_950 = 2131034180;
+			
+			// aapt resource value: 0x7f050045
+			public const int material_deep_teal_200 = 2131034181;
+			
+			// aapt resource value: 0x7f050046
+			public const int material_deep_teal_500 = 2131034182;
+			
+			// aapt resource value: 0x7f050047
+			public const int material_grey_100 = 2131034183;
+			
+			// aapt resource value: 0x7f050048
+			public const int material_grey_300 = 2131034184;
+			
+			// aapt resource value: 0x7f050049
+			public const int material_grey_50 = 2131034185;
+			
+			// aapt resource value: 0x7f05004a
+			public const int material_grey_600 = 2131034186;
+			
+			// aapt resource value: 0x7f05004b
+			public const int material_grey_800 = 2131034187;
+			
+			// aapt resource value: 0x7f05004c
+			public const int material_grey_850 = 2131034188;
+			
+			// aapt resource value: 0x7f05004d
+			public const int material_grey_900 = 2131034189;
 			
 			// aapt resource value: 0x7f050000
 			public const int my_blue = 2131034112;
@@ -1120,65 +1120,110 @@ namespace Com.Changmin.HI5Controller
 			// aapt resource value: 0x7f050008
 			public const int primary_dark = 2131034120;
 			
-			// aapt resource value: 0x7f05003f
-			public const int primary_dark_material_dark = 2131034175;
-			
-			// aapt resource value: 0x7f050040
-			public const int primary_dark_material_light = 2131034176;
-			
-			// aapt resource value: 0x7f050041
-			public const int primary_material_dark = 2131034177;
-			
-			// aapt resource value: 0x7f050042
-			public const int primary_material_light = 2131034178;
-			
-			// aapt resource value: 0x7f050043
-			public const int primary_text_default_material_dark = 2131034179;
-			
-			// aapt resource value: 0x7f050044
-			public const int primary_text_default_material_light = 2131034180;
-			
-			// aapt resource value: 0x7f050045
-			public const int primary_text_disabled_material_dark = 2131034181;
-			
-			// aapt resource value: 0x7f050046
-			public const int primary_text_disabled_material_light = 2131034182;
-			
-			// aapt resource value: 0x7f050047
-			public const int ripple_material_dark = 2131034183;
-			
-			// aapt resource value: 0x7f050048
-			public const int ripple_material_light = 2131034184;
-			
-			// aapt resource value: 0x7f050049
-			public const int secondary_text_default_material_dark = 2131034185;
-			
-			// aapt resource value: 0x7f05004a
-			public const int secondary_text_default_material_light = 2131034186;
-			
-			// aapt resource value: 0x7f05004b
-			public const int secondary_text_disabled_material_dark = 2131034187;
-			
-			// aapt resource value: 0x7f05004c
-			public const int secondary_text_disabled_material_light = 2131034188;
-			
-			// aapt resource value: 0x7f05004d
-			public const int switch_thumb_disabled_material_dark = 2131034189;
-			
 			// aapt resource value: 0x7f05004e
-			public const int switch_thumb_disabled_material_light = 2131034190;
-			
-			// aapt resource value: 0x7f05005b
-			public const int switch_thumb_material_dark = 2131034203;
-			
-			// aapt resource value: 0x7f05005c
-			public const int switch_thumb_material_light = 2131034204;
+			public const int primary_dark_material_dark = 2131034190;
 			
 			// aapt resource value: 0x7f05004f
-			public const int switch_thumb_normal_material_dark = 2131034191;
+			public const int primary_dark_material_light = 2131034191;
 			
 			// aapt resource value: 0x7f050050
-			public const int switch_thumb_normal_material_light = 2131034192;
+			public const int primary_material_dark = 2131034192;
+			
+			// aapt resource value: 0x7f050051
+			public const int primary_material_light = 2131034193;
+			
+			// aapt resource value: 0x7f050052
+			public const int primary_text_default_material_dark = 2131034194;
+			
+			// aapt resource value: 0x7f050053
+			public const int primary_text_default_material_light = 2131034195;
+			
+			// aapt resource value: 0x7f050054
+			public const int primary_text_disabled_material_dark = 2131034196;
+			
+			// aapt resource value: 0x7f050055
+			public const int primary_text_disabled_material_light = 2131034197;
+			
+			// aapt resource value: 0x7f050056
+			public const int ripple_material_dark = 2131034198;
+			
+			// aapt resource value: 0x7f050057
+			public const int ripple_material_light = 2131034199;
+			
+			// aapt resource value: 0x7f050058
+			public const int secondary_text_default_material_dark = 2131034200;
+			
+			// aapt resource value: 0x7f050059
+			public const int secondary_text_default_material_light = 2131034201;
+			
+			// aapt resource value: 0x7f05005a
+			public const int secondary_text_disabled_material_dark = 2131034202;
+			
+			// aapt resource value: 0x7f05005b
+			public const int secondary_text_disabled_material_light = 2131034203;
+			
+			// aapt resource value: 0x7f05005c
+			public const int switch_thumb_disabled_material_dark = 2131034204;
+			
+			// aapt resource value: 0x7f05005d
+			public const int switch_thumb_disabled_material_light = 2131034205;
+			
+			// aapt resource value: 0x7f05006a
+			public const int switch_thumb_material_dark = 2131034218;
+			
+			// aapt resource value: 0x7f05006b
+			public const int switch_thumb_material_light = 2131034219;
+			
+			// aapt resource value: 0x7f05005e
+			public const int switch_thumb_normal_material_dark = 2131034206;
+			
+			// aapt resource value: 0x7f05005f
+			public const int switch_thumb_normal_material_light = 2131034207;
+			
+			// aapt resource value: 0x7f05000e
+			public const int tab1_actionbar_background = 2131034126;
+			
+			// aapt resource value: 0x7f05000f
+			public const int tab1_tablayout_background = 2131034127;
+			
+			// aapt resource value: 0x7f050010
+			public const int tab1_textview_background = 2131034128;
+			
+			// aapt resource value: 0x7f050011
+			public const int tab2_actionbar_background = 2131034129;
+			
+			// aapt resource value: 0x7f050012
+			public const int tab2_tablayout_background = 2131034130;
+			
+			// aapt resource value: 0x7f050013
+			public const int tab2_textview_background = 2131034131;
+			
+			// aapt resource value: 0x7f050014
+			public const int tab3_actionbar_background = 2131034132;
+			
+			// aapt resource value: 0x7f050015
+			public const int tab3_tablayout_background = 2131034133;
+			
+			// aapt resource value: 0x7f050016
+			public const int tab3_textview_background = 2131034134;
+			
+			// aapt resource value: 0x7f050017
+			public const int tab4_actionbar_background = 2131034135;
+			
+			// aapt resource value: 0x7f050018
+			public const int tab4_tablayout_background = 2131034136;
+			
+			// aapt resource value: 0x7f050019
+			public const int tab4_textview_background = 2131034137;
+			
+			// aapt resource value: 0x7f05001a
+			public const int tab5_actionbar_background = 2131034138;
+			
+			// aapt resource value: 0x7f05001b
+			public const int tab5_tablayout_background = 2131034139;
+			
+			// aapt resource value: 0x7f05001c
+			public const int tab5_textview_background = 2131034140;
 			
 			// aapt resource value: 0x7f05000a
 			public const int text_primary = 2131034122;
@@ -1810,37 +1855,43 @@ namespace Com.Changmin.HI5Controller
 			public const int ic_mode_edit_white = 2130837602;
 			
 			// aapt resource value: 0x7f020063
-			public const int ic_sd_storage = 2130837603;
+			public const int ic_refresh = 2130837603;
 			
 			// aapt resource value: 0x7f020064
-			public const int ic_settings = 2130837604;
+			public const int ic_refresh_white = 2130837604;
 			
 			// aapt resource value: 0x7f020065
-			public const int ic_settings_applications = 2130837605;
+			public const int ic_sd_storage = 2130837605;
 			
 			// aapt resource value: 0x7f020066
-			public const int ic_settings_white = 2130837606;
+			public const int ic_settings = 2130837606;
 			
 			// aapt resource value: 0x7f020067
-			public const int ic_storage = 2130837607;
+			public const int ic_settings_applications = 2130837607;
 			
 			// aapt resource value: 0x7f020068
-			public const int ic_view_list = 2130837608;
+			public const int ic_settings_white = 2130837608;
 			
 			// aapt resource value: 0x7f020069
-			public const int listviewrow_bg = 2130837609;
-			
-			// aapt resource value: 0x7f02006d
-			public const int notification_template_icon_bg = 2130837613;
+			public const int ic_storage = 2130837609;
 			
 			// aapt resource value: 0x7f02006a
-			public const int nvheader_bg = 2130837610;
+			public const int ic_view_list = 2130837610;
 			
 			// aapt resource value: 0x7f02006b
-			public const int ProgressBarStyle = 2130837611;
+			public const int listviewrow_bg = 2130837611;
+			
+			// aapt resource value: 0x7f02006f
+			public const int notification_template_icon_bg = 2130837615;
 			
 			// aapt resource value: 0x7f02006c
-			public const int robot_industrial = 2130837612;
+			public const int nvheader_bg = 2130837612;
+			
+			// aapt resource value: 0x7f02006d
+			public const int ProgressBarStyle = 2130837613;
+			
+			// aapt resource value: 0x7f02006e
+			public const int robot_industrial = 2130837614;
 			
 			static Drawable()
 			{
@@ -1915,12 +1966,6 @@ namespace Com.Changmin.HI5Controller
 			// aapt resource value: 0x7f0b0011
 			public const int bottom = 2131427345;
 			
-			// aapt resource value: 0x7f0b007c
-			public const int button1 = 2131427452;
-			
-			// aapt resource value: 0x7f0b007d
-			public const int button2 = 2131427453;
-			
 			// aapt resource value: 0x7f0b004b
 			public const int buttonPanel = 2131427403;
 			
@@ -1972,8 +2017,8 @@ namespace Com.Changmin.HI5Controller
 			// aapt resource value: 0x7f0b0066
 			public const int drawerHeader = 2131427430;
 			
-			// aapt resource value: 0x7f0b0080
-			public const int drawer_layout = 2131427456;
+			// aapt resource value: 0x7f0b007e
+			public const int drawer_layout = 2131427454;
 			
 			// aapt resource value: 0x7f0b0057
 			public const int edit_query = 2131427415;
@@ -1990,29 +2035,29 @@ namespace Com.Changmin.HI5Controller
 			// aapt resource value: 0x7f0b000b
 			public const int enterAlwaysCollapsed = 2131427339;
 			
-			// aapt resource value: 0x7f0b0093
-			public const int etCommandOffset = 2131427475;
+			// aapt resource value: 0x7f0b0091
+			public const int etCommandOffset = 2131427473;
 			
 			// aapt resource value: 0x7f0b007b
 			public const int etDirPath = 2131427451;
 			
-			// aapt resource value: 0x7f0b008f
-			public const int etFixedTipClearance = 2131427471;
-			
 			// aapt resource value: 0x7f0b008d
-			public const int etMoveTipClearance = 2131427469;
-			
-			// aapt resource value: 0x7f0b0086
-			public const int etOutputData = 2131427462;
-			
-			// aapt resource value: 0x7f0b0089
-			public const int etOutputType = 2131427465;
-			
-			// aapt resource value: 0x7f0b0091
-			public const int etPannelThickness = 2131427473;
+			public const int etFixedTipClearance = 2131427469;
 			
 			// aapt resource value: 0x7f0b008b
-			public const int etSqueezeForce = 2131427467;
+			public const int etMoveTipClearance = 2131427467;
+			
+			// aapt resource value: 0x7f0b0084
+			public const int etOutputData = 2131427460;
+			
+			// aapt resource value: 0x7f0b0087
+			public const int etOutputType = 2131427463;
+			
+			// aapt resource value: 0x7f0b008f
+			public const int etPannelThickness = 2131427471;
+			
+			// aapt resource value: 0x7f0b0089
+			public const int etSqueezeForce = 2131427465;
 			
 			// aapt resource value: 0x7f0b000c
 			public const int exitUntilCollapsed = 2131427340;
@@ -2026,11 +2071,11 @@ namespace Com.Changmin.HI5Controller
 			// aapt resource value: 0x7f0b006b
 			public const int fab = 2131427435;
 			
-			// aapt resource value: 0x7f0b00a1
-			public const int fab_done = 2131427489;
+			// aapt resource value: 0x7f0b009f
+			public const int fab_done = 2131427487;
 			
-			// aapt resource value: 0x7f0b009e
-			public const int fab_wcd = 2131427486;
+			// aapt resource value: 0x7f0b009c
+			public const int fab_wcd = 2131427484;
 			
 			// aapt resource value: 0x7f0b006a
 			public const int file_list_fragment = 2131427434;
@@ -2092,8 +2137,8 @@ namespace Com.Changmin.HI5Controller
 			// aapt resource value: 0x7f0b006f
 			public const int media_actions = 2131427439;
 			
-			// aapt resource value: 0x7f0b00a6
-			public const int menu_settings = 2131427494;
+			// aapt resource value: 0x7f0b00a4
+			public const int menu_settings = 2131427492;
 			
 			// aapt resource value: 0x7f0b0031
 			public const int middle = 2131427377;
@@ -2104,23 +2149,23 @@ namespace Com.Changmin.HI5Controller
 			// aapt resource value: 0x7f0b002b
 			public const int multiply = 2131427371;
 			
-			// aapt resource value: 0x7f0b009d
-			public const int myListView = 2131427485;
+			// aapt resource value: 0x7f0b009b
+			public const int myListView = 2131427483;
+			
+			// aapt resource value: 0x7f0b00a1
+			public const int nav_robot = 2131427489;
+			
+			// aapt resource value: 0x7f0b0081
+			public const int nav_view = 2131427457;
+			
+			// aapt resource value: 0x7f0b00a0
+			public const int nav_wcd = 2131427488;
 			
 			// aapt resource value: 0x7f0b00a3
-			public const int nav_robot = 2131427491;
-			
-			// aapt resource value: 0x7f0b0083
-			public const int nav_view = 2131427459;
+			public const int nav_workpathconfig = 2131427491;
 			
 			// aapt resource value: 0x7f0b00a2
-			public const int nav_wcd = 2131427490;
-			
-			// aapt resource value: 0x7f0b00a5
-			public const int nav_workpathconfig = 2131427493;
-			
-			// aapt resource value: 0x7f0b00a4
-			public const int navigation_subheader = 2131427492;
+			public const int navigation_subheader = 2131427490;
 			
 			// aapt resource value: 0x7f0b0035
 			public const int never = 2131427381;
@@ -2131,8 +2176,8 @@ namespace Com.Changmin.HI5Controller
 			// aapt resource value: 0x7f0b0020
 			public const int normal = 2131427360;
 			
-			// aapt resource value: 0x7f0b0082
-			public const int pager = 2131427458;
+			// aapt resource value: 0x7f0b0080
+			public const int pager = 2131427456;
 			
 			// aapt resource value: 0x7f0b000f
 			public const int parallax = 2131427343;
@@ -2140,8 +2185,8 @@ namespace Com.Changmin.HI5Controller
 			// aapt resource value: 0x7f0b0042
 			public const int parentPanel = 2131427394;
 			
-			// aapt resource value: 0x7f0b009f
-			public const int pathTextView = 2131427487;
+			// aapt resource value: 0x7f0b009d
+			public const int pathTextView = 2131427485;
 			
 			// aapt resource value: 0x7f0b0010
 			public const int pin = 2131427344;
@@ -2158,14 +2203,14 @@ namespace Com.Changmin.HI5Controller
 			// aapt resource value: 0x7f0b0018
 			public const int right = 2131427352;
 			
-			// aapt resource value: 0x7f0b0087
-			public const int sampleSeekBar = 2131427463;
+			// aapt resource value: 0x7f0b0085
+			public const int sampleSeekBar = 2131427461;
 			
-			// aapt resource value: 0x7f0b0094
-			public const int sbBegin = 2131427476;
+			// aapt resource value: 0x7f0b0092
+			public const int sbBegin = 2131427474;
 			
-			// aapt resource value: 0x7f0b0095
-			public const int sbEnd = 2131427477;
+			// aapt resource value: 0x7f0b0093
+			public const int sbEnd = 2131427475;
 			
 			// aapt resource value: 0x7f0b002c
 			public const int screen = 2131427372;
@@ -2176,8 +2221,8 @@ namespace Com.Changmin.HI5Controller
 			// aapt resource value: 0x7f0b0047
 			public const int scrollView = 2131427399;
 			
-			// aapt resource value: 0x7f0b0084
-			public const int scrollView1 = 2131427460;
+			// aapt resource value: 0x7f0b0082
+			public const int scrollView1 = 2131427458;
 			
 			// aapt resource value: 0x7f0b0022
 			public const int scrollable = 2131427362;
@@ -2248,8 +2293,8 @@ namespace Com.Changmin.HI5Controller
 			// aapt resource value: 0x7f0b0019
 			public const int start = 2131427353;
 			
-			// aapt resource value: 0x7f0b0085
-			public const int statusText = 2131427461;
+			// aapt resource value: 0x7f0b0083
+			public const int statusText = 2131427459;
 			
 			// aapt resource value: 0x7f0b006e
 			public const int status_bar_latest_event_content = 2131427438;
@@ -2260,8 +2305,8 @@ namespace Com.Changmin.HI5Controller
 			// aapt resource value: 0x7f0b0024
 			public const int tabMode = 2131427364;
 			
-			// aapt resource value: 0x7f0b0081
-			public const int tab_layout = 2131427457;
+			// aapt resource value: 0x7f0b007f
+			public const int tab_layout = 2131427455;
 			
 			// aapt resource value: 0x7f0b0076
 			public const int text = 2131427446;
@@ -2272,29 +2317,29 @@ namespace Com.Changmin.HI5Controller
 			// aapt resource value: 0x7f0b007a
 			public const int textInputLayout1 = 2131427450;
 			
+			// aapt resource value: 0x7f0b0086
+			public const int textInputLayout2 = 2131427462;
+			
 			// aapt resource value: 0x7f0b0088
-			public const int textInputLayout2 = 2131427464;
+			public const int textInputLayout3 = 2131427464;
 			
 			// aapt resource value: 0x7f0b008a
-			public const int textInputLayout3 = 2131427466;
+			public const int textInputLayout4 = 2131427466;
 			
 			// aapt resource value: 0x7f0b008c
-			public const int textInputLayout4 = 2131427468;
+			public const int textInputLayout5 = 2131427468;
 			
 			// aapt resource value: 0x7f0b008e
-			public const int textInputLayout5 = 2131427470;
+			public const int textInputLayout6 = 2131427470;
 			
 			// aapt resource value: 0x7f0b0090
-			public const int textInputLayout6 = 2131427472;
-			
-			// aapt resource value: 0x7f0b0092
-			public const int textInputLayout7 = 2131427474;
+			public const int textInputLayout7 = 2131427472;
 			
 			// aapt resource value: 0x7f0b0048
 			public const int textSpacerNoButtons = 2131427400;
 			
-			// aapt resource value: 0x7f0b007e
-			public const int textView = 2131427454;
+			// aapt resource value: 0x7f0b007c
+			public const int textView = 2131427452;
 			
 			// aapt resource value: 0x7f0b0067
 			public const int textView1 = 2131427431;
@@ -2308,8 +2353,8 @@ namespace Com.Changmin.HI5Controller
 			// aapt resource value: 0x7f0b0044
 			public const int title_template = 2131427396;
 			
-			// aapt resource value: 0x7f0b007f
-			public const int toolbar = 2131427455;
+			// aapt resource value: 0x7f0b007d
+			public const int toolbar = 2131427453;
 			
 			// aapt resource value: 0x7f0b001a
 			public const int top = 2131427354;
@@ -2317,26 +2362,26 @@ namespace Com.Changmin.HI5Controller
 			// aapt resource value: 0x7f0b0043
 			public const int topPanel = 2131427395;
 			
-			// aapt resource value: 0x7f0b0098
-			public const int tvCommandOffset = 2131427480;
-			
-			// aapt resource value: 0x7f0b009c
-			public const int tvFixedTipClearance = 2131427484;
-			
-			// aapt resource value: 0x7f0b0099
-			public const int tvMoveTipClearance = 2131427481;
-			
 			// aapt resource value: 0x7f0b0096
-			public const int tvOutputData = 2131427478;
+			public const int tvCommandOffset = 2131427478;
 			
 			// aapt resource value: 0x7f0b009a
-			public const int tvOutputType = 2131427482;
+			public const int tvFixedTipClearance = 2131427482;
 			
 			// aapt resource value: 0x7f0b0097
-			public const int tvPannelThickness = 2131427479;
+			public const int tvMoveTipClearance = 2131427479;
 			
-			// aapt resource value: 0x7f0b009b
-			public const int tvSqueezeForce = 2131427483;
+			// aapt resource value: 0x7f0b0094
+			public const int tvOutputData = 2131427476;
+			
+			// aapt resource value: 0x7f0b0098
+			public const int tvOutputType = 2131427480;
+			
+			// aapt resource value: 0x7f0b0095
+			public const int tvPannelThickness = 2131427477;
+			
+			// aapt resource value: 0x7f0b0099
+			public const int tvSqueezeForce = 2131427481;
 			
 			// aapt resource value: 0x7f0b0009
 			public const int up = 2131427337;
@@ -2347,8 +2392,8 @@ namespace Com.Changmin.HI5Controller
 			// aapt resource value: 0x7f0b0000
 			public const int view_offset_helper = 2131427328;
 			
-			// aapt resource value: 0x7f0b00a0
-			public const int wcdTextView = 2131427488;
+			// aapt resource value: 0x7f0b009e
+			public const int wcdTextView = 2131427486;
 			
 			// aapt resource value: 0x7f0b0036
 			public const int withText = 2131427382;

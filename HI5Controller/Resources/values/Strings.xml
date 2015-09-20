@@ -25,6 +25,6 @@
   <string name="Save">저장</string>
   <string name="wcd_tab1_text">작업 경로</string>
   <string name="wcd_tab2_text">용접 조건</string>
-  <string name="wcd_tab3_text">Robot.swd</string>
+  <string name="wcd_tab3_text">swd</string>
   <string name="wcd_tab4_text">경로 선택</string>
 </resources>

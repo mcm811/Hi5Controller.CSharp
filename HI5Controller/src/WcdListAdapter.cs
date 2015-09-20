@@ -19,12 +19,13 @@ namespace Com.Changmin.HI5Controller.src
 		private Context mContent;
 
 		private readonly Color defaultBackgroundColor = Color.Transparent;
-		private readonly Color selectedBackGroundColor = Color.LightGray;
+		private Color selectedBackGroundColor = Color.LightGray;
 
 		public WcdListAdapter(Context context, List<WeldConditionData> items)
 		{
 			mItems = items;
 			mContent = context;
+			selectedBackGroundColor = Color.ParseColor("#F48FB1");
 		}
 
 		public override WeldConditionData this[int position]

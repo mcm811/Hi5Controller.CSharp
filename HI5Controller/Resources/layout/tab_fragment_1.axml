@@ -26,26 +26,14 @@
                 android:layout_marginRight="20dp"
                 android:id="@+id/etDirPath" />
         </android.support.design.widget.TextInputLayout>
-        <Button
-            android:text="@string/WcdButton"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/button1"
+        <fragment
+            class="com.xamarin.recipes.filepicker.FileListFragment"
+            android:id="@+id/file_list_fragment"
             android:layout_marginLeft="20dp"
             android:layout_marginRight="20dp"
-            android:gravity="left|center_vertical"
-            android:textSize="20dp"
-            android:drawableLeft="@drawable/button_wcdlist" />
-        <Button
-            android:text="@string/RobotButton"
+            android:layout_weight="1"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/button2"
-            android:layout_marginLeft="20dp"
-            android:layout_marginRight="20dp"
-            android:gravity="left|center_vertical"
-            android:textSize="20dp"
-            android:drawableLeft="@drawable/button_robot" />
+            android:layout_height="match_parent" />
     </LinearLayout>
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/fab"
@@ -55,5 +43,5 @@
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|right"
         android:layout_margin="16dp"
-        android:src="@drawable/ic_settings_white" />
+        android:src="@drawable/ic_done_white" />
 </FrameLayout>

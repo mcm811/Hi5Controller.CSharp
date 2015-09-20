@@ -16,7 +16,7 @@
             android:paddingBottom="2dp"
             android:paddingTop="2dp"
             android:paddingLeft="5dp"
-            android:background="@color/title_text_background">
+            android:background="@color/tab2_textview_background">
             <TextView
                 android:text="@string/OutputData"
                 android:hint="@string/OutputData"

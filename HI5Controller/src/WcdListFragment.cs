@@ -20,6 +20,7 @@ using Java.Lang;
 using System.Threading.Tasks;
 using Android.Graphics;
 using Android.Text;
+using Android.Views.InputMethods;
 
 namespace Com.Changmin.HI5Controller.src
 {
@@ -39,7 +40,7 @@ namespace Com.Changmin.HI5Controller.src
 
 		private const float alphaOff = 0.2f;
 		private readonly Color defaultBackgroundColor = Color.Transparent;
-		private readonly Color selectedBackGroundColor = Color.LightGray;
+		private Color selectedBackGroundColor = Color.LightGray;
 
 		private void LogDebug(string msg)
 		{
@@ -74,11 +75,13 @@ namespace Com.Changmin.HI5Controller.src
 			set
 			{
 				try {
-					using (var prefs = Application.Context.GetSharedPreferences(Context.PackageName, FileCreationMode.Private)) {
-						var prefEditor = prefs.Edit();
-						prefEditor.PutString("dirpath_file", value);
-						prefEditor.Commit();
-						ToastShow("경로 저장: " + value);
+					if (PrefPath != value) {
+						using (var prefs = Application.Context.GetSharedPreferences(Context.PackageName, FileCreationMode.Private)) {
+							var prefEditor = prefs.Edit();
+							prefEditor.PutString("dirpath_file", value);
+							prefEditor.Commit();
+							ToastShow("경로 저장: " + value);
+						}
 					}
 				} catch {
 
@@ -156,9 +159,8 @@ namespace Com.Changmin.HI5Controller.src
 			return sb.ToString();
 		}
 
-		private List<WeldConditionData> ReadFile(string fileName, out List<WeldConditionData> items)
+		private List<WeldConditionData> ReadFile(string fileName, List<WeldConditionData> items)
 		{
-			items = new List<WeldConditionData>();
 			try {
 				//using (StreamReader sr = new StreamReader(Assets.Open(fileName))) {
 				using (StreamReader sr = new StreamReader(fileName)) {
@@ -239,27 +241,17 @@ namespace Com.Changmin.HI5Controller.src
 
 			dirPath = PrefPath;
 			robotPath = System.IO.Path.Combine(dirPath, "ROBOT.SWD");
-			ReadFile(robotPath, out mItems);
+			mItems = new List<WeldConditionData>();
+			//ReadFile(robotPath, mItems);
 			adapter = new WcdListAdapter(Context, mItems);
-		}
-
-		public override void OnResume()
-		{
-			LogDebug("OnResume");
-			if (dirPath != PrefPath) {
-				LogDebug("OnResume: " + dirPath + " : " + PrefPath);
-				dirPath = PrefPath;
-				robotPath = System.IO.Path.Combine(dirPath, "ROBOT.SWD");
-				ReadFile(robotPath, out mItems);
-				adapter.NotifyDataSetChanged();
-			}
-			base.OnResume();
 		}
 
 		public override View OnCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
 		{
 			LogDebug("OnCreateView");
 			view = inflater.Inflate(Resource.Layout.WcdFragment, container, false);
+
+			selectedBackGroundColor = Context.Resources.GetColor(Resource.Color.tab2_textview_background);
 
 			mListView = view.FindViewById<ListView>(Resource.Id.myListView);
 			mListView.FastScrollEnabled = true;
@@ -287,11 +279,23 @@ namespace Com.Changmin.HI5Controller.src
 			return view;
 		}
 
+		public override void OnResume()
+		{
+			LogDebug("OnResume: " + dirPath);
+			if (dirPath != PrefPath || mItems.Count == 0) {
+				LogDebug("OnResume: " + dirPath + " : " + PrefPath);
+				dirPath = PrefPath;
+				robotPath = System.IO.Path.Combine(dirPath, "ROBOT.SWD");
+				mItems.Clear();
+				ReadFile(robotPath, mItems);
+				adapter.NotifyDataSetChanged();
+			}
+			base.OnResume();
+		}
+
 		public override void OnPause()
 		{
-			Log.Debug(Context.PackageName, "OnPause");
-			//if (PrefPath != dirPath)
-			//	PrefPath = dirPath;
+			LogDebug("OnPause");
 			base.OnPause();
 		}
 
@@ -339,7 +343,10 @@ namespace Com.Changmin.HI5Controller.src
 			etList.Add(editFieldView.FindViewById<EditText>(Resource.Id.etPannelThickness));
 			etList.Add(editFieldView.FindViewById<EditText>(Resource.Id.etCommandOffset));
 
-			int[] etMax = { 1000, 100, 350, 500, 500, 500, 500, 1000, 1000 };	// 임계치
+			int[] etMax = { 1000, 100, 350, 500, 500, 500, 500, 1000, 1000 };   // 임계치
+
+			InputMethodManager imm = (InputMethodManager)Context.GetSystemService(Context.InputMethodService);
+
 			for (int i = 0; i < etList.Count; i++) {
 				EditText et = etList[i];
 				//et.SetTextSize(ComplexUnitType.Sp, 12);
@@ -368,6 +375,18 @@ namespace Com.Changmin.HI5Controller.src
 								et.Text = n.ToString();
 							}
 						}
+					}
+				};
+				et.KeyPress += (object sender1, View.KeyEventArgs e1) =>
+				{
+					// KeyEventArgs.Handled
+					// 라우트된 이벤트를 처리된 것으로 표시하려면 true이고,
+					// 라우트된 이벤트를 처리되지 않은 것으로 두어 이벤트가 추가로 라우트되도록 허용하려면 false입니다.
+					// 기본값은 false입니다. 
+					e1.Handled = false;
+					if (e1.KeyCode == Keycode.Enter) {
+						imm.HideSoftInputFromWindow(et.WindowToken, 0);
+						e1.Handled = true;
 					}
 				};
 			}

@@ -72,7 +72,7 @@ namespace com.xamarin.recipes.filepicker
 				else
 					viewHolder.Update(Path.Combine(fileSystemEntry.FullName, ".."), Resource.Drawable.ic_file_upload);
 			} else {
-				viewHolder.Update(fileSystemEntry.Name, fileSystemEntry.IsDirectory() ? Resource.Drawable.ic_folder_open : Resource.Drawable.ic_insert_drive_file);
+				viewHolder.Update(fileSystemEntry.Name, fileSystemEntry.IsDirectory() ? Resource.Drawable.ic_folder : Resource.Drawable.ic_insert_drive_file);
 			}
 
 			return row;

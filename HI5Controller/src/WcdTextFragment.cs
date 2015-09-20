@@ -66,11 +66,13 @@ namespace Com.Changmin.HI5Controller.src
 			set
 			{
 				try {
-					using (var prefs = Application.Context.GetSharedPreferences(Context.PackageName, FileCreationMode.Private)) {
-						var prefEditor = prefs.Edit();
-						prefEditor.PutString("dirpath_file", value);
-						prefEditor.Commit();
-						ToastShow("경로 저장: " + value);
+					if (PrefPath != value) {
+						using (var prefs = Application.Context.GetSharedPreferences(Context.PackageName, FileCreationMode.Private)) {
+							var prefEditor = prefs.Edit();
+							prefEditor.PutString("dirpath_file", value);
+							prefEditor.Commit();
+							ToastShow("경로 저장: " + value);
+						}
 					}
 				} catch {
 

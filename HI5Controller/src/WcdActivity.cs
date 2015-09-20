@@ -57,11 +57,13 @@ namespace Com.Changmin.HI5Controller.src
 			set
 			{
 				try {
-					using (var prefs = Application.Context.GetSharedPreferences(Application.PackageName, FileCreationMode.Private)) {
-						var prefEditor = prefs.Edit();
-						prefEditor.PutString("dirpath_file", value);
-						prefEditor.Commit();
-						ToastShow("경로 저장: " + value);
+					if (PrefPath != value) {
+						using (var prefs = Application.Context.GetSharedPreferences(Application.PackageName, FileCreationMode.Private)) {
+							var prefEditor = prefs.Edit();
+							prefEditor.PutString("dirpath_file", value);
+							prefEditor.Commit();
+							ToastShow("경로 저장: " + value);
+						}
 					}
 				} catch {
 
@@ -132,7 +134,7 @@ namespace Com.Changmin.HI5Controller.src
 			//NaviViewHeader();
 		}
 
-		private void BaseView()
+		private void MainView()
 		{
 			//// 기본 화면 구성
 			//etDirPath = FindViewById<EditText>(Resource.Id.etDirPath);
@@ -181,67 +183,68 @@ namespace Com.Changmin.HI5Controller.src
 		// TabListener that replaces a Fragment when a tab is clicked.
 		private class TabLayoutOnTabSelectedListener : Java.Lang.Object, TabLayout.IOnTabSelectedListener
 		{
-			ViewPager vp;
-			ActionBar ab;
-			TabLayout tl;
+			Context mContext;
+			ViewPager mViewPager;
+			ActionBar mActionBar;
+			TabLayout mTabLayout;
 
-			public TabLayoutOnTabSelectedListener(ViewPager v, ActionBar a, TabLayout t)
+			public TabLayoutOnTabSelectedListener(Context context, ViewPager viewPager, ActionBar actionBar, TabLayout tabLayout)
 			{
-				vp = v;
-				ab = a;
-				tl = t;
+				mContext = context;
+				mViewPager = viewPager;
+				mActionBar = actionBar;
+				mTabLayout = tabLayout;
 			}
 
 			public void OnTabReselected(TabLayout.Tab tab)
-			{
-			}
+			{ }
 
 			public void OnTabSelected(TabLayout.Tab tab)
 			{
-				vp.SetCurrentItem(tab.Position, true);
+				mViewPager.SetCurrentItem(tab.Position, true);
 				switch (tab.Position) {
 					case 0:
-					ab.SetBackgroundDrawable(new ColorDrawable(Color.ParseColor("#F44336")));
-					tl.Background = new ColorDrawable(Color.ParseColor("#E53935"));
+					mActionBar.SetBackgroundDrawable(new ColorDrawable(mContext.Resources.GetColor(Resource.Color.tab1_actionbar_background)));
+					mTabLayout.Background = new ColorDrawable(mContext.Resources.GetColor(Resource.Color.tab1_tablayout_background));
 					break;
 					case 1:
-					ab.SetBackgroundDrawable(new ColorDrawable(Color.ParseColor("#E91E63")));
-					tl.Background = new ColorDrawable(Color.ParseColor("#D81B60"));
+					mActionBar.SetBackgroundDrawable(new ColorDrawable(mContext.Resources.GetColor(Resource.Color.tab2_actionbar_background)));
+					mTabLayout.Background = new ColorDrawable(mContext.Resources.GetColor(Resource.Color.tab2_tablayout_background));
+					//var fm = ((PagerAdapter)mViewPager.Adapter)[1];
 					break;
 					case 2:
-					ab.SetBackgroundDrawable(new ColorDrawable(Color.ParseColor("#9C27B0")));
-					tl.Background = new ColorDrawable(Color.ParseColor("#8E24AA"));
+					mActionBar.SetBackgroundDrawable(new ColorDrawable(mContext.Resources.GetColor(Resource.Color.tab3_actionbar_background)));
+					mTabLayout.Background = new ColorDrawable(mContext.Resources.GetColor(Resource.Color.tab3_tablayout_background));
 					break;
 					case 3:
-					ab.SetBackgroundDrawable(new ColorDrawable(Color.ParseColor("#673AB7")));
-					tl.Background = new ColorDrawable(Color.ParseColor("#5E35B1"));
+					mActionBar.SetBackgroundDrawable(new ColorDrawable(mContext.Resources.GetColor(Resource.Color.tab4_actionbar_background)));
+					mTabLayout.Background = new ColorDrawable(mContext.Resources.GetColor(Resource.Color.tab4_tablayout_background));
 					break;
 					case 4:
-					ab.SetBackgroundDrawable(new ColorDrawable(Color.ParseColor("#3F51B5")));
-					tl.Background = new ColorDrawable(Color.ParseColor("#3949AB"));
+					mActionBar.SetBackgroundDrawable(new ColorDrawable(mContext.Resources.GetColor(Resource.Color.tab5_actionbar_background)));
+					mTabLayout.Background = new ColorDrawable(mContext.Resources.GetColor(Resource.Color.tab5_tablayout_background));
 					break;
 				}
             }
 
 			public void OnTabUnselected(TabLayout.Tab tab)
-			{
-			}
+			{ }
 		}
 
 		private void TabLayoutViewPager()
 		{
 			tabLayout = FindViewById<TabLayout>(Resource.Id.tab_layout);
+			tabLayout.TabGravity = TabLayout.GravityFill;
 			tabLayout.AddTab(tabLayout.NewTab().SetText(Resources.GetString(Resource.String.wcd_tab1_text)));
 			tabLayout.AddTab(tabLayout.NewTab().SetText(Resources.GetString(Resource.String.wcd_tab2_text)));
 			tabLayout.AddTab(tabLayout.NewTab().SetText(Resources.GetString(Resource.String.wcd_tab3_text)));
 			//tabLayout.AddTab(tabLayout.NewTab().SetText(Resources.GetString(Resource.String.wcd_tab4_text)));
-			tabLayout.TabGravity = TabLayout.GravityFill;
 
 			viewPager = FindViewById<ViewPager>(Resource.Id.pager);
 			pagerAdapter = new PagerAdapter(SupportFragmentManager, tabLayout.TabCount);
 			viewPager.Adapter = pagerAdapter;
 			viewPager.AddOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
-			tabLayout.SetOnTabSelectedListener(new TabLayoutOnTabSelectedListener(viewPager, actionBar, tabLayout));
+			tabLayout.SetOnTabSelectedListener(new TabLayoutOnTabSelectedListener(this, viewPager, actionBar, tabLayout));
 			//viewPager.SetCurrentItem(1, true);
 		}
 
@@ -263,11 +266,11 @@ namespace Com.Changmin.HI5Controller.src
 
 			TabLayoutViewPager();
 			NaviView();
-			BaseView();
+			MainView();
 
-			actionBar.SetBackgroundDrawable(new ColorDrawable(Color.ParseColor("#F44336")));
-			tabLayout.Background = new ColorDrawable(Color.ParseColor("#E53935"));
-        }
+			actionBar.SetBackgroundDrawable(new ColorDrawable(Resources.GetColor(Resource.Color.tab1_actionbar_background)));
+			tabLayout.Background = new ColorDrawable(Resources.GetColor(Resource.Color.tab1_tablayout_background));
+		}
 
 		protected override void OnActivityResult(int requestCode, [GeneratedEnum] Result resultCode, Intent data)
 		{
@@ -279,8 +282,6 @@ namespace Com.Changmin.HI5Controller.src
 
 		protected override void OnStop()
 		{
-			//if (PrefPath != etDirPath.Text)
-			//	PrefPath = etDirPath.Text;
 			base.OnStop();
 		}
 
@@ -294,17 +295,14 @@ namespace Com.Changmin.HI5Controller.src
 		public override bool OnOptionsItemSelected(IMenuItem item)
 		{
 			// 액션바 옵션 선택시 처리
-			//ToastShow(item.ItemId.ToString());
-			//Log.Debug("NavigatoinView", item.ItemId.ToString());
-
 			switch (item.ItemId) {
 				case Android.Resource.Id.Home:
 				drawerLayout.OpenDrawer(Android.Support.V4.View.GravityCompat.Start);
 				return true;
 				case Resource.Id.menu_settings:
-				var intent = new Intent(this, typeof(FilePickerActivity));
-				intent.PutExtra("dir_path", PrefPath);
-				StartActivityForResult(intent, 1);
+				//var intent = new Intent(this, typeof(FilePickerActivity));
+				//intent.PutExtra("dir_path", PrefPath);
+				//StartActivityForResult(intent, 1);
 				return true;
 			}
 			return base.OnOptionsItemSelected(item);
