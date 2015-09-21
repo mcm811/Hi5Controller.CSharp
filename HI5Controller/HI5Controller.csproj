@@ -9,7 +9,7 @@
     <ProjectTypeGuids>{EFBA0AD7-5A72-4C68-AF49-83D382785DCF};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Com.Changmin.HI5Controller</RootNamespace>
+    <RootNamespace>Com.Changyoung.HI5Controller</RootNamespace>
     <AssemblyName>HI5Controller</AssemblyName>
     <FileAlignment>512</FileAlignment>
     <AndroidApplication>true</AndroidApplication>
@@ -82,16 +82,17 @@
     <Compile Include="src\bak\FilePickerDialog.cs" />
     <Compile Include="src\FilePicker\Helpers.cs" />
     <Compile Include="src\PagerAdapter.cs" />
-    <Compile Include="src\TabFragment1.cs" />
-    <Compile Include="src\TabFragment2.cs" />
-    <Compile Include="src\TabFragment3.cs" />
+    <Compile Include="src\Splash.cs" />
+    <Compile Include="src\WcdPathTabFragment1.cs" />
+    <Compile Include="src\WeldCountTabFragment.cs" />
+    <Compile Include="src\SpotCnEditTabFragment.cs" />
     <Compile Include="src\WcdActivity.cs" />
     <Compile Include="src\bak\WcdListActivity.cs" />
     <Compile Include="src\WcdListAdapter.cs" />
     <Compile Include="Resources\Resource.Designer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="src\WcdListFragment.cs" />
-    <Compile Include="src\WcdTextFragment.cs" />
+    <Compile Include="src\WcdListTabFragment.cs" />
+    <Compile Include="src\WcdTextTabFragment.cs" />
     <Compile Include="src\bak\WcdTextActivity.cs" />
     <Compile Include="src\WeldConditionData.cs" />
   </ItemGroup>
@@ -124,7 +125,7 @@
     <AndroidResource Include="Resources\layout\drawer_header_layout.axml">
       <SubType>Designer</SubType>
     </AndroidResource>
-    <AndroidResource Include="Resources\layout\tab_fragment_1.axml">
+    <AndroidResource Include="Resources\layout\WcdPathTabFragment.axml">
       <SubType>AndroidResource</SubType>
     </AndroidResource>
     <AndroidResource Include="Resources\layout\tab_fragment_2.axml">
@@ -133,8 +134,8 @@
     <AndroidResource Include="Resources\layout\tab_fragment_3.axml">
       <SubType>AndroidResource</SubType>
     </AndroidResource>
-    <AndroidResource Include="Resources\layout\WcdFragment.axml" />
-    <AndroidResource Include="Resources\layout\WcdTextFragment.axml">
+    <AndroidResource Include="Resources\layout\WcdListTabFragment.axml" />
+    <AndroidResource Include="Resources\layout\WcdTextTabFragment.axml">
       <SubType>AndroidResource</SubType>
     </AndroidResource>
   </ItemGroup>
@@ -322,6 +323,15 @@
   </ItemGroup>
   <ItemGroup>
     <AndroidResource Include="Resources\drawable\ic_refresh_white.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable\splash.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable-land\splash_black.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable\splash_black.png" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\Android\Xamarin.Android.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

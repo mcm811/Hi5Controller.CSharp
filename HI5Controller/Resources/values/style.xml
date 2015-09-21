@@ -19,4 +19,8 @@
     <!-- You can also set colorControlNormal, colorControlActivated
          colorControlHighlight and colorSwitchThumbNormal. -->
   </style>
+  <style name="Theme.Splash" parent="android:Theme">
+    <item name="android:windowBackground">@drawable/splash_black</item>
+    <item name="android:windowNoTitle">true</item>
+  </style>
 </resources>

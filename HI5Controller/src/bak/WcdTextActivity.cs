@@ -74,17 +74,17 @@ namespace Com.Changmin.HI5Controller.src
 				e.MenuItem.SetChecked(true);
 				Intent intent;
 				switch (e.MenuItem.ItemId) {
-					case Resource.Id.nav_workpathconfig:
+					case Resource.Id.nav_wcdpath:
 					intent = new Intent(this, typeof(FilePickerActivity));
 					intent.PutExtra("dir_path", dirPath);
 					StartActivityForResult(intent, 1);
 					break;
-					case Resource.Id.nav_wcd:
+					case Resource.Id.nav_wcdlist:
 					intent = new Intent(this, typeof(WcdListActivity));
 					intent.PutExtra("dir_path", dirPath);
 					StartActivity(intent);
 					break;
-					case Resource.Id.nav_robot:
+					case Resource.Id.nav_robotswd:
 					intent = new Intent(this, typeof(WcdTextActivity));
 					intent.PutExtra("dir_path", dirPath);
 					StartActivity(intent);

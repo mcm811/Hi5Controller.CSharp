@@ -22,13 +22,13 @@ using com.xamarin.recipes.filepicker;
 
 namespace Com.Changmin.HI5Controller.src
 {
-	public class WcdTextFragment : Android.Support.V4.App.Fragment
+	public class WcdTextTabFragment : Android.Support.V4.App.Fragment
 	{
-		private View view;
-		private TextView pathTv;
-		private TextView wcdTv;
+		private View mView;
+		private TextView mTvPath;
+		private TextView mTvWcd;
 
-		private FloatingActionButton fab;	// 다시 읽어오기
+		private FloatingActionButton mFab;	// 다시 읽어오기
 
 		private string dirPath;
 		private string robotPath;
@@ -47,7 +47,7 @@ namespace Com.Changmin.HI5Controller.src
 		private void SnackbarShow(View viewParent, string str)
 		{
 			Snackbar.Make(viewParent, str, Snackbar.LengthLong)
-					.SetAction("Undo", (view) => { /*Undo message sending here.*/ })
+					.SetAction("Undo", (mView) => { /*Undo message sending here.*/ })
 					.Show(); // Don’t forget to show!
 		}
 
@@ -119,12 +119,12 @@ namespace Com.Changmin.HI5Controller.src
 		public override void OnResume()
 		{
 			LogDebug("OnResume");
-			if (dirPath != PrefPath) {
+			if (dirPath != PrefPath || mTvWcd.Text.Length == 0) {
 				LogDebug("OnResume: " + dirPath + " : " + PrefPath);
 				dirPath = PrefPath;
 				robotPath = Path.Combine(dirPath, "ROBOT.SWD");
-				pathTv.Text = robotPath;
-				wcdTv.Text = ReadFile(robotPath);
+				mTvPath.Text = robotPath;
+				mTvWcd.Text = ReadFile(robotPath);
 			}
 			base.OnResume();
 		}
@@ -132,24 +132,23 @@ namespace Com.Changmin.HI5Controller.src
 		public override View OnCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
 		{
 			LogDebug("OnCreateView");
-			view = inflater.Inflate(Resource.Layout.WcdTextFragment, container, false);
+			mView = inflater.Inflate(Resource.Layout.WcdTextTabFragment, container, false);
 
-			pathTv = view.FindViewById<TextView>(Resource.Id.pathTextView);
-			wcdTv = view.FindViewById<TextView>(Resource.Id.wcdTextView);
+			mTvPath = mView.FindViewById<TextView>(Resource.Id.pathTextView);
+			mTvWcd = mView.FindViewById<TextView>(Resource.Id.wcdTextView);
 
 			// 떠 있는 액션버튼
-			fab = view.FindViewById<FloatingActionButton>(Resource.Id.fab);
-			fab.Elevation = 6;
-			fab.Click += (sender, e) =>
+			mFab = mView.FindViewById<FloatingActionButton>(Resource.Id.fab);
+			mFab.Elevation = 6;
+			mFab.Click += (sender, e) =>
 			{
-				LogDebug("OnResume: " + dirPath + " : " + PrefPath);
 				dirPath = PrefPath;
 				robotPath = Path.Combine(dirPath, "ROBOT.SWD");
-				pathTv.Text = robotPath;
-				wcdTv.Text = ReadFile(robotPath);
+				mTvPath.Text = robotPath;
+				mTvWcd.Text = ReadFile(robotPath);
 			};
 
-			return view;
+			return mView;
 		}
 
 		// 액션바 우측 옵션

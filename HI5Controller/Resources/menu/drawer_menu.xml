@@ -2,22 +2,31 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
   <group android:checkableBehavior="single">
     <item
-      android:id="@+id/nav_wcd"
-      android:icon="@drawable/ic_view_list"
-      android:title="@string/WcdButton" />
+    android:id="@+id/nav_wcdpath"
+    android:icon="@drawable/ic_settings"
+    android:title="@string/nav_wcdpath" />
     <item
-      android:id="@+id/nav_robot"
-      android:icon="@drawable/ic_android"
-      android:title="@string/RobotButton" />
+      android:id="@+id/nav_weldcount"
+      android:icon="@drawable/ic_view_list"
+      android:title="@string/nav_weldcount" />
+    <item
+      android:id="@+id/nav_wcdlist"
+      android:icon="@drawable/ic_view_list"
+      android:title="@string/nav_wcdlist" />
+    <item
+      android:id="@+id/nav_spotcnedit"
+      android:icon="@drawable/ic_view_list"
+      android:title="@string/nav_spotcnedit" />
+
   </group>
   <item
       android:id="@+id/navigation_subheader"
       android:title="@string/Settings">
     <menu>
       <item
-      android:id="@+id/nav_workpathconfig"
-      android:icon="@drawable/ic_settings"
-      android:title="@string/WorkPathConfigButton" />
+        android:id="@+id/nav_robotswd"
+        android:icon="@drawable/ic_android"
+        android:title="@string/nav_robotswd" />
     </menu>
   </item>
 </menu>

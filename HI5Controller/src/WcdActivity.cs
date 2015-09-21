@@ -25,7 +25,7 @@ using Android.Graphics.Drawables;
 
 namespace Com.Changmin.HI5Controller.src
 {
-	[Activity(Label = "@string/ApplicationName", MainLauncher = true, Icon = "@drawable/robot_industrial", Theme = "@style/MyTheme")]
+	[Activity(Label = "@string/ApplicationName", MainLauncher = false, Icon = "@drawable/robot_industrial", Theme = "@style/MyTheme")]
 	public class WcdActivity : AppCompatActivity
 	{
 		private Toolbar toolbar;
@@ -93,13 +93,14 @@ namespace Com.Changmin.HI5Controller.src
 
 		private void NaviViewHeader()
 		{
-			View header = navigationView.InflateHeaderView(Resource.Layout.drawer_header_layout);
-			RelativeLayout drawerHeader = header.FindViewById<RelativeLayout>(Resource.Id.drawerHeader);
-			drawerHeader.Click += (sender, e) =>
-			{
-				var intent = new Intent(this, typeof(WcdActivity));
-				StartActivity(intent);
-			};
+			//View header = navigationView.InflateHeaderView(Resource.Layout.drawer_header_layout);
+			//RelativeLayout drawerHeader = header.FindViewById<RelativeLayout>(Resource.Id.drawerHeader);
+			//drawerHeader.Click += (sender, e) =>
+			//{
+			//	var intent = new Intent(this, typeof(WcdActivity));
+			//	intent.PutExtra("dir_path", PrefPath);
+			//	StartActivity(intent);
+			//};
 		}
 
 		private void NaviView()
@@ -113,25 +114,25 @@ namespace Com.Changmin.HI5Controller.src
 				Intent intent;
 				e.MenuItem.SetChecked(true);
 				switch (e.MenuItem.ItemId) {
-					case Resource.Id.nav_wcd:
-					intent = new Intent(this, typeof(WcdListActivity));
-					intent.PutExtra("dir_path", PrefPath);
-					StartActivity(intent);
+					case Resource.Id.nav_wcdpath:
+					viewPager.SetCurrentItem(0, true);
 					break;
-					case Resource.Id.nav_robot:
-					intent = new Intent(this, typeof(WcdTextActivity));
-					intent.PutExtra("dir_path", PrefPath);
-					StartActivity(intent);
+					case Resource.Id.nav_weldcount:
+					viewPager.SetCurrentItem(1, true);
 					break;
-					case Resource.Id.nav_workpathconfig:
-					intent = new Intent(this, typeof(FilePickerActivity));
-					intent.PutExtra("dir_path", PrefPath);
-					StartActivityForResult(intent, 1);
+					case Resource.Id.nav_wcdlist:
+					viewPager.SetCurrentItem(2, true);
+					break;
+					case Resource.Id.nav_spotcnedit:
+					viewPager.SetCurrentItem(3, true);
+					break;
+					case Resource.Id.nav_robotswd:
+					viewPager.SetCurrentItem(4, true);
 					break;
 				}
 				drawerLayout.CloseDrawers();
 			};
-			//NaviViewHeader();
+			NaviViewHeader();
 		}
 
 		private void MainView()
@@ -199,33 +200,36 @@ namespace Com.Changmin.HI5Controller.src
 			public void OnTabReselected(TabLayout.Tab tab)
 			{ }
 
+			private void SetBackground(int actionBarColorId, int tabLayoutColorId)
+			{
+				mActionBar.SetBackgroundDrawable(new ColorDrawable(mContext.Resources.GetColor(actionBarColorId)));
+				mTabLayout.Background = new ColorDrawable(mContext.Resources.GetColor(tabLayoutColorId));
+			}
+
 			public void OnTabSelected(TabLayout.Tab tab)
 			{
 				mViewPager.SetCurrentItem(tab.Position, true);
 				switch (tab.Position) {
 					case 0:
-					mActionBar.SetBackgroundDrawable(new ColorDrawable(mContext.Resources.GetColor(Resource.Color.tab1_actionbar_background)));
-					mTabLayout.Background = new ColorDrawable(mContext.Resources.GetColor(Resource.Color.tab1_tablayout_background));
+					SetBackground(Resource.Color.tab1_actionbar_background, Resource.Color.tab1_tablayout_background);
 					break;
 					case 1:
-					mActionBar.SetBackgroundDrawable(new ColorDrawable(mContext.Resources.GetColor(Resource.Color.tab2_actionbar_background)));
-					mTabLayout.Background = new ColorDrawable(mContext.Resources.GetColor(Resource.Color.tab2_tablayout_background));
-					//var fm = ((PagerAdapter)mViewPager.Adapter)[1];
+					SetBackground(Resource.Color.tab2_actionbar_background, Resource.Color.tab2_tablayout_background);
 					break;
 					case 2:
-					mActionBar.SetBackgroundDrawable(new ColorDrawable(mContext.Resources.GetColor(Resource.Color.tab3_actionbar_background)));
-					mTabLayout.Background = new ColorDrawable(mContext.Resources.GetColor(Resource.Color.tab3_tablayout_background));
+					SetBackground(Resource.Color.tab3_actionbar_background, Resource.Color.tab3_tablayout_background);
+					WcdListTabFragment wcdListFragment = (WcdListTabFragment)((PagerAdapter)mViewPager.Adapter)[tab.Position];
+					if (wcdListFragment != null)
+						wcdListFragment.Refresh();  // 탭 선택시 경로 변경에 대한 확인
 					break;
 					case 3:
-					mActionBar.SetBackgroundDrawable(new ColorDrawable(mContext.Resources.GetColor(Resource.Color.tab4_actionbar_background)));
-					mTabLayout.Background = new ColorDrawable(mContext.Resources.GetColor(Resource.Color.tab4_tablayout_background));
+					SetBackground(Resource.Color.tab4_actionbar_background, Resource.Color.tab4_tablayout_background);
 					break;
 					case 4:
-					mActionBar.SetBackgroundDrawable(new ColorDrawable(mContext.Resources.GetColor(Resource.Color.tab5_actionbar_background)));
-					mTabLayout.Background = new ColorDrawable(mContext.Resources.GetColor(Resource.Color.tab5_tablayout_background));
+					SetBackground(Resource.Color.tab5_actionbar_background, Resource.Color.tab5_tablayout_background);
 					break;
 				}
-            }
+			}
 
 			public void OnTabUnselected(TabLayout.Tab tab)
 			{ }
@@ -235,16 +239,20 @@ namespace Com.Changmin.HI5Controller.src
 		{
 			tabLayout = FindViewById<TabLayout>(Resource.Id.tab_layout);
 			tabLayout.TabGravity = TabLayout.GravityFill;
+			tabLayout.TabMode = TabLayout.ModeScrollable;
 			tabLayout.AddTab(tabLayout.NewTab().SetText(Resources.GetString(Resource.String.wcd_tab1_text)));
 			tabLayout.AddTab(tabLayout.NewTab().SetText(Resources.GetString(Resource.String.wcd_tab2_text)));
 			tabLayout.AddTab(tabLayout.NewTab().SetText(Resources.GetString(Resource.String.wcd_tab3_text)));
-			//tabLayout.AddTab(tabLayout.NewTab().SetText(Resources.GetString(Resource.String.wcd_tab4_text)));
+			tabLayout.AddTab(tabLayout.NewTab().SetText(Resources.GetString(Resource.String.wcd_tab4_text)));
+			tabLayout.AddTab(tabLayout.NewTab().SetText(Resources.GetString(Resource.String.wcd_tab5_text)));
 
 			viewPager = FindViewById<ViewPager>(Resource.Id.pager);
 			pagerAdapter = new PagerAdapter(SupportFragmentManager, tabLayout.TabCount);
 			viewPager.Adapter = pagerAdapter;
 			viewPager.AddOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
 			tabLayout.SetOnTabSelectedListener(new TabLayoutOnTabSelectedListener(this, viewPager, actionBar, tabLayout));
+
+			//var position = tabLayout.SelectedTabPosition;
 			//viewPager.SetCurrentItem(1, true);
 		}
 
@@ -300,9 +308,7 @@ namespace Com.Changmin.HI5Controller.src
 				drawerLayout.OpenDrawer(Android.Support.V4.View.GravityCompat.Start);
 				return true;
 				case Resource.Id.menu_settings:
-				//var intent = new Intent(this, typeof(FilePickerActivity));
-				//intent.PutExtra("dir_path", PrefPath);
-				//StartActivityForResult(intent, 1);
+				viewPager.SetCurrentItem(0, true);
 				return true;
 			}
 			return base.OnOptionsItemSelected(item);

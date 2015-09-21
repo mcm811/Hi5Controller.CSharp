@@ -24,7 +24,7 @@ using Android.Views.InputMethods;
 
 namespace Com.Changmin.HI5Controller.src
 {
-	public class WcdListFragment : Android.Support.V4.App.Fragment
+	public class WcdListTabFragment : Android.Support.V4.App.Fragment
 	{
 		private View view;
 		private FloatingActionButton fabWcd;
@@ -34,7 +34,7 @@ namespace Com.Changmin.HI5Controller.src
 
 		private List<WeldConditionData> mItems;
 		private ListView mListView;
-		private WcdListAdapter adapter;
+		private WcdListAdapter mWcdListAdapter;
 
 		private int lastPosition = 0;
 
@@ -234,6 +234,25 @@ namespace Com.Changmin.HI5Controller.src
 			return Color.Argb(Color.GetAlphaComponent(argb), Color.GetRedComponent(argb), Color.GetGreenComponent(argb), Color.GetBlueComponent(argb));
 		}
 
+		public void Refresh()
+		{
+			if (mWcdListAdapter == null) {
+				fabWcd.SetImageResource(Resource.Drawable.ic_refresh_white);
+				LogDebug("mWcdListAdapter == null");
+				return;
+			}
+
+			if (dirPath != PrefPath || mWcdListAdapter.Count == 0) {
+				LogDebug("Refresh: " + dirPath + " : " + PrefPath + " : " + mWcdListAdapter.Count.ToString());
+				dirPath = PrefPath;
+				robotPath = System.IO.Path.Combine(dirPath, "ROBOT.SWD");
+				mItems.Clear();
+				ReadFile(robotPath, mItems);
+				mWcdListAdapter.NotifyDataSetChanged();
+			}
+			fabWcd.SetImageResource(mWcdListAdapter.Count == 0 ? Resource.Drawable.ic_refresh_white : Resource.Drawable.ic_edit_white);
+		}
+
 		public override void OnCreate(Bundle bundle)
 		{
 			LogDebug("OnCreate");
@@ -242,24 +261,24 @@ namespace Com.Changmin.HI5Controller.src
 			dirPath = PrefPath;
 			robotPath = System.IO.Path.Combine(dirPath, "ROBOT.SWD");
 			mItems = new List<WeldConditionData>();
-			//ReadFile(robotPath, mItems);
-			adapter = new WcdListAdapter(Context, mItems);
+			ReadFile(robotPath, mItems);
+			mWcdListAdapter = new WcdListAdapter(Context, mItems);
 		}
 
 		public override View OnCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
 		{
 			LogDebug("OnCreateView");
-			view = inflater.Inflate(Resource.Layout.WcdFragment, container, false);
+			view = inflater.Inflate(Resource.Layout.WcdListTabFragment, container, false);
 
 			selectedBackGroundColor = Context.Resources.GetColor(Resource.Color.tab2_textview_background);
 
 			mListView = view.FindViewById<ListView>(Resource.Id.myListView);
-			mListView.FastScrollEnabled = true;
-			mListView.Adapter = adapter;
+			mListView.FastScrollEnabled = false;
+			mListView.Adapter = mWcdListAdapter;
 			mListView.ChoiceMode = ChoiceMode.Multiple;
 			mListView.ItemClick += (object sender, AdapterView.ItemClickEventArgs e) =>
 			{
-				adapter[e.Position].ItemChecked = mListView.IsItemChecked(e.Position);
+				mWcdListAdapter[e.Position].ItemChecked = mListView.IsItemChecked(e.Position);
 				if (mListView.IsItemChecked(e.Position)) {
 					lastPosition = e.Position;
 					e.View.SetBackgroundColor(selectedBackGroundColor);
@@ -274,35 +293,18 @@ namespace Com.Changmin.HI5Controller.src
 			};
 			// 떠 있는 액션버튼
 			fabWcd = view.FindViewById<FloatingActionButton>(Resource.Id.fab_wcd);
+			fabWcd.SetImageResource(mWcdListAdapter.Count == 0 ? Resource.Drawable.ic_refresh_white : Resource.Drawable.ic_edit_white);
 			fabWcd.Click += FabWcd_Click;
 
 			return view;
 		}
 
-		public override void OnResume()
-		{
-			LogDebug("OnResume: " + dirPath);
-			if (dirPath != PrefPath || mItems.Count == 0) {
-				LogDebug("OnResume: " + dirPath + " : " + PrefPath);
-				dirPath = PrefPath;
-				robotPath = System.IO.Path.Combine(dirPath, "ROBOT.SWD");
-				mItems.Clear();
-				ReadFile(robotPath, mItems);
-				adapter.NotifyDataSetChanged();
-			}
-			base.OnResume();
-		}
-
-		public override void OnPause()
-		{
-			LogDebug("OnPause");
-			base.OnPause();
-		}
-
 		private void FabWcd_Click(object sender, EventArgs e)
 		{
-			if (adapter.Count == 0) {
-				ToastShow("항목이 없습니다");
+			if (mWcdListAdapter.Count == 0) {
+				Refresh();
+				if (mWcdListAdapter.Count == 0)
+					ToastShow("항목이 없습니다");
 				return;
 			}
 
@@ -356,7 +358,7 @@ namespace Com.Changmin.HI5Controller.src
 				//tilList[i].ScaleY = 0.8f;
 
 				if (i == 0)                                                 // outputData
-					et.Text = adapter[lastPosition][i];                     // 기본선택된 자료값 가져오기
+					et.Text = mWcdListAdapter[lastPosition][i];                     // 기본선택된 자료값 가져오기
 
 				int maxValue = etMax[i];                                    // 임계치 설정
 				et.TextChanged += (object sender1, TextChangedEventArgs e1) =>
@@ -392,7 +394,7 @@ namespace Com.Changmin.HI5Controller.src
 			}
 
 			var statusText = editFieldView.FindViewById<TextView>(Resource.Id.statusText);
-			statusText.Text = adapter[lastPosition][0];
+			statusText.Text = mWcdListAdapter[lastPosition][0];
 			if (positions.Count > 0) {
 				StringBuilder sb = new StringBuilder();
 				foreach (int pos in positions) {
@@ -405,13 +407,13 @@ namespace Com.Changmin.HI5Controller.src
 			}
 
 			var sampleSeekBar = editFieldView.FindViewById<SeekBar>(Resource.Id.sampleSeekBar);
-			sampleSeekBar.Max = adapter.Count - 1;
-			sampleSeekBar.Progress = Convert.ToInt32(adapter[lastPosition][0]) - 1;
+			sampleSeekBar.Max = mWcdListAdapter.Count - 1;
+			sampleSeekBar.Progress = Convert.ToInt32(mWcdListAdapter[lastPosition][0]) - 1;
 			sampleSeekBar.ProgressChanged += (object sender1, SeekBar.ProgressChangedEventArgs e1) =>
 			{
-				for (int i = 0; i < adapter[sampleSeekBar.Progress].Count; i++) {
+				for (int i = 0; i < mWcdListAdapter[sampleSeekBar.Progress].Count; i++) {
 					if (etList[i].Text != "")
-						etList[i].Text = adapter[sampleSeekBar.Progress][i];
+						etList[i].Text = mWcdListAdapter[sampleSeekBar.Progress][i];
 				}
 				if (positions.Count == 0) {
 					lastPosition = sampleSeekBar.Progress;
@@ -421,12 +423,12 @@ namespace Com.Changmin.HI5Controller.src
 
 			// 선택 시작
 			var beginSeekBar = editFieldView.FindViewById<SeekBar>(Resource.Id.sbBegin);
-			beginSeekBar.Max = adapter.Count - 1;
+			beginSeekBar.Max = mWcdListAdapter.Count - 1;
 			beginSeekBar.Progress = 0;
 
 			// 선택 끝
 			var endSeekBar = editFieldView.FindViewById<SeekBar>(Resource.Id.sbEnd);
-			endSeekBar.Max = adapter.Count - 1;
+			endSeekBar.Max = mWcdListAdapter.Count - 1;
 			endSeekBar.Progress = endSeekBar.Max;
 
 			//etList[7].TextChanged += (object sender1, TextChangedEventArgs e1) =>
@@ -525,9 +527,9 @@ namespace Com.Changmin.HI5Controller.src
 				if (positions.Count > 0) {
 					foreach (int pos in positions) {
 						mListView.SetItemChecked(pos, false);
-						adapter[pos].ItemChecked = false;
+						mWcdListAdapter[pos].ItemChecked = false;
 					}
-					adapter.NotifyDataSetChanged();
+					mWcdListAdapter.NotifyDataSetChanged();
 				}
 			});
 
@@ -547,39 +549,21 @@ namespace Com.Changmin.HI5Controller.src
 					}
 				}
 				foreach (int rowNum in positions) {
-					for (int colNum = 1; colNum < adapter[rowNum].Count; colNum++) {
+					for (int colNum = 1; colNum < mWcdListAdapter[rowNum].Count; colNum++) {
 						if (etList[colNum].Text != "") {
-							adapter[rowNum][colNum] = etList[colNum].Text;
+							mWcdListAdapter[rowNum][colNum] = etList[colNum].Text;
 							isUpdate = true;
 						}
 					}
 					mListView.SetItemChecked(rowNum, false);
-					adapter[rowNum].ItemChecked = false;
+					mWcdListAdapter[rowNum].ItemChecked = false;
 				}
 				if (isUpdate) {
-					adapter.NotifyDataSetChanged();
+					mWcdListAdapter.NotifyDataSetChanged();
 					await UpdateFileAsync(robotPath, mItems);
 				}
 			});
 			dialog.Show();
 		}
-
-		//// 액션바 우측 옵션
-		//public override bool OnCreateOptionsMenu(IMenu menu)
-		//{
-		//	MenuInflater.Inflate(Resource.Menu.home, menu);
-		//	return base.OnCreateOptionsMenu(menu);
-		//}
-
-		// 액션바 옵션 선택시 처리
-		//public override bool OnOptionsItemSelected(IMenuItem item)
-		//{
-		//	switch (item.ItemId) {
-		//		case Android.Resource.Id.Home:
-		//		drawerLayout.OpenDrawer(Android.Support.V4.View.GravityCompat.Start);
-		//		return true;
-		//	}
-		//	return base.OnOptionsItemSelected(item);
-		//}
 	}
 }

@@ -16,8 +16,18 @@ using FragmentStatePagerAdapter = Android.Support.V4.App.FragmentStatePagerAdapt
 
 namespace Com.Changmin.HI5Controller.src
 {
-	public class TabFragment3 : Fragment
+	public class Spot
 	{
+		string lineString;
+		int lineNumber;
+		int[] lineField = new int[3];
+		int cn;
+	}
+
+	public class SpotCnEditTabFragment : Fragment
+	{
+		List<Spot> mSpotList;
+
 		public override View OnCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
 		{
 			var view = inflater.Inflate(Resource.Layout.tab_fragment_3, container, false);

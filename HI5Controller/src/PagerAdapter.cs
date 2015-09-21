@@ -28,7 +28,8 @@ namespace Com.Changmin.HI5Controller.src
 			mFragments = new Fragment[NumOfTabs];
 		}
 
-		public Fragment this[int index] {
+		public Fragment this[int index]
+		{
 			get { return mFragments[index]; }
 		}
 
@@ -47,23 +48,28 @@ namespace Com.Changmin.HI5Controller.src
 
 		public override Fragment GetItem(int position)
 		{
-			switch (position) {
-				case 0:
-				mFragments[position] = new TabFragment1();
-				break;
-				case 1:
-				mFragments[position] = new WcdListFragment();
-				break;
-				case 2:
-				mFragments[position] = new WcdTextFragment();
-				break;
-				case 3:
-				mFragments[position] = new FileListFragment();
-				break;
-				default:
-				return null;
+			if (mFragments[position] == null) {
+				switch (position) {
+					case 0:
+					mFragments[position] = new WcdPathTabFragment1();
+					break;
+					case 1:
+					mFragments[position] = new WeldCountTabFragment();
+					break;
+					case 2:
+					mFragments[position] = new WcdListTabFragment();
+					break;
+					case 3:
+					mFragments[position] = new SpotCnEditTabFragment();
+					break;
+					case 4:
+					mFragments[position] = new WcdTextTabFragment();
+					break;
+					default:
+					return null;
+				}
 			}
-				return mFragments[position];
+			return mFragments[position];
 		}
 	}
 }

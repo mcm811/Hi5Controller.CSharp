@@ -31,7 +31,7 @@ using System.IO;
 
 namespace Com.Changmin.HI5Controller.src
 {
-	public class TabFragment1 : Fragment
+	public class WcdPathTabFragment1 : Fragment
 	{
 		View mView;
 		private EditText mEtDirPath;
@@ -97,16 +97,10 @@ namespace Com.Changmin.HI5Controller.src
 			//};
 		}
 
-		public override void OnCreate(Bundle savedInstanceState)
-		{
-			LogDebug("OnCreate");
-			base.OnCreate(savedInstanceState);
-		}
-
 		public override View OnCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
 		{
 			LogDebug("OnCreateView");
-			mView = inflater.Inflate(Resource.Layout.tab_fragment_1, container, false);
+			mView = inflater.Inflate(Resource.Layout.WcdPathTabFragment, container, false);
 			InputMethodManager imm = (InputMethodManager)Context.GetSystemService(Context.InputMethodService);
 
 			string path = PrefPath;
@@ -121,7 +115,7 @@ namespace Com.Changmin.HI5Controller.src
 				// KeyEventArgs.Handled
 				// 라우트된 이벤트를 처리된 것으로 표시하려면 true이고,
 				// 라우트된 이벤트를 처리되지 않은 것으로 두어 이벤트가 추가로 라우트되도록 허용하려면 false입니다.
-				// 기본값은 false입니다. 
+				// 기본값은 false입니다.
 				e.Handled = false;
 				if (e.KeyCode == Keycode.Enter) {
 					try {
@@ -152,18 +146,6 @@ namespace Com.Changmin.HI5Controller.src
 			Button();
 
 			return mView;
-		}
-
-		public override void OnResume()
-		{
-			LogDebug("OnResume");
-			base.OnResume();
-		}
-
-		public override void OnPause()
-		{
-			LogDebug("OnPause");
-			base.OnPause();
 		}
 
 		public override void OnActivityResult(int requestCode, int resultCode, Intent data)
