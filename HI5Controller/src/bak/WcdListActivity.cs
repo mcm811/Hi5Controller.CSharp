@@ -17,13 +17,13 @@ using com.xamarin.recipes.filepicker;
 
 using System.IO;
 using Android.Util;
-using Java.Lang;
 using System.Threading.Tasks;
 using Android.Graphics;
 using System;
 using Android.Text;
+using System.Text;
 
-namespace Com.Changmin.HI5Controller.src
+namespace Com.Changyoung.HI5Controller
 {
 	[Activity(Label = "용접 조건 데이터", MainLauncher = false, Icon = "@drawable/robot_industrial", Theme = "@style/MyTheme")]
 	public class WcdListActivity : AppCompatActivity
@@ -51,11 +51,10 @@ namespace Com.Changmin.HI5Controller.src
 			Log.Debug(Application.PackageName, msg);
 		}
 
-		async private Task<List<WeldConditionData>> ReadFileAsync(string fileName, List<WeldConditionData> items)
+		async private Task<List<WeldConditionData>> ReadFileAsync(string fileName, List<WeldConditionData> items, Context context = null)
 		{
 			try {
-				//using (StreamReader sr = new StreamReader(Assets.Open(fileName))) {
-				using (StreamReader sr = new StreamReader(fileName)) {
+				using (var sr = context != null ? new StreamReader(context.Assets.Open(fileName), Encoding.GetEncoding("euc-kr")) : new StreamReader(fileName, Encoding.GetEncoding("euc-kr"))) {
 					string swdLine = string.Empty;
 					bool addText = false;
 					while ((swdLine = await sr.ReadLineAsync()) != null) {
@@ -75,12 +74,11 @@ namespace Com.Changmin.HI5Controller.src
 			return items;
 		}
 
-		async private Task<string> UpdateFileAsync(string fileName, List<WeldConditionData> items)
+		async private Task<string> UpdateFileAsync(string fileName, List<WeldConditionData> items, Context context = null)
 		{
 			StringBuilder sb = new StringBuilder();
 			try {
-				//using (StreamReader sr = new StreamReader(Assets.Open(fileName))) {
-				using (StreamReader sr = new StreamReader(fileName)) {
+				using (var sr = context != null ? new StreamReader(context.Assets.Open(fileName), Encoding.GetEncoding("euc-kr")) : new StreamReader(fileName, Encoding.GetEncoding("euc-kr"))) {
 					string swdLine = string.Empty;
 					bool addText = true;
 					bool wcdText = true;
@@ -109,7 +107,7 @@ namespace Com.Changmin.HI5Controller.src
 			}
 
 			try {
-				using (var sw = new StreamWriter(fileName)) {
+				using (var sw = context != null ? new StreamWriter(context.Assets.Open(fileName), Encoding.GetEncoding("euc-kr")) : new StreamWriter(fileName, false, Encoding.GetEncoding("euc-kr"))) {
 					await sw.WriteAsync(sb.ToString());
 					sw.Close();
 					ToastShow("저장 완료: " + fileName);
@@ -121,12 +119,10 @@ namespace Com.Changmin.HI5Controller.src
 			return sb.ToString();
 		}
 
-		private List<WeldConditionData> ReadFile(string fileName, out List<WeldConditionData> items)
+		private List<WeldConditionData> ReadFile(string fileName, List<WeldConditionData> items, Context context = null)
 		{
-			items = new List<WeldConditionData>();
 			try {
-				//using (StreamReader sr = new StreamReader(Assets.Open(fileName))) {
-				using (StreamReader sr = new StreamReader(fileName)) {
+				using (var sr = context != null ? new StreamReader(context.Assets.Open(fileName), Encoding.GetEncoding("euc-kr")) : new StreamReader(fileName, Encoding.GetEncoding("euc-kr"))) {
 					string swdLine = string.Empty;
 					bool addText = false;
 					while ((swdLine = sr.ReadLine()) != null) {
@@ -146,12 +142,11 @@ namespace Com.Changmin.HI5Controller.src
 			return items;
 		}
 
-		private string UpdateFile(string fileName, List<WeldConditionData> items)
+		private string UpdateFile(string fileName, List<WeldConditionData> items, Context context = null)
 		{
 			StringBuilder sb = new StringBuilder();
 			try {
-				//using (StreamReader sr = new StreamReader(Assets.Open(fileName))) {
-				using (StreamReader sr = new StreamReader(fileName)) {
+				using (var sr = context != null ? new StreamReader(context.Assets.Open(fileName), Encoding.GetEncoding("euc-kr")) : new StreamReader(fileName, Encoding.GetEncoding("euc-kr"))) {
 					string swdLine = string.Empty;
 					bool addText = true;
 					bool wcdText = true;
@@ -180,7 +175,7 @@ namespace Com.Changmin.HI5Controller.src
 			}
 
 			try {
-				using (var sw = new StreamWriter(fileName)) {
+				using (var sw = context != null ? new StreamWriter(context.Assets.Open(fileName), Encoding.GetEncoding("euc-kr")) : new StreamWriter(fileName, false, Encoding.GetEncoding("euc-kr"))) {
 					sw.Write(sb.ToString());
 					sw.Close();
 					ToastShow("저장 완료:" + fileName);
@@ -260,7 +255,8 @@ namespace Com.Changmin.HI5Controller.src
 			};
 
 			robotPath = System.IO.Path.Combine(dirPath, "ROBOT.SWD");
-			adapter = new WcdListAdapter(this, ReadFile(robotPath, out mItems));
+			mItems = new List<WeldConditionData>();
+			adapter = new WcdListAdapter(this, ReadFile(robotPath, mItems));
 
 			mListView = FindViewById<ListView>(Resource.Id.myListView);
 			mListView.FastScrollEnabled = true;

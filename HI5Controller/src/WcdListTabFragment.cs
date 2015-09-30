@@ -12,19 +12,20 @@ using Toolbar = Android.Support.V7.Widget.Toolbar;
 using FloatingActionButton = Android.Support.Design.Widget.FloatingActionButton;
 using AlertDialog = Android.Support.V7.App.AlertDialog;
 using EditText = Android.Support.V7.Widget.AppCompatEditText;
+using Fragment = Android.Support.V4.App.Fragment;
 using com.xamarin.recipes.filepicker;
 
 using System.IO;
 using Android.Util;
-using Java.Lang;
 using System.Threading.Tasks;
 using Android.Graphics;
 using Android.Text;
 using Android.Views.InputMethods;
+using System.Text;
 
-namespace Com.Changmin.HI5Controller.src
+namespace Com.Changyoung.HI5Controller
 {
-	public class WcdListTabFragment : Android.Support.V4.App.Fragment
+	public class WcdListTabFragment : Fragment
 	{
 		private View view;
 		private FloatingActionButton fabWcd;
@@ -89,11 +90,10 @@ namespace Com.Changmin.HI5Controller.src
 			}
 		}
 
-		async private Task<List<WeldConditionData>> ReadFileAsync(string fileName, List<WeldConditionData> items)
+		async private Task<List<WeldConditionData>> ReadFileAsync(string fileName, List<WeldConditionData> items, Context context = null)
 		{
 			try {
-				//using (StreamReader sr = new StreamReader(Assets.Open(fileName))) {
-				using (StreamReader sr = new StreamReader(fileName)) {
+				using (var sr = context != null ? new StreamReader(context.Assets.Open(fileName), Encoding.GetEncoding("euc-kr")) : new StreamReader(fileName, Encoding.GetEncoding("euc-kr"))) {
 					string swdLine = string.Empty;
 					bool addText = false;
 					while ((swdLine = await sr.ReadLineAsync()) != null) {
@@ -113,12 +113,11 @@ namespace Com.Changmin.HI5Controller.src
 			return items;
 		}
 
-		async private Task<string> UpdateFileAsync(string fileName, List<WeldConditionData> items)
+		async private Task<string> UpdateFileAsync(string fileName, List<WeldConditionData> items, Context context = null)
 		{
 			StringBuilder sb = new StringBuilder();
 			try {
-				//using (StreamReader sr = new StreamReader(Assets.Open(fileName))) {
-				using (StreamReader sr = new StreamReader(fileName)) {
+				using (var sr = context != null ? new StreamReader(context.Assets.Open(fileName), Encoding.GetEncoding("euc-kr")) : new StreamReader(fileName, Encoding.GetEncoding("euc-kr"))) {
 					string swdLine = string.Empty;
 					bool addText = true;
 					bool wcdText = true;
@@ -147,7 +146,7 @@ namespace Com.Changmin.HI5Controller.src
 			}
 
 			try {
-				using (var sw = new StreamWriter(fileName)) {
+				using (var sw = context != null ? new StreamWriter(context.Assets.Open(fileName), Encoding.GetEncoding("euc-kr")) : new StreamWriter(fileName, false, Encoding.GetEncoding("euc-kr"))) {
 					await sw.WriteAsync(sb.ToString());
 					sw.Close();
 					ToastShow("저장 완료: " + fileName);
@@ -159,11 +158,10 @@ namespace Com.Changmin.HI5Controller.src
 			return sb.ToString();
 		}
 
-		private List<WeldConditionData> ReadFile(string fileName, List<WeldConditionData> items)
+		private List<WeldConditionData> ReadFile(string fileName, List<WeldConditionData> items, Context context = null)
 		{
 			try {
-				//using (StreamReader sr = new StreamReader(Assets.Open(fileName))) {
-				using (StreamReader sr = new StreamReader(fileName)) {
+				using (var sr = context != null ? new StreamReader(context.Assets.Open(fileName), Encoding.GetEncoding("euc-kr")) : new StreamReader(fileName, Encoding.GetEncoding("euc-kr"))) {
 					string swdLine = string.Empty;
 					bool addText = false;
 					while ((swdLine = sr.ReadLine()) != null) {
@@ -183,20 +181,18 @@ namespace Com.Changmin.HI5Controller.src
 			return items;
 		}
 
-		private string UpdateFile(string fileName, List<WeldConditionData> items)
+		private string UpdateFile(string fileName, List<WeldConditionData> items, Context context = null)
 		{
 			StringBuilder sb = new StringBuilder();
 			try {
-				//using (StreamReader sr = new StreamReader(Assets.Open(fileName))) {
-				using (StreamReader sr = new StreamReader(fileName)) {
+				using (var sr = context != null ? new StreamReader(context.Assets.Open(fileName), Encoding.GetEncoding("euc-kr")) : new StreamReader(fileName, Encoding.GetEncoding("euc-kr"))) {
 					string swdLine = string.Empty;
 					bool addText = true;
 					bool wcdText = true;
 					while ((swdLine = sr.ReadLine()) != null) {
 						if (addText == false && wcdText) {
 							foreach (WeldConditionData wcd in items) {
-								sb.Append(wcd.WcdString);
-								sb.Append("\n");
+								sb.AppendLine(wcd.WcdString);
 							}
 							sb.Append("\n");
 							wcdText = false;
@@ -204,8 +200,7 @@ namespace Com.Changmin.HI5Controller.src
 						if (swdLine.StartsWith("#006"))
 							addText = true;
 						if (addText /*&& swdLine.Length > 0*/) {
-							sb.Append(swdLine);
-							sb.Append("\n");
+							sb.AppendLine(swdLine);
 						}
 						if (swdLine.StartsWith("#005"))
 							addText = false;
@@ -217,7 +212,7 @@ namespace Com.Changmin.HI5Controller.src
 			}
 
 			try {
-				using (var sw = new StreamWriter(fileName)) {
+				using (var sw = context != null ? new StreamWriter(context.Assets.Open(fileName), Encoding.GetEncoding("euc-kr")) : new StreamWriter(fileName, false, Encoding.GetEncoding("euc-kr"))) {
 					sw.Write(sb.ToString());
 					sw.Close();
 					ToastShow("저장 완료:" + fileName);
@@ -234,7 +229,7 @@ namespace Com.Changmin.HI5Controller.src
 			return Color.Argb(Color.GetAlphaComponent(argb), Color.GetRedComponent(argb), Color.GetGreenComponent(argb), Color.GetBlueComponent(argb));
 		}
 
-		public void Refresh()
+		public void Refresh(bool forced = false)
 		{
 			if (mWcdListAdapter == null) {
 				fabWcd.SetImageResource(Resource.Drawable.ic_refresh_white);
@@ -242,7 +237,7 @@ namespace Com.Changmin.HI5Controller.src
 				return;
 			}
 
-			if (dirPath != PrefPath || mWcdListAdapter.Count == 0) {
+			if (forced || dirPath != PrefPath || mWcdListAdapter.Count == 0) {
 				LogDebug("Refresh: " + dirPath + " : " + PrefPath + " : " + mWcdListAdapter.Count.ToString());
 				dirPath = PrefPath;
 				robotPath = System.IO.Path.Combine(dirPath, "ROBOT.SWD");
@@ -272,9 +267,9 @@ namespace Com.Changmin.HI5Controller.src
 
 			selectedBackGroundColor = Context.Resources.GetColor(Resource.Color.tab2_textview_background);
 
-			mListView = view.FindViewById<ListView>(Resource.Id.myListView);
-			mListView.FastScrollEnabled = false;
+			mListView = view.FindViewById<ListView>(Resource.Id.wcdListView);
 			mListView.Adapter = mWcdListAdapter;
+			mListView.FastScrollEnabled = true;
 			mListView.ChoiceMode = ChoiceMode.Multiple;
 			mListView.ItemClick += (object sender, AdapterView.ItemClickEventArgs e) =>
 			{
@@ -291,6 +286,16 @@ namespace Com.Changmin.HI5Controller.src
 				lastPosition = e.Position;
 				FabWcd_Click(sender, e);
 			};
+
+			var refresher = view.FindViewById<SwipeRefreshLayout>(Resource.Id.srl);
+			if (refresher != null) {
+				refresher.Refresh += delegate
+				{
+					Refresh(forced: true);
+					refresher.Refreshing = false;
+				};
+			}
+
 			// 떠 있는 액션버튼
 			fabWcd = view.FindViewById<FloatingActionButton>(Resource.Id.fab_wcd);
 			fabWcd.SetImageResource(mWcdListAdapter.Count == 0 ? Resource.Drawable.ic_refresh_white : Resource.Drawable.ic_edit_white);
@@ -345,7 +350,7 @@ namespace Com.Changmin.HI5Controller.src
 			etList.Add(editFieldView.FindViewById<EditText>(Resource.Id.etPannelThickness));
 			etList.Add(editFieldView.FindViewById<EditText>(Resource.Id.etCommandOffset));
 
-			int[] etMax = { 1000, 100, 350, 500, 500, 500, 500, 1000, 1000 };   // 임계치
+			int[] etMax = { 2000, 100, 350, 500, 500, 500, 500, 1000, 1000 };   // 임계치
 
 			InputMethodManager imm = (InputMethodManager)Context.GetSystemService(Context.InputMethodService);
 

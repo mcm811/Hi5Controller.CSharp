@@ -1,35 +1,18 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
+﻿
 using Android.App;
 using Android.Content;
 using Android.OS;
-using Android.Runtime;
 using Android.Views;
 using Android.Widget;
 using Android.Util;
-using Android.Support.V4.App;
 using Fragment = Android.Support.V4.App.Fragment;
-using FragmentManager = Android.Support.V4.App.FragmentManager;
-using FragmentStatePagerAdapter = Android.Support.V4.App.FragmentStatePagerAdapter;
 using Android.Support.V4.Widget;
-using Android.Support.V7.App;
-using Android.Support.Design.Widget;
-using Toolbar = Android.Support.V7.Widget.Toolbar;
-using DialogFragment = Android.Support.V4.App.DialogFragment;
 using FloatingActionButton = Android.Support.Design.Widget.FloatingActionButton;
-using ViewPager = Android.Support.V4.View.ViewPager;
-using PagerAdapter = Android.Support.V4.View.PagerAdapter;
-using TabLayout = Android.Support.Design.Widget.TabLayout;
-using ActionBar = Android.Support.V7.App.ActionBar;
 using com.xamarin.recipes.filepicker;
 using Android.Views.InputMethods;
-using Android.Text;
 using System.IO;
 
-namespace Com.Changmin.HI5Controller.src
+namespace Com.Changyoung.HI5Controller
 {
 	public class WcdPathTabFragment1 : Fragment
 	{
@@ -78,23 +61,13 @@ namespace Com.Changmin.HI5Controller.src
 			}
 		}
 
-		private void Button()
+		public void Refresh(bool forced = false)
 		{
-			//wcdListViewButton = mView.FindViewById<Button>(Resource.Id.button1);
-			//wcdListViewButton.Click += (sender, e) =>
-			//{
-			//	var intent = new Intent(Context, typeof(WcdListActivity));
-			//	intent.PutExtra("dir_path", PrefPath);
-			//	StartActivity(intent);
-			//};
-			//
-			//wcdTextButton = mView.FindViewById<Button>(Resource.Id.button2);
-			//wcdTextButton.Click += (sender, e) =>
-			//{
-			//	var intent = new Intent(Context, typeof(WcdTextActivity));
-			//	intent.PutExtra("dir_path", PrefPath);
-			//	StartActivity(intent);
-			//};
+			if (forced) {
+				string path = PrefPath;
+				mEtDirPath.Text = path;
+				mFileListFragment.RefreshFilesList(path);
+			}
 		}
 
 		public override View OnCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
@@ -143,7 +116,15 @@ namespace Com.Changmin.HI5Controller.src
 				mEtDirPath.Text = mFileListFragment.DirPath;
 				PrefPath = mEtDirPath.Text;
 			};
-			Button();
+
+			var refresher = mView.FindViewById<SwipeRefreshLayout>(Resource.Id.srl);
+			if (refresher != null) {
+				refresher.Refresh += delegate
+				{
+					Refresh(forced: true);
+					refresher.Refreshing = false;
+				};
+			}
 
 			return mView;
 		}

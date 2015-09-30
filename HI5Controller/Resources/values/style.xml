@@ -20,7 +20,7 @@
          colorControlHighlight and colorSwitchThumbNormal. -->
   </style>
   <style name="Theme.Splash" parent="android:Theme">
-    <item name="android:windowBackground">@drawable/splash_black</item>
+    <item name="android:windowBackground">@drawable/splash_blue</item>
     <item name="android:windowNoTitle">true</item>
   </style>
 </resources>

@@ -20,12 +20,11 @@ using DialogFragment = Android.Support.V4.App.DialogFragment;
 using FloatingActionButton = Android.Support.Design.Widget.FloatingActionButton;
 using com.xamarin.recipes.filepicker;
 
-namespace Com.Changmin.HI5Controller.src
+namespace Com.Changyoung.HI5Controller
 {
 	public class WcdTextTabFragment : Android.Support.V4.App.Fragment
 	{
 		private View mView;
-		private TextView mTvPath;
 		private TextView mTvWcd;
 
 		private FloatingActionButton mFab;	// 다시 읽어오기
@@ -84,7 +83,7 @@ namespace Com.Changmin.HI5Controller.src
 		{
 			string st = "";
 			try {
-				using (StreamReader sr = new StreamReader(fileName)) {
+				using (StreamReader sr = new StreamReader(fileName, Encoding.GetEncoding("euc-kr"))) {
 					st = await sr.ReadToEndAsync();
 					sr.Close();
 				}
@@ -99,7 +98,7 @@ namespace Com.Changmin.HI5Controller.src
 		{
 			string st = "";
 			try {
-				using (StreamReader sr = new StreamReader(fileName)) {
+				using (StreamReader sr = new StreamReader(fileName, Encoding.GetEncoding("euc-kr"))) {
 					st = sr.ReadToEnd();
 					sr.Close();
 				}
@@ -110,23 +109,18 @@ namespace Com.Changmin.HI5Controller.src
 			return st;
 		}
 
-		public override void OnCreate(Bundle bundle)
+		private void ReadFile()
 		{
-			LogDebug("OnCreate");
-			base.OnCreate(bundle);
+			dirPath = PrefPath;
+			robotPath = Path.Combine(dirPath, "ROBOT.SWD");
+			mTvWcd.Text = ReadFile(robotPath);
 		}
 
-		public override void OnResume()
+		public void Refresh(bool forced = false)
 		{
-			LogDebug("OnResume");
-			if (dirPath != PrefPath || mTvWcd.Text.Length == 0) {
-				LogDebug("OnResume: " + dirPath + " : " + PrefPath);
-				dirPath = PrefPath;
-				robotPath = Path.Combine(dirPath, "ROBOT.SWD");
-				mTvPath.Text = robotPath;
-				mTvWcd.Text = ReadFile(robotPath);
+			if (forced || dirPath != PrefPath || mTvWcd.Text.Length == 0) {
+				ReadFile();
 			}
-			base.OnResume();
 		}
 
 		public override View OnCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
@@ -134,7 +128,6 @@ namespace Com.Changmin.HI5Controller.src
 			LogDebug("OnCreateView");
 			mView = inflater.Inflate(Resource.Layout.WcdTextTabFragment, container, false);
 
-			mTvPath = mView.FindViewById<TextView>(Resource.Id.pathTextView);
 			mTvWcd = mView.FindViewById<TextView>(Resource.Id.wcdTextView);
 
 			// 떠 있는 액션버튼
@@ -142,31 +135,19 @@ namespace Com.Changmin.HI5Controller.src
 			mFab.Elevation = 6;
 			mFab.Click += (sender, e) =>
 			{
-				dirPath = PrefPath;
-				robotPath = Path.Combine(dirPath, "ROBOT.SWD");
-				mTvPath.Text = robotPath;
-				mTvWcd.Text = ReadFile(robotPath);
+				Refresh(forced: true);
 			};
+
+			var refresher = mView.FindViewById<SwipeRefreshLayout>(Resource.Id.srl);
+			if (refresher != null) {
+				refresher.Refresh += delegate
+				{
+					Refresh(forced: true);
+					refresher.Refreshing = false;
+				};
+			}
 
 			return mView;
 		}
-
-		// 액션바 우측 옵션
-		//public override bool OnCreateOptionsMenu(IMenu menu)
-		//{
-		//	MenuInflater.Inflate(Resource.Menu.home, menu);
-		//	return base.OnCreateOptionsMenu(menu);
-		//}
-
-		//// 액션바 옵션 선택시 처리
-		//public override bool OnOptionsItemSelected(IMenuItem item)
-		//{
-		//	switch (item.ItemId) {
-		//		case Android.Resource.Id.Home:
-		//		drawerLayout.OpenDrawer(Android.Support.V4.View.GravityCompat.Start);
-		//		return true;
-		//	}
-		//	return base.OnOptionsItemSelected(item);
-		//}
 	}
 }

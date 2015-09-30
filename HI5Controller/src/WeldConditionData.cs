@@ -1,7 +1,7 @@
 using Android.Util;
 using System;
 
-namespace Com.Changmin.HI5Controller.src
+namespace Com.Changyoung.HI5Controller
 {
 	public class WeldConditionData
 	{
@@ -12,6 +12,7 @@ namespace Com.Changmin.HI5Controller.src
 		private decimal fixedTipClearance;   // 고정극 제거율
 		private decimal pannelThickness;     // 패널 두께
 		private decimal commandOffset;       // 명령 옵셋
+		private string rowString;
 
 		private bool itemChecked;
 
@@ -62,21 +63,16 @@ namespace Com.Changmin.HI5Controller.src
 
 		public string WcdString {
 			get {
+				if (rowString != null) {
+					return (outputData < 10 ? "\t- " : "\t-") + OutputData + "=" + OutputData + "," + OutputType + "," + SqueezeForce + "," + MoveTipClearance + "," + FixedTipClearance + "," + PannelThickness + "," + CommandOffset + rowString;
+				}
 				return (outputData < 10 ? "\t- " : "\t-") + OutputData + "=" + OutputData + "," + OutputType + "," + SqueezeForce + "," + MoveTipClearance + "," + FixedTipClearance + "," + PannelThickness + "," + CommandOffset;
 			}
 			set {
 				string[] ds = value.Trim().Split(new char[] { '=' });
 				if (ds.Length == 2) {
 					string[] data = ds[1].Trim().Split(new char[] { ',', '-' });
-					if (data.Length == 7) {
-						//OutputData = data[0];
-						//OutputType = data[1];
-						//SqueezeForce = data[2];
-						//MoveTipClearance = data[3];
-						//FixedTipClearance = data[4];
-						//PannelThickness = data[5];
-						//CommandOffset = data[6];
-
+					if (data.Length >= 7) {
 						OutputData = data[0].Trim();
 						OutputType = data[1].Trim();
 						SqueezeForce = data[2].Trim();
@@ -84,6 +80,11 @@ namespace Com.Changmin.HI5Controller.src
 						FixedTipClearance = data[4].Trim();
 						PannelThickness = data[5].Trim();
 						CommandOffset = data[6].Trim();
+						if (data.Length > 7) {
+							for (int n = 7; n < data.Length; n++) {
+								rowString += "," + data[n].Trim();
+							}
+						}
 					}
 				}
 			}
@@ -107,6 +108,8 @@ namespace Com.Changmin.HI5Controller.src
 					return PannelThickness;
 					case 6:
 					return CommandOffset;
+					case 7:
+					return rowString;
 				}
 
 				return string.Empty;
@@ -134,6 +137,9 @@ namespace Com.Changmin.HI5Controller.src
 					break;
 					case 6:
 					CommandOffset = value;
+					break;
+					case 7:
+					rowString = value;
 					break;
 				}
 			}

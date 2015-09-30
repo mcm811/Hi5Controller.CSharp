@@ -21,7 +21,7 @@
   </group>
   <item
       android:id="@+id/navigation_subheader"
-      android:title="@string/Settings">
+      android:title="@string/Load">
     <menu>
       <item
         android:id="@+id/nav_robotswd"

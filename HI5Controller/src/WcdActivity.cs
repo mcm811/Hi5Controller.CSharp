@@ -5,25 +5,17 @@ using Android.Views;
 using Android.Widget;
 using Android.OS;
 using Android.Util;
-using System;
-
-using Android.Support.V4.App;
 using Android.Support.V7.App;
 using Android.Support.V4.Widget;
 using Android.Support.Design.Widget;
 
 using Toolbar = Android.Support.V7.Widget.Toolbar;
-using DialogFragment = Android.Support.V4.App.DialogFragment;
-using FloatingActionButton = Android.Support.Design.Widget.FloatingActionButton;
 using ViewPager = Android.Support.V4.View.ViewPager;
-using PagerAdapter = Android.Support.V4.View.PagerAdapter;
 using TabLayout = Android.Support.Design.Widget.TabLayout;
 using ActionBar = Android.Support.V7.App.ActionBar;
-using com.xamarin.recipes.filepicker;
-using Android.Graphics;
 using Android.Graphics.Drawables;
 
-namespace Com.Changmin.HI5Controller.src
+namespace Com.Changyoung.HI5Controller
 {
 	[Activity(Label = "@string/ApplicationName", MainLauncher = false, Icon = "@drawable/robot_industrial", Theme = "@style/MyTheme")]
 	public class WcdActivity : AppCompatActivity
@@ -110,8 +102,6 @@ namespace Com.Changmin.HI5Controller.src
 			navigationView = FindViewById<NavigationView>(Resource.Id.nav_view);
 			navigationView.NavigationItemSelected += (sender, e) =>
 			{
-				//ToastShow(e.MenuItem.ItemId.ToString());
-				Intent intent;
 				e.MenuItem.SetChecked(true);
 				switch (e.MenuItem.ItemId) {
 					case Resource.Id.nav_wcdpath:
@@ -166,9 +156,6 @@ namespace Com.Changmin.HI5Controller.src
 			//	intent.PutExtra("dir_path", etDirPath.Text);
 			//	StartActivity(intent);
 			//};
-
-			//ToastShow(Application.PackageName);
-			//Log.Error("+++++++++++++++++++++++++:::::::::::::::::::::::::::::::", Application.PackageName);
 		}
 
 		private void ActionBarTab()
@@ -220,13 +207,16 @@ namespace Com.Changmin.HI5Controller.src
 					SetBackground(Resource.Color.tab3_actionbar_background, Resource.Color.tab3_tablayout_background);
 					WcdListTabFragment wcdListFragment = (WcdListTabFragment)((PagerAdapter)mViewPager.Adapter)[tab.Position];
 					if (wcdListFragment != null)
-						wcdListFragment.Refresh();  // 탭 선택시 경로 변경에 대한 확인
+						wcdListFragment.Refresh();
 					break;
 					case 3:
 					SetBackground(Resource.Color.tab4_actionbar_background, Resource.Color.tab4_tablayout_background);
 					break;
 					case 4:
 					SetBackground(Resource.Color.tab5_actionbar_background, Resource.Color.tab5_tablayout_background);
+					WcdTextTabFragment wcdTextFragment = (WcdTextTabFragment)((PagerAdapter)mViewPager.Adapter)[tab.Position];
+					if (wcdTextFragment != null)
+						wcdTextFragment.Refresh();
 					break;
 				}
 			}

@@ -20,6 +20,7 @@
   <string name="no_files_or_directories">No files or directories</string>
   <string name="wcd_edit">선택 항목 수정</string>
   <string name="wcd_ok">확인</string>
+  <string name="Load">읽기</string>
   <string name="Settings">설정</string>
   <string name="Share">공유</string>
   <string name="Save">저장</string>

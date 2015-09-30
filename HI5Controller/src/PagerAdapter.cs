@@ -1,21 +1,8 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
-using Android.App;
-using Android.Content;
-using Android.OS;
-using Android.Runtime;
-using Android.Views;
-using Android.Widget;
-using Android.Support.V4.App;
 using Fragment = Android.Support.V4.App.Fragment;
 using FragmentManager = Android.Support.V4.App.FragmentManager;
 using FragmentStatePagerAdapter = Android.Support.V4.App.FragmentStatePagerAdapter;
-using com.xamarin.recipes.filepicker;
 
-namespace Com.Changmin.HI5Controller.src
+namespace Com.Changyoung.HI5Controller
 {
 	public class PagerAdapter : FragmentStatePagerAdapter
 	{
@@ -60,7 +47,7 @@ namespace Com.Changmin.HI5Controller.src
 					mFragments[position] = new WcdListTabFragment();
 					break;
 					case 3:
-					mFragments[position] = new SpotCnEditTabFragment();
+					mFragments[position] = new JobEditTabFragment();
 					break;
 					case 4:
 					mFragments[position] = new WcdTextTabFragment();

@@ -1,45 +1,118 @@
-using Android.App;
+ï»¿using Android.App;
 using Android.Content;
 using Android.OS;
-using Android.Runtime;
-using Android.Support.V4.App;
+using Android.Util;
 using Android.Views;
 using Android.Widget;
-using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Text;
 using Fragment = Android.Support.V4.App.Fragment;
-using FragmentManager = Android.Support.V4.App.FragmentManager;
-using FragmentStatePagerAdapter = Android.Support.V4.App.FragmentStatePagerAdapter;
+using Android.Support.V4.Widget;
 
-namespace Com.Changmin.HI5Controller.src
+namespace Com.Changyoung.HI5Controller
 {
-	public class WeldCount
-	{
-		int total;  // SPOT ÀÇ ÃÑ Ä«¿îÆ®
-		int gn1;	// SPOT ´Ü¾î ´ÙÀ½¿¡ ³ª¿À´Â Ã¹¹øÂ° ´Ü¾î ºÐ¼® ÇØ¼­ Á¾·ù °áÁ¤(GN1, GN2, GN3, G1, G2)
-		int gn2;
-		int gn3;
-		int g1;
-		int g2;
-		int step;	// S1 S2 S3 ºÙÀº °Íµé Á© ¸¶Áö¸· S¹øÈ£ °ª
-		string preview;
-
-		FileSystemInfo fsi;
-		string fileName;
-		int fileSize;
-		int fileTime;
-	}
-
 	public class WeldCountTabFragment : Fragment
 	{
-		List<WeldCount> mWeldCountList;
+		private View view;
+		private ListView mListView;
+		private WeldCountAdapter mWeldCountAdapter;
+
+		private string dirPath;
+
+		private void LogDebug(string msg)
+		{
+			Log.Debug(Context.PackageName, "WeldCountTabFragment: " + msg);
+		}
+
+		private void ToastShow(string str)
+		{
+			Toast.MakeText(Context, str, ToastLength.Short).Show();
+			LogDebug(str);
+		}
+
+		public string PrefPath
+		{
+			get
+			{
+				try {
+					using (var prefs = Application.Context.GetSharedPreferences(Context.PackageName, FileCreationMode.Private)) {
+						return prefs.GetString("dirpath_file", Android.OS.Environment.ExternalStorageDirectory.AbsolutePath);
+					}
+				} catch {
+					return Android.OS.Environment.ExternalStorageDirectory.AbsolutePath;
+				}
+			}
+			set
+			{
+				try {
+					if (PrefPath != value) {
+						using (var prefs = Application.Context.GetSharedPreferences(Context.PackageName, FileCreationMode.Private)) {
+							var prefEditor = prefs.Edit();
+							prefEditor.PutString("dirpath_file", value);
+							prefEditor.Commit();
+							ToastShow("ê²½ë¡œ ì €ìž¥: " + value);
+						}
+					}
+				} catch {
+				}
+			}
+		}
+
+		public void Refresh(bool forced = false)
+		{
+			if (forced || dirPath != PrefPath || mWeldCountAdapter.Count == 0) {
+				LogDebug("Refresh: " + dirPath + " : " + PrefPath + " : " + mWeldCountAdapter.Count.ToString());
+				dirPath = PrefPath;
+				mWeldCountAdapter.Clear();
+				try {
+					var dir = new DirectoryInfo(dirPath);
+					foreach (var item in dir.GetFileSystemInfos()) {
+						if (item.FullName.EndsWith(".JOB")) {
+							mWeldCountAdapter.Add(new JobFile(item.FullName));
+						}
+					}
+				} catch {
+				}
+			}
+		}
+
+		public override void OnCreate(Bundle bundle)
+		{
+			LogDebug("OnCreate");
+			base.OnCreate(bundle);
+
+			dirPath = PrefPath;
+			mWeldCountAdapter = new WeldCountAdapter(Context, Resource.Layout.WeldCountRow);
+			try {
+				var dir = new DirectoryInfo(PrefPath);
+				foreach (var item in dir.GetFileSystemInfos()) {
+					if (item.FullName.EndsWith(".JOB")) {
+						mWeldCountAdapter.Add(new JobFile(item.FullName));
+					}
+				}
+			} catch {
+			}
+		}
 
 		public override View OnCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
 		{
-			var view = inflater.Inflate(Resource.Layout.tab_fragment_2, container, false);
+			view = inflater.Inflate(Resource.Layout.WeldCountTabFragment, container, false);
+
+			mListView = view.FindViewById<ListView>(Resource.Id.weldCountListView);
+			mListView.Adapter = mWeldCountAdapter;
+			mListView.ItemClick += (object sender, AdapterView.ItemClickEventArgs e) =>
+			{ };
+			mListView.ItemLongClick += (object sender, AdapterView.ItemLongClickEventArgs e) =>
+			{ };
+
+			var refresher = view.FindViewById<SwipeRefreshLayout>(Resource.Id.srl);
+			if (refresher != null) {
+				refresher.Refresh += delegate
+				{
+					Refresh(forced: true);
+					refresher.Refreshing = false;
+				};
+			}
+
 			return view;
 		}
 	}

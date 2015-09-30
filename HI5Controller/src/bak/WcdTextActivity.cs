@@ -20,7 +20,7 @@ using FloatingActionButton = Android.Support.Design.Widget.FloatingActionButton;
 using com.xamarin.recipes.filepicker;
 
 
-namespace Com.Changmin.HI5Controller.src
+namespace Com.Changyoung.HI5Controller
 {
 	[Activity(Label = "ROBOT.SWD", MainLauncher = false, Icon = "@drawable/robot_industrial", Theme = "@style/MyTheme")]
 	public class WcdTextActivity : AppCompatActivity
@@ -39,7 +39,7 @@ namespace Com.Changmin.HI5Controller.src
 		{
 			string st = "";
 			try {
-				using (StreamReader sr = new StreamReader(fileName)) {
+				using (StreamReader sr = new StreamReader(fileName, Encoding.GetEncoding("euc-kr"))) {
 					st = await sr.ReadToEndAsync();
 					sr.Close();
 				}

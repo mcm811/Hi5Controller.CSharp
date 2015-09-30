@@ -122,13 +122,19 @@
                 android:layout_marginTop="2dp"
                 android:layout_marginLeft="10dp" />
         </RelativeLayout>
-        <ListView
-            android:minWidth="25px"
-            android:minHeight="25px"
+        <android.support.v4.widget.SwipeRefreshLayout
+            android:id="@+id/srl"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:id="@+id/myListView" />
+            android:layout_height="match_parent">
+            <ListView
+                android:minWidth="25px"
+                android:minHeight="25px"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:choiceMode="multipleChoice"
+                android:id="@+id/wcdListView" />
+        </android.support.v4.widget.SwipeRefreshLayout>
     </LinearLayout>
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/fab_wcd"

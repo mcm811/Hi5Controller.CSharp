@@ -10,8 +10,9 @@ using Android.Runtime;
 using Android.Views;
 using Android.Widget;
 using Android.Graphics;
+using Android.Util;
 
-namespace Com.Changmin.HI5Controller.src
+namespace Com.Changyoung.HI5Controller
 {
 	class WcdListAdapter : BaseAdapter<WeldConditionData>
 	{
@@ -30,18 +31,12 @@ namespace Com.Changmin.HI5Controller.src
 
 		public override WeldConditionData this[int position]
 		{
-			get
-			{
-				return mItems[position];
-			}
+			get { return mItems[position]; }
 		}
 
 		public override int Count
 		{
-			get
-			{
-				return mItems.Count;
-			}
+			get { return mItems.Count; }
 		}
 
 		public override long GetItemId(int position)
@@ -52,37 +47,18 @@ namespace Com.Changmin.HI5Controller.src
 		public override View GetView(int position, View convertView, ViewGroup parent)
 		{
 			View row = convertView;
+			WcdListRowViewHolder viewHolder;
 
 			if (row == null) {
 				row = LayoutInflater.From(mContent).Inflate(Resource.Layout.WcdListRow, null, false);
-			}
-
-			if (mItems[position].ItemChecked) {
-				row.SetBackgroundColor(selectedBackGroundColor);
+				viewHolder = new WcdListRowViewHolder(row);
+				row.Tag = viewHolder;
 			} else {
-				row.SetBackgroundColor(defaultBackgroundColor);
+				viewHolder = (WcdListRowViewHolder)row.Tag;
 			}
 
-			TextView tvOutputData = row.FindViewById<TextView>(Resource.Id.tvOutputData);
-			tvOutputData.Text = mItems[position].OutputData;
-
-			TextView tvOutputType = row.FindViewById<TextView>(Resource.Id.tvOutputType);
-			tvOutputType.Text = mItems[position].OutputType;
-
-			TextView tvSqueezeForce = row.FindViewById<TextView>(Resource.Id.tvSqueezeForce);
-			tvSqueezeForce.Text = mItems[position].SqueezeForce;
-
-			TextView tvMoveTipClearance = row.FindViewById<TextView>(Resource.Id.tvMoveTipClearance);
-			tvMoveTipClearance.Text = mItems[position].MoveTipClearance;
-
-			TextView tvFixedTipClearance = row.FindViewById<TextView>(Resource.Id.tvFixedTipClearance);
-			tvFixedTipClearance.Text = mItems[position].FixedTipClearance;
-
-			TextView tvPannelThickness = row.FindViewById<TextView>(Resource.Id.tvPannelThickness);
-			tvPannelThickness.Text = mItems[position].PannelThickness;
-
-			TextView tvCommandOffset = row.FindViewById<TextView>(Resource.Id.tvCommandOffset);
-			tvCommandOffset.Text = mItems[position].CommandOffset;
+			row.SetBackgroundColor(this[position].ItemChecked ? selectedBackGroundColor : defaultBackgroundColor);
+			viewHolder.Update(this[position]);
 
 			return row;
 		}

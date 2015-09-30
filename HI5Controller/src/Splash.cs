@@ -12,7 +12,7 @@ using Android.Widget;
 using System.Threading;
 using Android.Content.PM;
 
-namespace Com.Changmin.HI5Controller.src
+namespace Com.Changyoung.HI5Controller
 {
 	[Activity(Label = "@string/ApplicationName", Theme = "@style/Theme.Splash", MainLauncher = true, NoHistory = true)]
 	public class Splash : Activity

@@ -3,38 +3,43 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
-    <LinearLayout xmlns:tools="http://schemas.android.com/tools"
-        android:id="@+id/main_parent_view"
+    <android.support.v4.widget.SwipeRefreshLayout
+        android:id="@+id/srl"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:focusable="true"
-        android:focusableInTouchMode="true"
-        android:orientation="vertical"
-        android:fitsSystemWindows="true">
-        <android.support.design.widget.TextInputLayout
-            android:id="@+id/textInputLayout1"
-            android:layout_marginTop="10dp"
+        android:layout_height="match_parent">
+        <LinearLayout xmlns:tools="http://schemas.android.com/tools"
+            android:id="@+id/main_parent_view"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-            <EditText
-                android:textAppearance="?android:attr/textAppearanceSmall"
-                android:hint="작업 경로"
-                android:singleLine="true"
+            android:layout_height="match_parent"
+            android:focusable="true"
+            android:focusableInTouchMode="true"
+            android:orientation="vertical"
+            android:fitsSystemWindows="true">
+            <android.support.design.widget.TextInputLayout
+                android:id="@+id/textInputLayout1"
+                android:layout_marginTop="10dp"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="wrap_content">
+                <EditText
+                    android:textAppearance="?android:attr/textAppearanceSmall"
+                    android:hint="작업 경로"
+                    android:singleLine="true"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginRight="20dp"
+                    android:id="@+id/etDirPath" />
+            </android.support.design.widget.TextInputLayout>
+            <fragment
+                class="com.xamarin.recipes.filepicker.FileListFragment"
+                android:id="@+id/file_list_fragment"
                 android:layout_marginLeft="20dp"
                 android:layout_marginRight="20dp"
-                android:id="@+id/etDirPath" />
-        </android.support.design.widget.TextInputLayout>
-        <fragment
-            class="com.xamarin.recipes.filepicker.FileListFragment"
-            android:id="@+id/file_list_fragment"
-            android:layout_marginLeft="20dp"
-            android:layout_marginRight="20dp"
-            android:layout_weight="1"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent" />
-    </LinearLayout>
+                android:layout_weight="1"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+        </LinearLayout>
+    </android.support.v4.widget.SwipeRefreshLayout>
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/fab"
         app:elevation="6dp"
