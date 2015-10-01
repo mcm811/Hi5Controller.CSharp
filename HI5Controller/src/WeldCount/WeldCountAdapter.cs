@@ -43,7 +43,7 @@ namespace Com.Changyoung.HI5Controller
 			WeldCountRowViewHolder viewHolder;
 
 			if (convertView == null) {
-				row = LayoutInflater.From(Context).Inflate(Resource.Layout.WeldCountRow, null, false);
+				row = LayoutInflater.From(Context).Inflate(Resource.Layout.weld_count_row, null, false);
 				viewHolder = new WeldCountRowViewHolder(row);
 				row.Tag = viewHolder;
 			} else {

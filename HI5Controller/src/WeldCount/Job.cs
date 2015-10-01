@@ -7,7 +7,7 @@ using Android.Util;
 
 namespace Com.Changyoung.HI5Controller
 {
-	public class Job
+	public class Job : Java.Lang.Object
 	{
 		public enum RowTypes
 		{
@@ -447,7 +447,7 @@ namespace Com.Changyoung.HI5Controller
 				sb.Append("Step: " + step.ToString());
 			}
 
-			Log.Debug("JobCount", sb.ToString());
+			//Log.Debug("JobCount", sb.ToString());
 
 			return sb.ToString();
 		}
@@ -569,11 +569,13 @@ namespace Com.Changyoung.HI5Controller
 			return sb.ToString();
 		}
 
-		public void LogRowString()
+		public string RowText()
 		{
+			StringBuilder sb = new StringBuilder();
 			foreach (var Job in jobList) {
-				Job.LogDebug(Job.RowString);
+				sb.AppendLine(Job.RowString);
 			}
+			return sb.ToString();
 		}
 
 		public void UpdateCN(int start)

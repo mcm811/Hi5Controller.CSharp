@@ -12,7 +12,7 @@ using System.Text;
 
 namespace Com.Changyoung.HI5Controller
 {
-	public class JobEditTabFragment : Fragment
+	public class JobEditTabFragment : Fragment, IRefresh
 	{
 		View view;
 		TextView textView;
@@ -32,24 +32,10 @@ namespace Com.Changyoung.HI5Controller
 			LogDebug(str);
 		}
 
-		public string PrefPath
-		{
-			get
-			{
-				try {
-					using (var prefs = Application.Context.GetSharedPreferences(Context.PackageName, FileCreationMode.Private)) {
-						return prefs.GetString("dirpath_file", Android.OS.Environment.ExternalStorageDirectory.AbsolutePath);
-					}
-				} catch {
-					return Android.OS.Environment.ExternalStorageDirectory.AbsolutePath;
-				}
-			}
-		}
-
 		public void Refresh(bool forced = false)
 		{
-			if (forced || dirPath != PrefPath || jobFileList.Count == 0) {
-				dirPath = PrefPath;
+			if (forced || dirPath != Pref.Path || jobFileList.Count == 0) {
+				dirPath = Pref.Path;
 				try {
 					var sb = new StringBuilder();
 					var dir = new DirectoryInfo(dirPath);
@@ -75,12 +61,12 @@ namespace Com.Changyoung.HI5Controller
 		{
 			base.OnCreate(savedInstanceState);
 			jobFileList = new List<JobFile>();
-			dirPath = PrefPath;
+			dirPath = Pref.Path;
 		}
 
 		public override View OnCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
 		{
-			view = inflater.Inflate(Resource.Layout.JobEditTabFragment, container, false);
+			view = inflater.Inflate(Resource.Layout.job_edit_tab_fragment, container, false);
 			textView = view.FindViewById<TextView>(Resource.Id.textView);
 
 			Refresh(forced: true);

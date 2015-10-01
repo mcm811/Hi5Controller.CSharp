@@ -6,12 +6,9 @@
 	using System.Linq;
 
 	using Android.OS;
-	using Android.Support.V4.App;
 	using Android.Util;
 	using Android.Views;
 	using Android.Widget;
-	using Com.Changyoung.HI5Controller;
-	using Android.App;
 	using Android.Content;
 
 	/// <summary>
@@ -49,6 +46,7 @@
 			mFileListAdapter = new FileListAdapter(Activity, new FileSystemInfo[0]);
 			ListAdapter = mFileListAdapter;
 			DirPath = Android.OS.Environment.ExternalStorageDirectory.AbsolutePath;
+			//DirPath = Com.Changyoung.HI5Controller.Pref.StoragePath;
 		}
 
 		public override View OnCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)

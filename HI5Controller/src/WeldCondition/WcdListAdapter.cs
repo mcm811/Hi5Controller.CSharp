@@ -52,7 +52,7 @@ namespace Com.Changyoung.HI5Controller
 			WcdListRowViewHolder viewHolder;
 
 			if (row == null) {
-				row = LayoutInflater.From(mContext).Inflate(Resource.Layout.WcdListRow, null, false);
+				row = LayoutInflater.From(mContext).Inflate(Resource.Layout.wcd_list_row, null, false);
 				viewHolder = new WcdListRowViewHolder(row);
 				row.Tag = viewHolder;
 			} else {

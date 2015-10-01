@@ -25,11 +25,11 @@
   <string name="Share">공유</string>
   <string name="Save">저장</string>
   
-  <string name="wcd_tab1_text">작업 경로</string>
-  <string name="wcd_tab2_text">용접 카운트</string>
-  <string name="wcd_tab3_text">용접 조건</string>
-  <string name="wcd_tab4_text">계열 수정</string>
-  <string name="wcd_tab5_text">Robot.swd</string>
+  <string name="WcdPathTabFragment">작업 경로</string>
+  <string name="WeldCountTabFragment">용접 카운트</string>
+  <string name="WcdListTabFragment">용접 조건</string>
+  <string name="JobEditTabFragment">계열 수정</string>
+  <string name="WcdTextTabFragment">Robot.swd</string>
 
   <string name="nav_wcdpath">작업 경로</string>
   <string name="nav_weldcount">용접 카운트</string>

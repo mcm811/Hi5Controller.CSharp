@@ -1,12 +1,9 @@
-﻿
-using Android.App;
-using Android.Content;
+﻿using Android.Content;
 using Android.OS;
 using Android.Views;
 using Android.Widget;
 using Android.Util;
 using Fragment = Android.Support.V4.App.Fragment;
-using Android.Support.V4.Widget;
 using FloatingActionButton = Android.Support.Design.Widget.FloatingActionButton;
 using com.xamarin.recipes.filepicker;
 using Android.Views.InputMethods;
@@ -14,7 +11,7 @@ using System.IO;
 
 namespace Com.Changyoung.HI5Controller
 {
-	public class WcdPathTabFragment1 : Fragment
+	public class WcdPathTabFragment : Fragment, IRefresh
 	{
 		View mView;
 		private EditText mEtDirPath;
@@ -31,52 +28,23 @@ namespace Com.Changyoung.HI5Controller
 			Toast.MakeText(Context, str, ToastLength.Short).Show();
 			LogDebug(str);
 		}
-
-		public string PrefPath
-		{
-			get
-			{
-				try {
-					using (var prefs = Application.Context.GetSharedPreferences(Context.PackageName, FileCreationMode.Private)) {
-						return prefs.GetString("dirpath_file", Android.OS.Environment.ExternalStorageDirectory.AbsolutePath);
-					}
-				} catch {
-					return Android.OS.Environment.ExternalStorageDirectory.AbsolutePath;
-				}
-			}
-			set
-			{
-				try {
-					if (PrefPath != value) {
-						using (var prefs = Application.Context.GetSharedPreferences(Context.PackageName, FileCreationMode.Private)) {
-							var prefEditor = prefs.Edit();
-							prefEditor.PutString("dirpath_file", value);
-							prefEditor.Commit();
-							ToastShow("경로 저장: " + value);
-						}
-					}
-				} catch {
-
-				}
-			}
-		}
-
+		
 		public void Refresh(bool forced = false)
 		{
 			if (forced) {
-				string path = PrefPath;
+				string path = Pref.Path;
 				mEtDirPath.Text = path;
 				mFileListFragment.RefreshFilesList(path);
 			}
-		}
+        }
 
 		public override View OnCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
 		{
 			LogDebug("OnCreateView");
-			mView = inflater.Inflate(Resource.Layout.WcdPathTabFragment, container, false);
+			mView = inflater.Inflate(Resource.Layout.wcd_path_tab_fragment, container, false);
 			InputMethodManager imm = (InputMethodManager)Context.GetSystemService(Context.InputMethodService);
 
-			string path = PrefPath;
+			string path = Pref.Path;
 			mFileListFragment = (FileListFragment)this.ChildFragmentManager.FindFragmentById(Resource.Id.file_list_fragment);
 			mFileListFragment.RefreshFilesList(path);
 
@@ -94,14 +62,14 @@ namespace Com.Changyoung.HI5Controller
 					try {
 						var dir = new DirectoryInfo(mEtDirPath.Text);
 						if (dir.IsDirectory()) {
-							PrefPath = mEtDirPath.Text;
+							Pref.Path = mEtDirPath.Text;
 						} else {
 							ToastShow("잘못된 경로: " + mEtDirPath.Text);
-							mEtDirPath.Text = PrefPath;
+							mEtDirPath.Text = Pref.Path;
 						}
 					} catch {
 						ToastShow("잘못된 경로: " + mEtDirPath.Text);
-                        mEtDirPath.Text = PrefPath;
+                        mEtDirPath.Text = Pref.Path;
 					}
 					mFileListFragment.RefreshFilesList(mEtDirPath.Text);
 					imm.HideSoftInputFromWindow(mEtDirPath.WindowToken, 0);
@@ -114,17 +82,8 @@ namespace Com.Changyoung.HI5Controller
 			mFab.Click += (sender, e) =>
 			{
 				mEtDirPath.Text = mFileListFragment.DirPath;
-				PrefPath = mEtDirPath.Text;
+				Pref.Path = mEtDirPath.Text;
 			};
-
-			var refresher = mView.FindViewById<SwipeRefreshLayout>(Resource.Id.srl);
-			if (refresher != null) {
-				refresher.Refresh += delegate
-				{
-					Refresh(forced: true);
-					refresher.Refreshing = false;
-				};
-			}
 
 			return mView;
 		}
@@ -133,10 +92,8 @@ namespace Com.Changyoung.HI5Controller
 		{
 			if (requestCode == 1) {
 				try {
-					PrefPath = data.GetStringExtra("dir_path");
-					//ToastShow(resultCode.ToString() + " ::: " + requestCode.ToString() + ":::::" + PrefPath);
+					Pref.Path = data.GetStringExtra("dir_path");
 				} catch {
-					//PrefPath = Android.OS.Environment.ExternalStorageDirectory.AbsolutePath;
 				}
 			}
 			base.OnActivityResult(requestCode, resultCode, data);

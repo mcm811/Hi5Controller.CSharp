@@ -33,23 +33,32 @@ namespace Com.Changyoung.HI5Controller
 			}
 		}
 
+		public enum FragmentPosition
+		{
+			WcdPathTabFragment,
+			WeldCountTabFragment,
+			WcdListTabFragment,
+			JobEditTabFragment,
+			WcdTextTabFragment
+		}
+
 		public override Fragment GetItem(int position)
 		{
 			if (mFragments[position] == null) {
-				switch (position) {
-					case 0:
-					mFragments[position] = new WcdPathTabFragment1();
+				switch ((FragmentPosition)position) {
+					case FragmentPosition.WcdPathTabFragment:
+					mFragments[position] = new WcdPathTabFragment();
 					break;
-					case 1:
+					case FragmentPosition.WeldCountTabFragment:
 					mFragments[position] = new WeldCountTabFragment();
 					break;
-					case 2:
+					case FragmentPosition.WcdListTabFragment:
 					mFragments[position] = new WcdListTabFragment();
 					break;
-					case 3:
+					case FragmentPosition.JobEditTabFragment:
 					mFragments[position] = new JobEditTabFragment();
 					break;
-					case 4:
+					case FragmentPosition.WcdTextTabFragment:
 					mFragments[position] = new WcdTextTabFragment();
 					break;
 					default:

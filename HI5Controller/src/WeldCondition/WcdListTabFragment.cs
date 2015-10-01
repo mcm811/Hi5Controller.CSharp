@@ -22,7 +22,7 @@ using System.Text;
 
 namespace Com.Changyoung.HI5Controller
 {
-	public class WcdListTabFragment : Fragment
+	public class WcdListTabFragment : Fragment, IRefresh
 	{
 		private View view;
 		private FloatingActionButton fabWcd;
@@ -55,20 +55,6 @@ namespace Com.Changyoung.HI5Controller
 			Snackbar.Make(viewParent, str, Snackbar.LengthLong)
 					.SetAction("Undo", (view) => { /*Undo message sending here.*/ })
 					.Show(); // Don’t forget to show!
-		}
-
-		public string PrefPath
-		{
-			get
-			{
-				try {
-					using (var prefs = Application.Context.GetSharedPreferences(Context.PackageName, FileCreationMode.Private)) {
-						return prefs.GetString("dirpath_file", Android.OS.Environment.ExternalStorageDirectory.AbsolutePath);
-					}
-				} catch {
-					return Android.OS.Environment.ExternalStorageDirectory.AbsolutePath;
-				}
-			}
 		}
 
 		private void ReadFile(string fileName, WcdListAdapter items, Context context = null)
@@ -149,9 +135,9 @@ namespace Com.Changyoung.HI5Controller
 				return;
 			}
 
-			if (forced || dirPath != PrefPath || mWcdListAdapter.Count == 0) {
-				LogDebug("Refresh: " + dirPath + " : " + PrefPath + " : " + mWcdListAdapter.Count.ToString());
-				dirPath = PrefPath;
+			if (forced || dirPath != Pref.Path || mWcdListAdapter.Count == 0) {
+				LogDebug("Refresh: " + dirPath + " : " + Pref.Path + " : " + mWcdListAdapter.Count.ToString());
+				dirPath = Pref.Path;
 				robotPath = System.IO.Path.Combine(dirPath, "ROBOT.SWD");
 				mWcdListAdapter.Clear();
 				ReadFile(robotPath, mWcdListAdapter);
@@ -165,7 +151,7 @@ namespace Com.Changyoung.HI5Controller
 			LogDebug("OnCreate");
 			base.OnCreate(bundle);
 
-			dirPath = PrefPath;
+			dirPath = Pref.Path;
 			robotPath = System.IO.Path.Combine(dirPath, "ROBOT.SWD");
 			mWcdListAdapter = new WcdListAdapter(Context);
 			ReadFile(robotPath, mWcdListAdapter);
@@ -174,7 +160,7 @@ namespace Com.Changyoung.HI5Controller
 		public override View OnCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
 		{
 			LogDebug("OnCreateView");
-			view = inflater.Inflate(Resource.Layout.WcdListTabFragment, container, false);
+			view = inflater.Inflate(Resource.Layout.wcd_list_tab_fragment, container, false);
 
 			selectedBackGroundColor = Context.Resources.GetColor(Resource.Color.tab2_textview_background);
 
@@ -238,28 +224,28 @@ namespace Com.Changyoung.HI5Controller
 				return;
 			}
 
-			View editFieldView = LayoutInflater.From(Context).Inflate(Resource.Layout.WcdEditor, null);
+			View dialogView = LayoutInflater.From(Context).Inflate(Resource.Layout.wcd_editor, null);
 			AlertDialog.Builder dialog = new AlertDialog.Builder(Context);
-			dialog.SetView(editFieldView);
+			dialog.SetView(dialogView);
 
 			//IList<TextInputLayout> tilList = new List<TextInputLayout>();
-			//tilList.Add(editFieldView.FindViewById<TextInputLayout>(Resource.Id.textInputLayout1));
-			//tilList.Add(editFieldView.FindViewById<TextInputLayout>(Resource.Id.textInputLayout2));
-			//tilList.Add(editFieldView.FindViewById<TextInputLayout>(Resource.Id.textInputLayout3));
-			//tilList.Add(editFieldView.FindViewById<TextInputLayout>(Resource.Id.textInputLayout4));
-			//tilList.Add(editFieldView.FindViewById<TextInputLayout>(Resource.Id.textInputLayout5));
-			//tilList.Add(editFieldView.FindViewById<TextInputLayout>(Resource.Id.textInputLayout6));
-			//tilList.Add(editFieldView.FindViewById<TextInputLayout>(Resource.Id.textInputLayout7));
+			//tilList.Add(dialogView.FindViewById<TextInputLayout>(Resource.Id.textInputLayout1));
+			//tilList.Add(dialogView.FindViewById<TextInputLayout>(Resource.Id.textInputLayout2));
+			//tilList.Add(dialogView.FindViewById<TextInputLayout>(Resource.Id.textInputLayout3));
+			//tilList.Add(dialogView.FindViewById<TextInputLayout>(Resource.Id.textInputLayout4));
+			//tilList.Add(dialogView.FindViewById<TextInputLayout>(Resource.Id.textInputLayout5));
+			//tilList.Add(dialogView.FindViewById<TextInputLayout>(Resource.Id.textInputLayout6));
+			//tilList.Add(dialogView.FindViewById<TextInputLayout>(Resource.Id.textInputLayout7));
 
 			// 에디트텍스트
 			IList<EditText> etList = new List<EditText>();
-			etList.Add(editFieldView.FindViewById<EditText>(Resource.Id.etOutputData));
-			etList.Add(editFieldView.FindViewById<EditText>(Resource.Id.etOutputType));
-			etList.Add(editFieldView.FindViewById<EditText>(Resource.Id.etSqueezeForce));
-			etList.Add(editFieldView.FindViewById<EditText>(Resource.Id.etMoveTipClearance));
-			etList.Add(editFieldView.FindViewById<EditText>(Resource.Id.etFixedTipClearance));
-			etList.Add(editFieldView.FindViewById<EditText>(Resource.Id.etPannelThickness));
-			etList.Add(editFieldView.FindViewById<EditText>(Resource.Id.etCommandOffset));
+			etList.Add(dialogView.FindViewById<EditText>(Resource.Id.etOutputData));
+			etList.Add(dialogView.FindViewById<EditText>(Resource.Id.etOutputType));
+			etList.Add(dialogView.FindViewById<EditText>(Resource.Id.etSqueezeForce));
+			etList.Add(dialogView.FindViewById<EditText>(Resource.Id.etMoveTipClearance));
+			etList.Add(dialogView.FindViewById<EditText>(Resource.Id.etFixedTipClearance));
+			etList.Add(dialogView.FindViewById<EditText>(Resource.Id.etPannelThickness));
+			etList.Add(dialogView.FindViewById<EditText>(Resource.Id.etCommandOffset));
 
 			int[] etMax = { 2000, 100, 350, 500, 500, 500, 500, 1000, 1000 };   // 임계치
 
@@ -277,21 +263,13 @@ namespace Com.Changyoung.HI5Controller
 					et.Text = mWcdListAdapter[lastPosition][i];             // 기본선택된 자료값 가져오기
 
 				int maxValue = etMax[i];                                    // 임계치 설정
-				et.TextChanged += (object sender1, TextChangedEventArgs e1) =>
+				et.FocusChange += (object sender1, View.FocusChangeEventArgs e1) =>
 				{
 					int n;
-					try {
-						n = Convert.ToInt32(e1.Text.ToString());
+					if (Int32.TryParse(et.Text, out n)) {
 						if (n > maxValue) {
 							n = maxValue;
 							et.Text = n.ToString();
-						}
-					} catch {       // Convert는 다른 타입이 들어오면 예외가 발생 된다
-						if (Int32.TryParse(e1.Text.ToString(), out n)) {
-							if (n > maxValue) {
-								n = maxValue;
-								et.Text = n.ToString();
-							}
 						}
 					}
 				};
@@ -304,12 +282,13 @@ namespace Com.Changyoung.HI5Controller
 					e1.Handled = false;
 					if (e1.KeyCode == Keycode.Enter) {
 						imm.HideSoftInputFromWindow(et.WindowToken, 0);
+						et.ClearFocus();
 						e1.Handled = true;
 					}
 				};
 			}
 
-			var statusText = editFieldView.FindViewById<TextView>(Resource.Id.statusText);
+			var statusText = dialogView.FindViewById<TextView>(Resource.Id.statusText);
 			statusText.Text = mWcdListAdapter[lastPosition][0];
 			if (positions.Count > 0) {
 				StringBuilder sb = new StringBuilder();
@@ -322,7 +301,7 @@ namespace Com.Changyoung.HI5Controller
 				statusText.Text = "수정 항목: " + (lastPosition + 1).ToString();
 			}
 
-			var sampleSeekBar = editFieldView.FindViewById<SeekBar>(Resource.Id.sampleSeekBar);
+			var sampleSeekBar = dialogView.FindViewById<SeekBar>(Resource.Id.sampleSeekBar);
 			sampleSeekBar.Max = mWcdListAdapter.Count - 1;
 			sampleSeekBar.Progress = Convert.ToInt32(mWcdListAdapter[lastPosition][0]) - 1;
 			sampleSeekBar.ProgressChanged += (object sender1, SeekBar.ProgressChangedEventArgs e1) =>
@@ -338,12 +317,12 @@ namespace Com.Changyoung.HI5Controller
 			};
 
 			// 선택 시작
-			var beginSeekBar = editFieldView.FindViewById<SeekBar>(Resource.Id.sbBegin);
+			var beginSeekBar = dialogView.FindViewById<SeekBar>(Resource.Id.sbBegin);
 			beginSeekBar.Max = mWcdListAdapter.Count - 1;
 			beginSeekBar.Progress = 0;
 
 			// 선택 끝
-			var endSeekBar = editFieldView.FindViewById<SeekBar>(Resource.Id.sbEnd);
+			var endSeekBar = dialogView.FindViewById<SeekBar>(Resource.Id.sbEnd);
 			endSeekBar.Max = mWcdListAdapter.Count - 1;
 			endSeekBar.Progress = endSeekBar.Max;
 
@@ -400,16 +379,15 @@ namespace Com.Changyoung.HI5Controller
 
 			dialog.SetNegativeButton("취소", delegate
 			{
-				if (positions.Count > 0) {
-					foreach (int pos in positions) {
-						mListView.SetItemChecked(pos, false);
-						mWcdListAdapter[pos].ItemChecked = false;
-					}
-					mWcdListAdapter.NotifyDataSetChanged();
-				}
+				//if (positions.Count > 0) {
+				//	foreach (int pos in positions) {
+				//		mListView.SetItemChecked(pos, false);
+				//		mWcdListAdapter[pos].ItemChecked = false;
+				//	}
+				//	mWcdListAdapter.NotifyDataSetChanged();
+				//}
 			});
-
-			dialog.SetPositiveButton("확인", async delegate
+			dialog.SetPositiveButton("저장", async delegate
 			{
 				int seekBegin = beginSeekBar.Progress + 1;
 				int seekEnd = endSeekBar.Max - endSeekBar.Progress + 1;
@@ -439,6 +417,7 @@ namespace Com.Changyoung.HI5Controller
 					await UpdateFileAsync(robotPath, mWcdListAdapter);
 				}
 			});
+
 			dialog.Show();
 		}
 	}

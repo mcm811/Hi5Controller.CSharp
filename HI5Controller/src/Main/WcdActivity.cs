@@ -34,35 +34,6 @@ namespace Com.Changyoung.HI5Controller
 			Log.Debug(Application.PackageName, "WcdActivity: " + msg);
 		}
 
-		public string PrefPath
-		{
-			get
-			{
-				try {
-					using (var prefs = Application.Context.GetSharedPreferences(Application.PackageName, FileCreationMode.Private)) {
-						return prefs.GetString("dirpath_file", Android.OS.Environment.ExternalStorageDirectory.AbsolutePath);
-					}
-				} catch {
-					return Android.OS.Environment.ExternalStorageDirectory.AbsolutePath;
-				}
-			}
-			set
-			{
-				try {
-					if (PrefPath != value) {
-						using (var prefs = Application.Context.GetSharedPreferences(Application.PackageName, FileCreationMode.Private)) {
-							var prefEditor = prefs.Edit();
-							prefEditor.PutString("dirpath_file", value);
-							prefEditor.Commit();
-							ToastShow("경로 저장: " + value);
-						}
-					}
-				} catch {
-
-				}
-			}
-		}
-
 		private void ToastShow(string str)
 		{
 			Toast.MakeText(this, str, ToastLength.Short).Show();
@@ -90,7 +61,7 @@ namespace Com.Changyoung.HI5Controller
 			//drawerHeader.Click += (sender, e) =>
 			//{
 			//	var intent = new Intent(this, typeof(WcdActivity));
-			//	intent.PutExtra("dir_path", PrefPath);
+			//	intent.PutExtra("dir_path", Pref.Path);
 			//	StartActivity(intent);
 			//};
 		}
@@ -129,7 +100,7 @@ namespace Com.Changyoung.HI5Controller
 		{
 			//// 기본 화면 구성
 			//etDirPath = FindViewById<EditText>(Resource.Id.etDirPath);
-			//etDirPath.Text = PrefPath;
+			//etDirPath.Text = Pref.Path;
 
 			//// 떠 있는 액션버튼
 			//fab = FindViewById<FloatingActionButton>(Resource.Id.fab);
@@ -196,35 +167,26 @@ namespace Com.Changyoung.HI5Controller
 			public void OnTabSelected(TabLayout.Tab tab)
 			{
 				mViewPager.SetCurrentItem(tab.Position, true);
-				switch (tab.Position) {
-					case 0:
+				switch ((PagerAdapter.FragmentPosition)tab.Position) {
+					case PagerAdapter.FragmentPosition.WcdPathTabFragment:
 					SetBackground(Resource.Color.tab1_actionbar_background, Resource.Color.tab1_tablayout_background);
 					break;
-					case 1:
+					case PagerAdapter.FragmentPosition.WeldCountTabFragment:
 					SetBackground(Resource.Color.tab2_actionbar_background, Resource.Color.tab2_tablayout_background);
-					WeldCountTabFragment weldCountTabFragment = (WeldCountTabFragment)((PagerAdapter)mViewPager.Adapter)[tab.Position];
-					if (weldCountTabFragment != null)
-						weldCountTabFragment.Refresh();
 					break;
-					case 2:
+					case PagerAdapter.FragmentPosition.WcdListTabFragment:
 					SetBackground(Resource.Color.tab3_actionbar_background, Resource.Color.tab3_tablayout_background);
-					WcdListTabFragment wcdListFragment = (WcdListTabFragment)((PagerAdapter)mViewPager.Adapter)[tab.Position];
-					if (wcdListFragment != null)
-						wcdListFragment.Refresh();
 					break;
-					case 3:
+					case PagerAdapter.FragmentPosition.JobEditTabFragment:
 					SetBackground(Resource.Color.tab4_actionbar_background, Resource.Color.tab4_tablayout_background);
-					JobEditTabFragment jobEditTabFragment = (JobEditTabFragment)((PagerAdapter)mViewPager.Adapter)[tab.Position];
-					if (jobEditTabFragment != null)
-						jobEditTabFragment.Refresh();
 					break;
-					case 4:
+					case PagerAdapter.FragmentPosition.WcdTextTabFragment:
 					SetBackground(Resource.Color.tab5_actionbar_background, Resource.Color.tab5_tablayout_background);
-					WcdTextTabFragment wcdTextFragment = (WcdTextTabFragment)((PagerAdapter)mViewPager.Adapter)[tab.Position];
-					if (wcdTextFragment != null)
-						wcdTextFragment.Refresh();
 					break;
 				}
+				var ir = (IRefresh)((PagerAdapter)mViewPager.Adapter)[tab.Position];
+				if (ir != null)
+					ir.Refresh();
 			}
 
 			public void OnTabUnselected(TabLayout.Tab tab)
@@ -236,11 +198,13 @@ namespace Com.Changyoung.HI5Controller
 			tabLayout = FindViewById<TabLayout>(Resource.Id.tab_layout);
 			tabLayout.TabGravity = TabLayout.GravityFill;
 			tabLayout.TabMode = TabLayout.ModeScrollable;
-			tabLayout.AddTab(tabLayout.NewTab().SetText(Resources.GetString(Resource.String.wcd_tab1_text)));
-			tabLayout.AddTab(tabLayout.NewTab().SetText(Resources.GetString(Resource.String.wcd_tab2_text)));
-			tabLayout.AddTab(tabLayout.NewTab().SetText(Resources.GetString(Resource.String.wcd_tab3_text)));
-			tabLayout.AddTab(tabLayout.NewTab().SetText(Resources.GetString(Resource.String.wcd_tab4_text)));
-			tabLayout.AddTab(tabLayout.NewTab().SetText(Resources.GetString(Resource.String.wcd_tab5_text)));
+
+			// PagerAdapter.FragmentPosition과 순서를 맞출것
+			tabLayout.AddTab(tabLayout.NewTab().SetText(Resources.GetString(Resource.String.WcdPathTabFragment)));
+			tabLayout.AddTab(tabLayout.NewTab().SetText(Resources.GetString(Resource.String.WeldCountTabFragment)));
+			tabLayout.AddTab(tabLayout.NewTab().SetText(Resources.GetString(Resource.String.WcdListTabFragment)));
+			//tabLayout.AddTab(tabLayout.NewTab().SetText(Resources.GetString(Resource.String.JobEditTabFragment)));
+			//tabLayout.AddTab(tabLayout.NewTab().SetText(Resources.GetString(Resource.String.WcdTextTabFragment)));
 
 			viewPager = FindViewById<ViewPager>(Resource.Id.pager);
 			pagerAdapter = new PagerAdapter(SupportFragmentManager, tabLayout.TabCount);
@@ -249,13 +213,13 @@ namespace Com.Changyoung.HI5Controller
 			tabLayout.SetOnTabSelectedListener(new TabLayoutOnTabSelectedListener(this, viewPager, actionBar, tabLayout));
 
 			//var position = tabLayout.SelectedTabPosition;
-			//viewPager.SetCurrentItem(1, true);
+			viewPager.SetCurrentItem(1, true);
 		}
 
 		protected override void OnCreate(Bundle bundle)
 		{
 			base.OnCreate(bundle);
-			SetContentView(Resource.Layout.Wcd);
+			SetContentView(Resource.Layout.wcd);
 			SetFullscreen();
 
 			// 액션바
@@ -279,7 +243,7 @@ namespace Com.Changyoung.HI5Controller
 		protected override void OnActivityResult(int requestCode, [GeneratedEnum] Result resultCode, Intent data)
 		{
 			if (resultCode == Result.Ok && requestCode == 1) {
-				PrefPath = data.GetStringExtra("dir_path") ?? Android.OS.Environment.ExternalStorageDirectory.AbsolutePath;
+				Pref.Path = data.GetStringExtra("dir_path");
 			}
 			base.OnActivityResult(requestCode, resultCode, data);
 		}
