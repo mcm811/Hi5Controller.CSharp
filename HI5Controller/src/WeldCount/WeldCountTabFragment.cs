@@ -13,8 +13,8 @@ namespace Com.Changyoung.HI5Controller
 	public class WeldCountTabFragment : Fragment
 	{
 		private View view;
-		private ListView mListView;
-		private WeldCountAdapter mWeldCountAdapter;
+		private ListView listView;
+		private WeldCountAdapter weldCountAdapter;
 
 		private string dirPath;
 
@@ -41,35 +41,21 @@ namespace Com.Changyoung.HI5Controller
 					return Android.OS.Environment.ExternalStorageDirectory.AbsolutePath;
 				}
 			}
-			set
-			{
-				try {
-					if (PrefPath != value) {
-						using (var prefs = Application.Context.GetSharedPreferences(Context.PackageName, FileCreationMode.Private)) {
-							var prefEditor = prefs.Edit();
-							prefEditor.PutString("dirpath_file", value);
-							prefEditor.Commit();
-							ToastShow("경로 저장: " + value);
-						}
-					}
-				} catch {
-				}
-			}
 		}
 
 		public void Refresh(bool forced = false)
 		{
-			if (forced || dirPath != PrefPath || mWeldCountAdapter.Count == 0) {
-				LogDebug("Refresh: " + dirPath + " : " + PrefPath + " : " + mWeldCountAdapter.Count.ToString());
+			if (forced || dirPath != PrefPath || weldCountAdapter.Count == 0) {
+				LogDebug("Refresh: " + dirPath + " : " + PrefPath + " : " + weldCountAdapter.Count.ToString());
 				dirPath = PrefPath;
-				mWeldCountAdapter.Clear();
 				try {
 					var dir = new DirectoryInfo(dirPath);
+					weldCountAdapter.Clear();
 					foreach (var item in dir.GetFileSystemInfos()) {
-						if (item.FullName.EndsWith(".JOB")) {
-							mWeldCountAdapter.Add(new JobFile(item.FullName));
-						}
+						if (item.FullName.EndsWith(".JOB"))
+							weldCountAdapter.Add(new JobFile(item.FullName));
 					}
+					weldCountAdapter.NotifyDataSetChanged();
 				} catch {
 				}
 			}
@@ -81,13 +67,12 @@ namespace Com.Changyoung.HI5Controller
 			base.OnCreate(bundle);
 
 			dirPath = PrefPath;
-			mWeldCountAdapter = new WeldCountAdapter(Context, Resource.Layout.WeldCountRow);
+			weldCountAdapter = new WeldCountAdapter(Context, Resource.Layout.WeldCountRow);
 			try {
 				var dir = new DirectoryInfo(PrefPath);
 				foreach (var item in dir.GetFileSystemInfos()) {
-					if (item.FullName.EndsWith(".JOB")) {
-						mWeldCountAdapter.Add(new JobFile(item.FullName));
-					}
+					if (item.FullName.EndsWith(".JOB"))
+						weldCountAdapter.Add(new JobFile(item.FullName));
 				}
 			} catch {
 			}
@@ -97,13 +82,6 @@ namespace Com.Changyoung.HI5Controller
 		{
 			view = inflater.Inflate(Resource.Layout.WeldCountTabFragment, container, false);
 
-			mListView = view.FindViewById<ListView>(Resource.Id.weldCountListView);
-			mListView.Adapter = mWeldCountAdapter;
-			mListView.ItemClick += (object sender, AdapterView.ItemClickEventArgs e) =>
-			{ };
-			mListView.ItemLongClick += (object sender, AdapterView.ItemLongClickEventArgs e) =>
-			{ };
-
 			var refresher = view.FindViewById<SwipeRefreshLayout>(Resource.Id.srl);
 			if (refresher != null) {
 				refresher.Refresh += delegate
@@ -112,6 +90,22 @@ namespace Com.Changyoung.HI5Controller
 					refresher.Refreshing = false;
 				};
 			}
+
+			int n = 0;
+			listView = view.FindViewById<ListView>(Resource.Id.weldCountListView);
+			listView.Adapter = weldCountAdapter;
+			listView.ItemClick += (object sender, AdapterView.ItemClickEventArgs e) =>
+			{
+				var jobFile = weldCountAdapter.GetItem(e.Position);
+				jobFile.UpdateCN(n++);
+				weldCountAdapter.NotifyDataSetChanged();
+			};
+			listView.ItemLongClick += (object sender, AdapterView.ItemLongClickEventArgs e) =>
+			{
+				var jobFile = weldCountAdapter.GetItem(e.Position);
+				jobFile.LogRowString();
+				jobFile.SaveFile();
+            };
 
 			return view;
 		}

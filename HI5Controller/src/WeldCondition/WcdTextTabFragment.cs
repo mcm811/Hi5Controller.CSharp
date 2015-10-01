@@ -1,24 +1,15 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using System.Text;
 using Android.App;
 using Android.Content;
 using Android.OS;
-using Android.Runtime;
 using Android.Views;
 using Android.Widget;
-using System.Threading.Tasks;
 using System.IO;
 using Android.Util;
 using Android.Support.V4.Widget;
-using Android.Support.V4.App;
-using Android.Support.V7.App;
 using Android.Support.Design.Widget;
-using Toolbar = Android.Support.V7.Widget.Toolbar;
-using DialogFragment = Android.Support.V4.App.DialogFragment;
 using FloatingActionButton = Android.Support.Design.Widget.FloatingActionButton;
-using com.xamarin.recipes.filepicker;
+using System.Threading.Tasks;
 
 namespace Com.Changyoung.HI5Controller
 {
@@ -62,24 +53,9 @@ namespace Com.Changyoung.HI5Controller
 					return Android.OS.Environment.ExternalStorageDirectory.AbsolutePath;
 				}
 			}
-			set
-			{
-				try {
-					if (PrefPath != value) {
-						using (var prefs = Application.Context.GetSharedPreferences(Context.PackageName, FileCreationMode.Private)) {
-							var prefEditor = prefs.Edit();
-							prefEditor.PutString("dirpath_file", value);
-							prefEditor.Commit();
-							ToastShow("경로 저장: " + value);
-						}
-					}
-				} catch {
-
-				}
-			}
 		}
 
-		async private Task<string> ReadFileAsync(string fileName)
+		async private Task<string> ReadFile(string fileName)
 		{
 			string st = "";
 			try {
@@ -88,32 +64,17 @@ namespace Com.Changyoung.HI5Controller
 					sr.Close();
 				}
 			} catch {
-				ToastShow("파일이 없습니다: " + fileName);
+				LogDebug("파일이 없습니다: " + fileName);
 			}
 
 			return st;
 		}
 
-		private string ReadFile(string fileName)
-		{
-			string st = "";
-			try {
-				using (StreamReader sr = new StreamReader(fileName, Encoding.GetEncoding("euc-kr"))) {
-					st = sr.ReadToEnd();
-					sr.Close();
-				}
-			} catch {
-				ToastShow("파일이 없습니다: " + fileName);
-			}
-
-			return st;
-		}
-
-		private void ReadFile()
+		async private void ReadFile()
 		{
 			dirPath = PrefPath;
 			robotPath = Path.Combine(dirPath, "ROBOT.SWD");
-			mTvWcd.Text = ReadFile(robotPath);
+			mTvWcd.Text = await ReadFile(robotPath);
 		}
 
 		public void Refresh(bool forced = false)

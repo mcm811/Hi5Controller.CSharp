@@ -2050,8 +2050,8 @@ namespace Com.Changyoung.HI5Controller
 			// aapt resource value: 0x7f0b0091
 			public const int etCommandOffset = 2131427473;
 			
-			// aapt resource value: 0x7f0b009f
-			public const int etDirPath = 2131427487;
+			// aapt resource value: 0x7f0b009e
+			public const int etDirPath = 2131427486;
 			
 			// aapt resource value: 0x7f0b008d
 			public const int etFixedTipClearance = 2131427469;
@@ -2083,8 +2083,8 @@ namespace Com.Changyoung.HI5Controller
 			// aapt resource value: 0x7f0b006b
 			public const int fab = 2131427435;
 			
-			// aapt resource value: 0x7f0b00a2
-			public const int fab_done = 2131427490;
+			// aapt resource value: 0x7f0b00a1
+			public const int fab_done = 2131427489;
 			
 			// aapt resource value: 0x7f0b009c
 			public const int fab_wcd = 2131427484;
@@ -2152,8 +2152,8 @@ namespace Com.Changyoung.HI5Controller
 			// aapt resource value: 0x7f0b0072
 			public const int media_actions = 2131427442;
 			
-			// aapt resource value: 0x7f0b00ab
-			public const int menu_settings = 2131427499;
+			// aapt resource value: 0x7f0b00af
+			public const int menu_settings = 2131427503;
 			
 			// aapt resource value: 0x7f0b0031
 			public const int middle = 2131427377;
@@ -2164,29 +2164,26 @@ namespace Com.Changyoung.HI5Controller
 			// aapt resource value: 0x7f0b002b
 			public const int multiply = 2131427371;
 			
-			// aapt resource value: 0x7f0b009e
-			public const int myListView = 2131427486;
+			// aapt resource value: 0x7f0b00ae
+			public const int nav_robotswd = 2131427502;
 			
-			// aapt resource value: 0x7f0b00aa
-			public const int nav_robotswd = 2131427498;
-			
-			// aapt resource value: 0x7f0b00a8
-			public const int nav_spotcnedit = 2131427496;
+			// aapt resource value: 0x7f0b00ac
+			public const int nav_spotcnedit = 2131427500;
 			
 			// aapt resource value: 0x7f0b0081
 			public const int nav_view = 2131427457;
 			
-			// aapt resource value: 0x7f0b00a7
-			public const int nav_wcdlist = 2131427495;
-			
-			// aapt resource value: 0x7f0b00a5
-			public const int nav_wcdpath = 2131427493;
-			
-			// aapt resource value: 0x7f0b00a6
-			public const int nav_weldcount = 2131427494;
+			// aapt resource value: 0x7f0b00ab
+			public const int nav_wcdlist = 2131427499;
 			
 			// aapt resource value: 0x7f0b00a9
-			public const int navigation_subheader = 2131427497;
+			public const int nav_wcdpath = 2131427497;
+			
+			// aapt resource value: 0x7f0b00aa
+			public const int nav_weldcount = 2131427498;
+			
+			// aapt resource value: 0x7f0b00ad
+			public const int navigation_subheader = 2131427501;
 			
 			// aapt resource value: 0x7f0b0035
 			public const int never = 2131427381;
@@ -2206,8 +2203,8 @@ namespace Com.Changyoung.HI5Controller
 			// aapt resource value: 0x7f0b0042
 			public const int parentPanel = 2131427394;
 			
-			// aapt resource value: 0x7f0b00a0
-			public const int pathTextView = 2131427488;
+			// aapt resource value: 0x7f0b009f
+			public const int pathTextView = 2131427487;
 			
 			// aapt resource value: 0x7f0b0010
 			public const int pin = 2131427344;
@@ -2386,8 +2383,17 @@ namespace Com.Changyoung.HI5Controller
 			// aapt resource value: 0x7f0b0043
 			public const int topPanel = 2131427395;
 			
+			// aapt resource value: 0x7f0b00a4
+			public const int tvCN = 2131427492;
+			
 			// aapt resource value: 0x7f0b0096
 			public const int tvCommandOffset = 2131427478;
+			
+			// aapt resource value: 0x7f0b00a5
+			public const int tvCount = 2131427493;
+			
+			// aapt resource value: 0x7f0b00a2
+			public const int tvFileName = 2131427490;
 			
 			// aapt resource value: 0x7f0b009a
 			public const int tvFixedTipClearance = 2131427482;
@@ -2404,11 +2410,17 @@ namespace Com.Changyoung.HI5Controller
 			// aapt resource value: 0x7f0b0095
 			public const int tvPannelThickness = 2131427477;
 			
+			// aapt resource value: 0x7f0b00a3
+			public const int tvPreview = 2131427491;
+			
+			// aapt resource value: 0x7f0b00a6
+			public const int tvSize = 2131427494;
+			
 			// aapt resource value: 0x7f0b0099
 			public const int tvSqueezeForce = 2131427481;
 			
-			// aapt resource value: 0x7f0b00a3
-			public const int tvWeldCount = 2131427491;
+			// aapt resource value: 0x7f0b00a7
+			public const int tvTime = 2131427495;
 			
 			// aapt resource value: 0x7f0b0009
 			public const int up = 2131427337;
@@ -2422,11 +2434,11 @@ namespace Com.Changyoung.HI5Controller
 			// aapt resource value: 0x7f0b009b
 			public const int wcdListView = 2131427483;
 			
-			// aapt resource value: 0x7f0b00a1
-			public const int wcdTextView = 2131427489;
+			// aapt resource value: 0x7f0b00a0
+			public const int wcdTextView = 2131427488;
 			
-			// aapt resource value: 0x7f0b00a4
-			public const int weldCountListView = 2131427492;
+			// aapt resource value: 0x7f0b00a8
+			public const int weldCountListView = 2131427496;
 			
 			// aapt resource value: 0x7f0b0036
 			public const int withText = 2131427382;
@@ -2644,25 +2656,19 @@ namespace Com.Changyoung.HI5Controller
 			public const int WcdListTabFragment = 2130903094;
 			
 			// aapt resource value: 0x7f030037
-			public const int WcdListView = 2130903095;
+			public const int WcdPathTabFragment = 2130903095;
 			
 			// aapt resource value: 0x7f030038
-			public const int WcdListViewRow = 2130903096;
+			public const int WcdText = 2130903096;
 			
 			// aapt resource value: 0x7f030039
-			public const int WcdPathTabFragment = 2130903097;
+			public const int WcdTextTabFragment = 2130903097;
 			
 			// aapt resource value: 0x7f03003a
-			public const int WcdText = 2130903098;
+			public const int WeldCountRow = 2130903098;
 			
 			// aapt resource value: 0x7f03003b
-			public const int WcdTextTabFragment = 2130903099;
-			
-			// aapt resource value: 0x7f03003c
-			public const int WeldCountRow = 2130903100;
-			
-			// aapt resource value: 0x7f03003d
-			public const int WeldCountTabFragment = 2130903101;
+			public const int WeldCountTabFragment = 2130903099;
 			
 			static Layout()
 			{

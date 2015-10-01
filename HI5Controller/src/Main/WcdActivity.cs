@@ -202,6 +202,9 @@ namespace Com.Changyoung.HI5Controller
 					break;
 					case 1:
 					SetBackground(Resource.Color.tab2_actionbar_background, Resource.Color.tab2_tablayout_background);
+					WeldCountTabFragment weldCountTabFragment = (WeldCountTabFragment)((PagerAdapter)mViewPager.Adapter)[tab.Position];
+					if (weldCountTabFragment != null)
+						weldCountTabFragment.Refresh();
 					break;
 					case 2:
 					SetBackground(Resource.Color.tab3_actionbar_background, Resource.Color.tab3_tablayout_background);
@@ -211,6 +214,9 @@ namespace Com.Changyoung.HI5Controller
 					break;
 					case 3:
 					SetBackground(Resource.Color.tab4_actionbar_background, Resource.Color.tab4_tablayout_background);
+					JobEditTabFragment jobEditTabFragment = (JobEditTabFragment)((PagerAdapter)mViewPager.Adapter)[tab.Position];
+					if (jobEditTabFragment != null)
+						jobEditTabFragment.Refresh();
 					break;
 					case 4:
 					SetBackground(Resource.Color.tab5_actionbar_background, Resource.Color.tab5_tablayout_background);

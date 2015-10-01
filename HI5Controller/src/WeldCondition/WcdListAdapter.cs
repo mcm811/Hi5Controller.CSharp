@@ -1,32 +1,34 @@
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
-using Android.App;
 using Android.Content;
-using Android.OS;
-using Android.Runtime;
 using Android.Views;
 using Android.Widget;
 using Android.Graphics;
-using Android.Util;
 
 namespace Com.Changyoung.HI5Controller
 {
 	class WcdListAdapter : BaseAdapter<WeldConditionData>
 	{
 		private List<WeldConditionData> mItems;
-		private Context mContent;
+		private Context mContext;
 
 		private readonly Color defaultBackgroundColor = Color.Transparent;
 		private Color selectedBackGroundColor = Color.LightGray;
 
-		public WcdListAdapter(Context context, List<WeldConditionData> items)
+		public WcdListAdapter(Context context, List<WeldConditionData> items = null)
 		{
-			mItems = items;
-			mContent = context;
+			mItems = items == null ? new List<WeldConditionData>() : items;
+			mContext = context;
 			selectedBackGroundColor = Color.ParseColor("#F48FB1");
+		}
+
+		public void Add(WeldConditionData item)
+		{
+			mItems.Add(item);
+		}
+
+		public void Clear()
+		{
+			mItems.Clear();
 		}
 
 		public override WeldConditionData this[int position]
@@ -50,7 +52,7 @@ namespace Com.Changyoung.HI5Controller
 			WcdListRowViewHolder viewHolder;
 
 			if (row == null) {
-				row = LayoutInflater.From(mContent).Inflate(Resource.Layout.WcdListRow, null, false);
+				row = LayoutInflater.From(mContext).Inflate(Resource.Layout.WcdListRow, null, false);
 				viewHolder = new WcdListRowViewHolder(row);
 				row.Tag = viewHolder;
 			} else {

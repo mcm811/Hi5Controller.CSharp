@@ -72,16 +72,16 @@
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Xml" />
-    <Reference Include="Xamarin.Android.Support.Design, Version=1.0.0.0, Culture=neutral, PublicKeyToken=84e04ff9cfb79065, processorArchitecture=MSIL">
-      <HintPath>..\packages\Xamarin.Android.Support.Design.23.0.1.0-rc2\lib\MonoAndroid403\Xamarin.Android.Support.Design.dll</HintPath>
+    <Reference Include="Xamarin.Android.Support.Design, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Xamarin.Android.Support.Design.23.0.1.1\lib\MonoAndroid403\Xamarin.Android.Support.Design.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Xamarin.Android.Support.v4, Version=1.0.0.0, Culture=neutral, PublicKeyToken=84e04ff9cfb79065, processorArchitecture=MSIL">
-      <HintPath>..\packages\Xamarin.Android.Support.v4.23.0.1.0-rc2\lib\MonoAndroid403\Xamarin.Android.Support.v4.dll</HintPath>
+    <Reference Include="Xamarin.Android.Support.v4, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Xamarin.Android.Support.v4.23.0.1.1\lib\MonoAndroid403\Xamarin.Android.Support.v4.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Xamarin.Android.Support.v7.AppCompat, Version=1.0.0.0, Culture=neutral, PublicKeyToken=84e04ff9cfb79065, processorArchitecture=MSIL">
-      <HintPath>..\packages\Xamarin.Android.Support.v7.AppCompat.23.0.1.0-rc2\lib\MonoAndroid403\Xamarin.Android.Support.v7.AppCompat.dll</HintPath>
+    <Reference Include="Xamarin.Android.Support.v7.AppCompat, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Xamarin.Android.Support.v7.AppCompat.23.0.1.1\lib\MonoAndroid403\Xamarin.Android.Support.v7.AppCompat.dll</HintPath>
       <Private>True</Private>
     </Reference>
   </ItemGroup>
@@ -89,30 +89,25 @@
     <Compile Include="src\FilePicker\FileListAdapter.cs" />
     <Compile Include="src\FilePicker\FileListFragment.cs" />
     <Compile Include="src\FilePicker\FileListRowViewHolder.cs" />
-    <Compile Include="src\FilePicker\FilePickerActivity.cs" />
-    <Compile Include="src\bak\FilePickerDialog.cs" />
     <Compile Include="src\FilePicker\Helpers.cs" />
-    <Compile Include="src\Job.cs" />
-    <Compile Include="src\PagerAdapter.cs" />
-    <Compile Include="src\Splash.cs" />
-    <Compile Include="src\WcdListRowViewHolder.cs" />
-    <Compile Include="src\WcdPathTabFragment.cs" />
-    <Compile Include="src\WeldCountAdapter.cs" />
-    <Compile Include="src\WeldCountRowViewHolder.cs" />
-    <Compile Include="src\WeldCountTabFragment.cs" />
-    <Compile Include="src\JobEditTabFragment.cs" />
-    <Compile Include="src\WcdActivity.cs" />
-    <Compile Include="src\bak\WcdListActivity.cs" />
-    <Compile Include="src\WcdListAdapter.cs" />
+    <Compile Include="src\WeldCount\Job.cs" />
+    <Compile Include="src\Main\PagerAdapter.cs" />
+    <Compile Include="src\Main\Splash.cs" />
+    <Compile Include="src\WeldCondition\WcdListRowViewHolder.cs" />
+    <Compile Include="src\WeldCondition\WcdPathTabFragment.cs" />
+    <Compile Include="src\WeldCount\WeldCountAdapter.cs" />
+    <Compile Include="src\WeldCount\WeldCountRowViewHolder.cs" />
+    <Compile Include="src\WeldCount\WeldCountTabFragment.cs" />
+    <Compile Include="src\WeldCount\JobEditTabFragment.cs" />
+    <Compile Include="src\Main\WcdActivity.cs" />
+    <Compile Include="src\WeldCondition\WcdListAdapter.cs" />
     <Compile Include="Resources\Resource.Designer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="src\WcdListTabFragment.cs" />
-    <Compile Include="src\WcdTextTabFragment.cs" />
-    <Compile Include="src\bak\WcdTextActivity.cs" />
-    <Compile Include="src\WeldConditionData.cs" />
+    <Compile Include="src\WeldCondition\WcdListTabFragment.cs" />
+    <Compile Include="src\WeldCondition\WcdTextTabFragment.cs" />
+    <Compile Include="src\WeldCondition\WeldConditionData.cs" />
   </ItemGroup>
   <ItemGroup>
-    <AndroidAsset Include="Assets\0001.JOB" />
     <None Include="packages.config" />
     <None Include="Resources\AboutResources.txt" />
     <None Include="Assets\AboutAssets.txt" />
@@ -133,8 +128,6 @@
       <SubType>AndroidResource</SubType>
     </AndroidResource>
     <AndroidResource Include="Resources\layout\WcdList.axml" />
-    <AndroidResource Include="Resources\layout-land\WcdListViewRow.axml" />
-    <AndroidResource Include="Resources\layout-land\WcdListView.axml" />
     <AndroidResource Include="Resources\layout\toolbar.axml">
       <SubType>AndroidResource</SubType>
     </AndroidResource>

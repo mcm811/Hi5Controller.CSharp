@@ -1,14 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Text;
-
-using Android.App;
 using Android.Content;
-using Android.OS;
-using Android.Runtime;
-using Android.Views;
-using Android.Widget;
 using System.IO;
 using Android.Util;
 
@@ -86,7 +79,7 @@ namespace Com.Changyoung.HI5Controller
 
 		RowJob row;
 
-		private static void LogDebug(string msg)
+		public static void LogDebug(string msg)
 		{
 			Log.Debug("Job", "[" + msg + "]");
 		}
@@ -265,22 +258,14 @@ namespace Com.Changyoung.HI5Controller
 			{
 				mJobValueList = new List<JobValue>();
 				var s = rowString.Trim().Split(new char[] { ' ' });
-				LogDebug("s.Length: " + s.Length.ToString());
+				//LogDebug("s.Length: " + s.Length.ToString());
 				if (s.Length == 2) {
 					var f = s[1].Split(new char[] { ',' });
-					LogDebug("f.Lenght: " + f.Length.ToString());
+					//LogDebug("f.Lenght: " + f.Length.ToString());
 					for (int i = 0; i < f.Length; i++) {
 						mJobValueList.Add(new JobValue(f[i]));
-						LogDebug("f" + i.ToString() + ": " + f[i]);
+						//LogDebug("f" + i.ToString() + ": " + f[i]);
 					}
-					//if (f.Length == 3) {
-					//	mJobValueList.Add(new JobValue(f[0]));
-					//	mJobValueList.Add(new JobValue(f[1]));
-					//	mJobValueList.Add(new JobValue(f[2]));
-					//	//LogDebug("f0: " + f[0]);
-					//	//LogDebug("f1: " + f[1]);
-					//	//LogDebug("f2: " + f[2]);
-					//}
 				}
 			}
 
@@ -382,12 +367,10 @@ namespace Com.Changyoung.HI5Controller
 		private int step;            // S1 S2 S3 붙은 것들 젤 마지막 S번호 값
 		private string preview;
 
-		private FileInfo fi;
-		private string fileName;
+		public FileInfo fi { get; private set; }
 
 		public JobCount(string fileName)
 		{
-			this.fileName = fileName;
 			try {
 				fi = new FileInfo(fileName);
 			} catch {
@@ -446,29 +429,25 @@ namespace Com.Changyoung.HI5Controller
 		public string GetString()
 		{
 			StringBuilder sb = new StringBuilder();
-			int n;
-			if (fi != null) {
-				sb.Append(fi.Name);
-				if (preview != null) sb.Append("    " + preview);
-				sb.Append("\n");
 
+			if (total > 0)
 				sb.Append("Total: " + total.ToString());
-				n = 1;
-				foreach (var item in gn) {
-					sb.Append(",  GN" + n++.ToString() + ": " + item.ToString());
-				}
-				n = 1;
-				foreach (var item in g) {
-					sb.Append(",  G" + n++.ToString() + ": " + item.ToString());
-				}
-				sb.AppendLine(",  Step: " + step.ToString());
 
-
-				sb.Append("날짜: " + fi.LastWriteTime.ToString());
-				sb.Append("    크기: " + fi.Length.ToString() + "B");
-
-				Log.Debug("JobCount", sb.ToString());
+			int n = 1;
+			foreach (var item in gn) {
+				sb.Append(",  GN" + n++.ToString() + ": " + item.ToString());
 			}
+			n = 1;
+			foreach (var item in g) {
+				sb.Append(",  G" + n++.ToString() + ": " + item.ToString());
+			}
+			if (step > 0) {
+				if (total > 0)
+					sb.Append(",  ");
+				sb.Append("Step: " + step.ToString());
+			}
+
+			Log.Debug("JobCount", sb.ToString());
 
 			return sb.ToString();
 		}
@@ -476,21 +455,31 @@ namespace Com.Changyoung.HI5Controller
 
 	public class JobFile
 	{
-		private string mFileName;
-		private List<Job> mJobList;
-		private JobCount mJc;
+		private List<Job> jobList;
+		private JobCount jobCount;
+
+		public Job this[int index]
+		{
+			get { return jobList[index]; }
+			set { jobList[index] = value; }
+		}
+
+		public int Count
+		{
+			get { return jobList.Count; }
+		}
 
 		public JobCount JobCount
 		{
-			get { return mJc; }
+			get { return jobCount; }
 		}
 
 		public JobFile(string fileName, Context context = null)
 		{
-			mFileName = fileName;
-			mJobList = new List<Job>();
-			mJc = new JobCount(fileName);
-			ReadFile(mFileName, mJobList, context);
+			jobList = new List<Job>();
+			jobCount = new JobCount(fileName);
+			ReadFile(fileName, jobList, context);
+			BuildJobCount(jobList, jobCount);
 		}
 
 		private List<Job> ReadFile(string fileName, List<Job> items, Context context = null)
@@ -503,57 +492,102 @@ namespace Com.Changyoung.HI5Controller
 						items.Add(new Job(rowNumber++, rowString));
 					}
 					sr.Close();
-					//LogDebug("불러 오기:" + fileName);
 				}
 			} catch {
-				//ToastShow("읽기 실패:" + fileName);
 			}
 			return items;
 		}
 
-		public string GetCount()
+		private void SaveFile(string fileName, List<Job> items, Context context = null)
 		{
-			Count(mJc);
-			return mJc.GetString();
+			try {
+				using (var sw = context != null ? new StreamWriter(context.Assets.Open(fileName), Encoding.GetEncoding("euc-kr")) : new StreamWriter(fileName, false, Encoding.GetEncoding("euc-kr"))) {
+					foreach (var item in items) {
+						sw.WriteLine(item.RowString);
+					}
+					sw.Close();
+					Job.LogDebug("저장 완료:" + fileName);
+				}
+			} catch {
+				Job.LogDebug("저장 실패:" + fileName);
+			}
 		}
 
-		public string GetCN()
+		public void SaveFile()
+		{
+			SaveFile(jobCount.fi.FullName, jobList);
+		}
+
+		private void BuildJobCount(List<Job> jobList, JobCount jobCount)
+		{
+			foreach (var job in jobList) {
+				var cn = job.CN;
+				if (cn != null) {
+					jobCount.Total++;
+				}
+				var gn = job.GN;
+				if (gn != null) {
+					jobCount.IncreaseGN(gn);
+				}
+				var g = job.G;
+				if (g != null) {
+					jobCount.IncreaseG(g);
+				}
+				if (job.RowType == Job.RowTypes.Move) {
+					jobCount.Step++;
+				}
+				if (job.RowType == Job.RowTypes.Comment) {
+					if (jobCount.Preview == null)
+						jobCount.Preview = job.RowString.Trim();
+				}
+			}
+		}
+
+		public string GetCNList()
+		{
+			StringBuilder sb = new StringBuilder();
+			foreach (var job in jobList) {
+				var cn = job.CN;
+				if (cn != null)
+					sb.Append(cn + "  ");
+			}
+			if (sb.Length > 0)
+				sb.Insert(0, "CN: ");
+			return sb.ToString();
+		}
+
+		public string GetCNTest()
 		{
 			StringBuilder sb = new StringBuilder();
 
-			foreach (var job in mJobList) {
+			foreach (var job in jobList) {
 				var cn = job.CN;
-				if (cn != null) {
+				if (cn != null)
 					sb.Append(job.RowNumber.ToString() + ": CN=" + cn + "\n");
-				}
 			}
 
 			return sb.ToString();
 		}
 
-		public void Count(JobCount jc)
+		public void LogRowString()
 		{
-			foreach (var job in mJobList) {
-				var cn = job.CN;
-				if (cn != null) {
-					jc.Total++;
-				}
-				var gn = job.GN;
-				if (gn != null) {
-					jc.IncreaseGN(gn);
-				}
-				var g = job.G;
-				if (g != null) {
-					jc.IncreaseG(g);
-				}
-				if (job.RowType == Job.RowTypes.Move) {
-					jc.Step++;
-				}
-				if (job.RowType == Job.RowTypes.Comment) {
-					if (jc.Preview == null)
-						jc.Preview = job.RowString.Trim();
+			foreach (var Job in jobList) {
+				Job.LogDebug(Job.RowString);
+			}
+		}
+
+		public void UpdateCN(int start)
+		{
+			foreach (var job in jobList) {
+				if (job.RowType == Job.RowTypes.Spot) {
+					job.CN = start++.ToString();
 				}
 			}
+		}
+
+		public void UpdateCN(int index, string value)
+		{
+			jobList[index].CN = value;
 		}
 	}
 }
