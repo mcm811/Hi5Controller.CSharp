@@ -84,12 +84,6 @@ namespace Com.Changyoung.HI5Controller
 					case Resource.Id.nav_wcdlist:
 					viewPager.SetCurrentItem(2, true);
 					break;
-					case Resource.Id.nav_spotcnedit:
-					viewPager.SetCurrentItem(3, true);
-					break;
-					case Resource.Id.nav_robotswd:
-					viewPager.SetCurrentItem(4, true);
-					break;
 				}
 				drawerLayout.CloseDrawers();
 			};
@@ -229,7 +223,7 @@ namespace Com.Changyoung.HI5Controller
 			actionBar.SetHomeAsUpIndicator(Resource.Drawable.ic_menu_white);
 			actionBar.SetDisplayHomeAsUpEnabled(true);
 			actionBar.Title = Resources.GetString(Resource.String.ApplicationName);
-			actionBar.Elevation = 0;
+			//actionBar.Elevation = 0;
 			actionBar.Show();
 
 			TabLayoutViewPager();

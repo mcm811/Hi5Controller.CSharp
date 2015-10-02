@@ -508,6 +508,9 @@ namespace Com.Changyoung.HI5Controller
 					sw.Close();
 					Job.LogDebug("저장 완료:" + fileName);
 				}
+				jobCount = null;
+				jobCount = new JobCount(fileName);
+				BuildJobCount(jobList, jobCount);
 			} catch {
 				Job.LogDebug("저장 실패:" + fileName);
 			}
@@ -546,10 +549,16 @@ namespace Com.Changyoung.HI5Controller
 		public string GetCNList()
 		{
 			StringBuilder sb = new StringBuilder();
+			int n = 0;
 			foreach (var job in jobList) {
 				var cn = job.CN;
-				if (cn != null)
+				if (cn != null) {
+					if (++n > 200) {	// 200개 까지만 보여줌
+						sb.Append("...");
+						break;
+					}
 					sb.Append(cn + "  ");
+				}
 			}
 			if (sb.Length > 0)
 				sb.Insert(0, "CN: ");

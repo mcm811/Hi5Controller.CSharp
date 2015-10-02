@@ -14,7 +14,7 @@ using Android.Content.PM;
 
 namespace Com.Changyoung.HI5Controller
 {
-	[Activity(Label = "@string/ApplicationName", Theme = "@style/Theme.Splash", MainLauncher = true, NoHistory = true)]
+	[Activity(Label = "@string/ApplicationName", Theme = "@style/Theme.Splash", MainLauncher = true, NoHistory = true, ScreenOrientation = ScreenOrientation.Portrait)]
 	public class Splash : Activity
 	{
 		protected override void OnCreate(Bundle savedInstanceState)

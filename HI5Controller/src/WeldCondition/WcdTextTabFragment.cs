@@ -78,7 +78,7 @@ namespace Com.Changyoung.HI5Controller
 
 			// 떠 있는 액션버튼
 			mFab = mView.FindViewById<FloatingActionButton>(Resource.Id.fab);
-			mFab.Elevation = 6;
+			//mFab.Elevation = 6;
 			mFab.Click += (sender, e) =>
 			{
 				Refresh(forced: true);

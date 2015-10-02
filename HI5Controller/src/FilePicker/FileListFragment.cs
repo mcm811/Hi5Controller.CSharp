@@ -10,6 +10,10 @@
 	using Android.Views;
 	using Android.Widget;
 	using Android.Content;
+	using Android.Support.Design.Widget;
+	using Android;
+	using AlertDialog = Android.Support.V7.App.AlertDialog;
+	using System.Text;
 
 	/// <summary>
 	///   A ListFragment that will show the files and subdirectories of a given directory.
@@ -20,6 +24,7 @@
 	/// </remarks>
 	public class FileListFragment : Android.Support.V4.App.ListFragment
 	{
+		private View view;
 		private FileListAdapter mFileListAdapter;
 		private DirectoryInfo mDirectoryInfo;
 
@@ -30,7 +35,7 @@
 
 		private void ToastShow(string str)
 		{
-			Toast.MakeText(Context, str, ToastLength.Short).Show();
+			Snackbar.Make(view, str, Snackbar.LengthLong).Show();
 			LogDebug(str);
 		}
 
@@ -51,7 +56,8 @@
 
 		public override View OnCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
 		{
-			return base.OnCreateView(inflater, container, savedInstanceState);
+			view = base.OnCreateView(inflater, container, savedInstanceState);
+			return view;
 		}
 
 		public override void OnResume()
@@ -65,14 +71,37 @@
 			base.OnPause();
 		}
 
-		public override void OnListItemClick(ListView l, View v, int position, long id)
+		async public override void OnListItemClick(ListView l, View v, int position, long id)
 		{
 			var fileSystemInfo = mFileListAdapter.GetItem(position);
 			if (position == 0) {
 				RefreshFilesList(Path.GetDirectoryName(fileSystemInfo.FullName));
 			} else if (fileSystemInfo.IsDirectory()) {
 				RefreshFilesList(fileSystemInfo.FullName);
+			} else {
+				if (fileSystemInfo.FullName.EndsWith(".JOB") || fileSystemInfo.FullName.EndsWith(".SWD")) {
+					var textView = new TextView(Context);
+					textView.SetPadding(10, 10, 10, 10);
+					textView.SetTextSize(ComplexUnitType.Sp, 10f);
+					var scrollView = new ScrollView(Context);
+					scrollView.AddView(textView);
+					AlertDialog.Builder dialog = new AlertDialog.Builder(Context);
+					dialog.SetView(scrollView);
+
+					try {
+						using (StreamReader sr = new StreamReader(fileSystemInfo.FullName, Encoding.GetEncoding("euc-kr"))) {
+							textView.Text = await sr.ReadToEndAsync();
+							sr.Close();
+						}
+					} catch { }
+
+					dialog.SetPositiveButton("닫기", delegate
+					{ });
+
+					dialog.Show();
+				}
 			}
+
 			base.OnListItemClick(l, v, position, id);
 		}
 

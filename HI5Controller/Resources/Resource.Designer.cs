@@ -1876,34 +1876,40 @@ namespace Com.Changyoung.HI5Controller
 			public const int ic_storage = 2130837609;
 			
 			// aapt resource value: 0x7f02006a
-			public const int ic_view_list = 2130837610;
+			public const int ic_subject_white = 2130837610;
 			
 			// aapt resource value: 0x7f02006b
-			public const int listviewrow_bg = 2130837611;
-			
-			// aapt resource value: 0x7f020073
-			public const int notification_template_icon_bg = 2130837619;
+			public const int ic_today = 2130837611;
 			
 			// aapt resource value: 0x7f02006c
-			public const int nvheader_bg = 2130837612;
+			public const int ic_view_list = 2130837612;
 			
 			// aapt resource value: 0x7f02006d
-			public const int nvheader_bg_blue = 2130837613;
+			public const int listviewrow_bg = 2130837613;
+			
+			// aapt resource value: 0x7f020075
+			public const int notification_template_icon_bg = 2130837621;
 			
 			// aapt resource value: 0x7f02006e
-			public const int ProgressBarStyle = 2130837614;
+			public const int nvheader_bg = 2130837614;
 			
 			// aapt resource value: 0x7f02006f
-			public const int robot_industrial = 2130837615;
+			public const int nvheader_bg_blue = 2130837615;
 			
 			// aapt resource value: 0x7f020070
-			public const int splash = 2130837616;
+			public const int ProgressBarStyle = 2130837616;
 			
 			// aapt resource value: 0x7f020071
-			public const int splash_black = 2130837617;
+			public const int robot_industrial = 2130837617;
 			
 			// aapt resource value: 0x7f020072
-			public const int splash_blue = 2130837618;
+			public const int splash = 2130837618;
+			
+			// aapt resource value: 0x7f020073
+			public const int splash_black = 2130837619;
+			
+			// aapt resource value: 0x7f020074
+			public const int splash_blue = 2130837620;
 			
 			static Drawable()
 			{
@@ -2158,8 +2164,8 @@ namespace Com.Changyoung.HI5Controller
 			// aapt resource value: 0x7f0b0072
 			public const int media_actions = 2131427442;
 			
-			// aapt resource value: 0x7f0b00b1
-			public const int menu_settings = 2131427505;
+			// aapt resource value: 0x7f0b00af
+			public const int menu_settings = 2131427503;
 			
 			// aapt resource value: 0x7f0b0031
 			public const int middle = 2131427377;
@@ -2170,26 +2176,20 @@ namespace Com.Changyoung.HI5Controller
 			// aapt resource value: 0x7f0b002b
 			public const int multiply = 2131427371;
 			
-			// aapt resource value: 0x7f0b00b0
-			public const int nav_robotswd = 2131427504;
-			
-			// aapt resource value: 0x7f0b00ae
-			public const int nav_spotcnedit = 2131427502;
-			
 			// aapt resource value: 0x7f0b0081
 			public const int nav_view = 2131427457;
 			
-			// aapt resource value: 0x7f0b00ad
-			public const int nav_wcdlist = 2131427501;
+			// aapt resource value: 0x7f0b00ac
+			public const int nav_wcdlist = 2131427500;
+			
+			// aapt resource value: 0x7f0b00ae
+			public const int nav_wcdpath = 2131427502;
 			
 			// aapt resource value: 0x7f0b00ab
-			public const int nav_wcdpath = 2131427499;
+			public const int nav_weldcount = 2131427499;
 			
-			// aapt resource value: 0x7f0b00ac
-			public const int nav_weldcount = 2131427500;
-			
-			// aapt resource value: 0x7f0b00af
-			public const int navigation_subheader = 2131427503;
+			// aapt resource value: 0x7f0b00ad
+			public const int navigation_subheader = 2131427501;
 			
 			// aapt resource value: 0x7f0b0035
 			public const int never = 2131427381;

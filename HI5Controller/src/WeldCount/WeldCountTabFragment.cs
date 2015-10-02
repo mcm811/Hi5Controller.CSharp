@@ -30,7 +30,16 @@ namespace Com.Changyoung.HI5Controller
 
 		private void ToastShow(string str)
 		{
-			Toast.MakeText(Context, str, ToastLength.Short).Show();
+			//Toast.MakeText(Context, str, ToastLength.Short).Show();
+			Snackbar.Make(view, str, Snackbar.LengthLong).Show();
+			LogDebug(str);
+		}
+
+		private void SnackbarShow(View viewParent, string str)
+		{
+			Snackbar.Make(viewParent, str, Snackbar.LengthLong)
+					.SetAction("Undo", (view) => { /*Undo message sending here.*/ })
+					.Show(); // Don’t forget to show!
 			LogDebug(str);
 		}
 
@@ -91,12 +100,19 @@ namespace Com.Changyoung.HI5Controller
 					return;
 				}
 
-				InputMethodManager imm = (InputMethodManager)Context.GetSystemService(Context.InputMethodService);
-				View dialogView = LayoutInflater.From(Context).Inflate(Resource.Layout.weld_count_text_view, null);
-				AlertDialog.Builder dialog = new AlertDialog.Builder(Context);
-				dialog.SetView(dialogView);
+				//View dialogView = LayoutInflater.From(Context).Inflate(Resource.Layout.weld_count_text_view, null);
+				//var textView = dialogView.FindViewById<TextView>(Resource.Id.textView);
+				//AlertDialog.Builder dialog = new AlertDialog.Builder(Context);
+				//dialog.SetView(dialogView);
 
-				var textView = dialogView.FindViewById<TextView>(Resource.Id.textView);
+				var textView = new TextView(Context);
+				textView.SetPadding(10, 10, 10, 10);
+				textView.SetTextSize(ComplexUnitType.Sp, 10f);
+				var scrollView = new ScrollView(Context);
+				scrollView.AddView(textView);
+				AlertDialog.Builder dialog = new AlertDialog.Builder(Context);
+				dialog.SetView(scrollView);
+
 				var jobFile = weldCountAdapter.GetItem(e.Position);
 				textView.Text = jobFile.RowText();
 
@@ -137,6 +153,7 @@ namespace Com.Changyoung.HI5Controller
 					var textInputLayout = new TextInputLayout(Context);
 					var etCN = new EditText(Context);
 					etCN.InputType = etBeginNumber.InputType;
+					etCN.SetSelectAllOnFocus(true);
 					etCN.Hint = "CN[" + jobFile[i].RowNumber + "]";
 					etCN.Text = jobFile[i].CN;
 					etCN.Gravity = GravityFlags.Center;
@@ -154,7 +171,7 @@ namespace Com.Changyoung.HI5Controller
 					etCN.KeyPress += (object sender1, View.KeyEventArgs e1) =>
 					{
 						e1.Handled = false;
-						if (e1.KeyCode == Keycode.Enter) {
+						if (e1.KeyCode == Keycode.Enter || e1.KeyCode == Keycode.Back || e1.KeyCode == Keycode.Escape) {
 							imm.HideSoftInputFromWindow(etCN.WindowToken, 0);
 							etCN.ClearFocus();
 							e1.Handled = true;
@@ -186,7 +203,7 @@ namespace Com.Changyoung.HI5Controller
 			etBeginNumber.KeyPress += (object sender1, View.KeyEventArgs e1) =>
 			{
 				e1.Handled = false;
-				if (e1.KeyCode == Keycode.Enter) {
+				if (e1.KeyCode == Keycode.Enter || e1.KeyCode == Keycode.Back || e1.KeyCode == Keycode.Escape) {
 					imm.HideSoftInputFromWindow(etBeginNumber.WindowToken, 0);
 					etBeginNumber.ClearFocus();
 					e1.Handled = true;
@@ -221,8 +238,9 @@ namespace Com.Changyoung.HI5Controller
 					job.CN = et.Text;
 				}
 				if (jobFile.JobCount.Total > 0) {
-					weldCountAdapter.NotifyDataSetChanged();
 					jobFile.SaveFile();
+					weldCountAdapter.NotifyDataSetChanged();
+					ToastShow("저장 완료: " + jobFile.JobCount.fi.FullName);
 				}
 			});
 

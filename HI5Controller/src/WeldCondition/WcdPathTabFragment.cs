@@ -8,15 +8,16 @@ using FloatingActionButton = Android.Support.Design.Widget.FloatingActionButton;
 using com.xamarin.recipes.filepicker;
 using Android.Views.InputMethods;
 using System.IO;
+using Android.Support.Design.Widget;
 
 namespace Com.Changyoung.HI5Controller
 {
 	public class WcdPathTabFragment : Fragment, IRefresh
 	{
-		View mView;
-		private EditText mEtDirPath;
-		private FloatingActionButton mFab;
-		private FileListFragment mFileListFragment;
+		View view;
+		private EditText etDirPath;
+		private FloatingActionButton fab;
+		private FileListFragment fileListFragment;
 
 		private void LogDebug(string msg)
 		{
@@ -25,67 +26,82 @@ namespace Com.Changyoung.HI5Controller
 
 		private void ToastShow(string str)
 		{
-			Toast.MakeText(Context, str, ToastLength.Short).Show();
+			//Toast.MakeText(Context, str, ToastLength.Short).Show();
+			Snackbar.Make(view, str, Snackbar.LengthLong).Show();
 			LogDebug(str);
 		}
-		
+
 		public void Refresh(bool forced = false)
 		{
 			if (forced) {
-				string path = Pref.Path;
-				mEtDirPath.Text = path;
-				mFileListFragment.RefreshFilesList(path);
+				etDirPath.Text = Pref.Path;
+				fileListFragment.RefreshFilesList(etDirPath.Text);
 			}
-        }
+		}
+
+		public bool Refresh(string path)
+		{
+			if (path != null) {
+				try {
+					var dir = new DirectoryInfo(path);
+					if (dir.IsDirectory()) {
+						Pref.Path = path;
+						etDirPath.Text = path;
+						fileListFragment.RefreshFilesList(path);
+					}
+					return true;
+				} catch { }
+			}
+			return false;
+		}
 
 		public override View OnCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
 		{
 			LogDebug("OnCreateView");
-			mView = inflater.Inflate(Resource.Layout.wcd_path_tab_fragment, container, false);
+			view = inflater.Inflate(Resource.Layout.wcd_path_tab_fragment, container, false);
 			InputMethodManager imm = (InputMethodManager)Context.GetSystemService(Context.InputMethodService);
 
 			string path = Pref.Path;
-			mFileListFragment = (FileListFragment)this.ChildFragmentManager.FindFragmentById(Resource.Id.file_list_fragment);
-			mFileListFragment.RefreshFilesList(path);
+			fileListFragment = (FileListFragment)this.ChildFragmentManager.FindFragmentById(Resource.Id.file_list_fragment);
+			fileListFragment.RefreshFilesList(path);
 
-			mEtDirPath = mView.FindViewById<EditText>(Resource.Id.etDirPath);
-			mEtDirPath.Text = path;
-			//mEtDirPath.InputType = InputTypes.TextFlagNoSuggestions | InputTypes.ClassText;
-			mEtDirPath.KeyPress += (object sender, View.KeyEventArgs e) =>
+			etDirPath = view.FindViewById<EditText>(Resource.Id.etDirPath);
+			etDirPath.Text = path;
+			etDirPath.FocusChange += (object sender, View.FocusChangeEventArgs e) =>
 			{
-				// KeyEventArgs.Handled
-				// 라우트된 이벤트를 처리된 것으로 표시하려면 true이고,
-				// 라우트된 이벤트를 처리되지 않은 것으로 두어 이벤트가 추가로 라우트되도록 허용하려면 false입니다.
-				// 기본값은 false입니다.
-				e.Handled = false;
-				if (e.KeyCode == Keycode.Enter) {
-					try {
-						var dir = new DirectoryInfo(mEtDirPath.Text);
-						if (dir.IsDirectory()) {
-							Pref.Path = mEtDirPath.Text;
-						} else {
-							ToastShow("잘못된 경로: " + mEtDirPath.Text);
-							mEtDirPath.Text = Pref.Path;
-						}
-					} catch {
-						ToastShow("잘못된 경로: " + mEtDirPath.Text);
-                        mEtDirPath.Text = Pref.Path;
+				try {
+					var dir = new DirectoryInfo(etDirPath.Text);
+					if (dir.IsDirectory()) {
+						Pref.Path = etDirPath.Text;
+					} else {
+						ToastShow("잘못된 경로: " + etDirPath.Text);
+						etDirPath.Text = Pref.Path;
 					}
-					mFileListFragment.RefreshFilesList(mEtDirPath.Text);
-					imm.HideSoftInputFromWindow(mEtDirPath.WindowToken, 0);
+				} catch {
+					ToastShow("잘못된 경로: " + etDirPath.Text);
+					etDirPath.Text = Pref.Path;
+				}
+				fileListFragment.RefreshFilesList(etDirPath.Text);
+			};
+			etDirPath.KeyPress += (object sender, View.KeyEventArgs e) =>
+			{
+				e.Handled = false;
+				if (e.KeyCode == Keycode.Enter || e.KeyCode == Keycode.Back || e.KeyCode == Keycode.Escape) {
+					imm.HideSoftInputFromWindow(etDirPath.WindowToken, 0);
+					etDirPath.ClearFocus();
 					e.Handled = true;
 				}
 			};
 
-			mFab = mView.FindViewById<FloatingActionButton>(Resource.Id.fab);
-			mFab.Elevation = 6;
-			mFab.Click += (sender, e) =>
+			fab = view.FindViewById<FloatingActionButton>(Resource.Id.fab);
+			//fab.Elevation = 6;
+			fab.Click += (sender, e) =>
 			{
-				mEtDirPath.Text = mFileListFragment.DirPath;
-				Pref.Path = mEtDirPath.Text;
+				etDirPath.Text = fileListFragment.DirPath;
+				Pref.Path = etDirPath.Text;
 			};
 
-			return mView;
+			return view;
 		}
 
 		public override void OnActivityResult(int requestCode, int resultCode, Intent data)
