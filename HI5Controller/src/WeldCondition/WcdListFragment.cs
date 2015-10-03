@@ -20,7 +20,7 @@ using System.Text;
 
 namespace Com.Changyoung.HI5Controller
 {
-	public class WcdListTabFragment : Fragment, IRefresh
+	public class WcdListFragment : Fragment, IRefresh
 	{
 		private View view;
 		private FloatingActionButton fabWcd;
@@ -136,9 +136,9 @@ namespace Com.Changyoung.HI5Controller
 				return;
 			}
 
-			if (forced || dirPath != Pref.Path || wcdListAdapter.Count == 0) {
-				LogDebug("Refresh: " + dirPath + " : " + Pref.Path + " : " + wcdListAdapter.Count.ToString());
-				dirPath = Pref.Path;
+			if (forced || dirPath != Pref.WorkPath || wcdListAdapter.Count == 0) {
+				LogDebug("Refresh: " + dirPath + " : " + Pref.WorkPath + " : " + wcdListAdapter.Count.ToString());
+				dirPath = Pref.WorkPath;
 				robotPath = System.IO.Path.Combine(dirPath, "ROBOT.SWD");
 				wcdListAdapter.Clear();
 				ReadFile(robotPath, wcdListAdapter);
@@ -169,7 +169,7 @@ namespace Com.Changyoung.HI5Controller
 			LogDebug("OnCreate");
 			base.OnCreate(bundle);
 
-			dirPath = Pref.Path;
+			dirPath = Pref.WorkPath;
 			robotPath = System.IO.Path.Combine(dirPath, "ROBOT.SWD");
 			wcdListAdapter = new WcdListAdapter(Context);
 			ReadFile(robotPath, wcdListAdapter);
@@ -178,9 +178,9 @@ namespace Com.Changyoung.HI5Controller
 		public override View OnCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
 		{
 			LogDebug("OnCreateView");
-			view = inflater.Inflate(Resource.Layout.wcd_list_tab_fragment, container, false);
+			view = inflater.Inflate(Resource.Layout.wcd_list_fragment, container, false);
 
-			selectedBackGroundColor = Context.Resources.GetColor(Resource.Color.tab2_textview_background);
+			selectedBackGroundColor = Context.Resources.GetColor(Resource.Color.tab3_textview_background);
 
 			listView = view.FindViewById<ListView>(Resource.Id.wcdListView);
 			listView.Adapter = wcdListAdapter;
@@ -251,7 +251,7 @@ namespace Com.Changyoung.HI5Controller
 			return view;
 		}
 
-		async private void FabWcd_TextView(object sender, EventArgs e)
+		private void FabWcd_TextView(object sender, EventArgs e)
 		{
 			//View dialogView = LayoutInflater.From(Context).Inflate(Resource.Layout.weld_count_text_view, null);
 			//var textView = dialogView.FindViewById<TextView>(Resource.Id.textView);
@@ -268,7 +268,7 @@ namespace Com.Changyoung.HI5Controller
 
 			try {
 				using (StreamReader sr = new StreamReader(robotPath, Encoding.GetEncoding("euc-kr"))) {
-					textView.Text = await sr.ReadToEndAsync();
+					textView.Text = sr.ReadToEnd();
 					sr.Close();
 				}
 			} catch {

@@ -18,8 +18,8 @@
         android:id="@+id/textInputLayout1"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="10dp"
-        android:layout_marginRight="10dp">
+        android:layout_marginLeft="30dp"
+        android:layout_marginRight="30dp">
         <android.support.v7.widget.AppCompatEditText
             android:inputType="numberDecimal"
             android:id="@+id/etBeginNumber"
@@ -37,6 +37,8 @@
     <SeekBar
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginLeft="25dp"
+        android:layout_marginRight="25dp"
         android:id="@+id/sampleSeekBar"
         android:indeterminate="false"
         android:max="254" />
@@ -46,7 +48,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/scrollView1"
-        android:padding="10dp">
+        android:padding="30dp">
         <LinearLayout
             android:orientation="vertical"
             android:layout_width="match_parent"

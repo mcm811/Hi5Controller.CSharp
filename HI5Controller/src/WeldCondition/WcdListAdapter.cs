@@ -18,7 +18,7 @@ namespace Com.Changyoung.HI5Controller
 		{
 			mItems = items == null ? new List<WeldConditionData>() : items;
 			mContext = context;
-			selectedBackGroundColor = Color.ParseColor("#F48FB1");
+			selectedBackGroundColor = Color.ParseColor("#FFE0B2");  // orange_100
 		}
 
 		public void Add(WeldConditionData item)

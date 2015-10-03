@@ -15,8 +15,8 @@
             android:minHeight="25px"
             android:paddingBottom="2dp"
             android:paddingTop="2dp"
-            android:paddingLeft="5dp"
-            android:background="@color/tab2_textview_background">
+            android:paddingLeft="5dp">
+        <!--android:background="@color/tab2_textview_background">-->
             <TextView
                 android:text="@string/OutputData"
                 android:hint="@string/OutputData"
@@ -142,5 +142,6 @@
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|right"
         android:layout_margin="16dp"
+        app:backgroundTint="@color/orange_A700"
         android:src="@drawable/ic_edit_white" />
 </FrameLayout>

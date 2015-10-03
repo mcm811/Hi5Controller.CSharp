@@ -22,7 +22,7 @@ namespace Com.Changyoung.HI5Controller
 			base.OnCreate(savedInstanceState);
 
 			Thread.Sleep(1000); // Simulate a long loading process on app startup.
-			StartActivity(typeof(WcdActivity));
+			StartActivity(typeof(MainActivity));
 		}
 	}
 }

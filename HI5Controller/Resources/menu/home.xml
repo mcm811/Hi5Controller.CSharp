@@ -1,13 +1,16 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
 	  xmlns:local="http://schemas.android.com/apk/res-auto">
+  <item
+     android:id="@+id/menu_backup"
+     android:title="@string/Backup" />
+</menu>
   <!--<item
        android:id="@+id/menu_share"
        android:icon="@drawable/ic_action_social_share"
        local:showAsAction="never"
        android:title="@string/Share" />-->
-  <item
+  <!--<item
        android:id="@+id/menu_settings"
        local:showAsAction="never"
-       android:title="@string/Settings" />
-</menu>
+       android:title="@string/Settings" />-->

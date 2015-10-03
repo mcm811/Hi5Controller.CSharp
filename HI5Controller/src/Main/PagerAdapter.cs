@@ -6,30 +6,30 @@ namespace Com.Changyoung.HI5Controller
 {
 	public class PagerAdapter : FragmentStatePagerAdapter
 	{
-		private int mNumOfTabs;
-		private Fragment[] mFragments;
+		private int numOfTabs;
+		private Fragment[] fragments;
 
 		public PagerAdapter(FragmentManager fm, int NumOfTabs) : base(fm)
 		{
-			this.mNumOfTabs = NumOfTabs;
-			mFragments = new Fragment[NumOfTabs];
+			this.numOfTabs = NumOfTabs;
+			fragments = new Fragment[NumOfTabs];
 		}
 
 		public Fragment this[int index]
 		{
-			get { return mFragments[index]; }
+			get { return fragments[index]; }
 		}
 
 		public Fragment GetFragment(int i)
 		{
-			return mFragments[i];
+			return fragments[i];
 		}
 
 		public override int Count
 		{
 			get
 			{
-				return mNumOfTabs;
+				return numOfTabs;
 			}
 		}
 
@@ -44,28 +44,28 @@ namespace Com.Changyoung.HI5Controller
 
 		public override Fragment GetItem(int position)
 		{
-			if (mFragments[position] == null) {
+			if (fragments[position] == null) {
 				switch ((FragmentPosition)position) {
 					case FragmentPosition.WcdPathTabFragment:
-					mFragments[position] = new WcdPathTabFragment();
+					fragments[position] = new WorkPathFragment();
 					break;
 					case FragmentPosition.WeldCountTabFragment:
-					mFragments[position] = new WeldCountTabFragment();
+					fragments[position] = new WeldCountFragment();
 					break;
 					case FragmentPosition.WcdListTabFragment:
-					mFragments[position] = new WcdListTabFragment();
+					fragments[position] = new WcdListFragment();
 					break;
 					case FragmentPosition.JobEditTabFragment:
-					mFragments[position] = new JobEditTabFragment();
+					fragments[position] = new JobEditFragment();
 					break;
 					case FragmentPosition.WcdTextTabFragment:
-					mFragments[position] = new WcdTextTabFragment();
+					fragments[position] = new WcdTextFragment();
 					break;
 					default:
 					return null;
 				}
 			}
-			return mFragments[position];
+			return fragments[position];
 		}
 	}
 }

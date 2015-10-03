@@ -25,8 +25,10 @@
 	public class FileListFragment : Android.Support.V4.App.ListFragment
 	{
 		private View view;
-		private FileListAdapter mFileListAdapter;
-		private DirectoryInfo mDirectoryInfo;
+		private FileListAdapter fileListAdapter;
+		private DirectoryInfo directoryInfo;
+
+		public string Key { get; set; }
 
 		private void LogDebug(string msg)
 		{
@@ -41,17 +43,16 @@
 
 		public string DirPath
 		{
-			get { return mDirectoryInfo.FullName; }
-			set { mDirectoryInfo = new DirectoryInfo(value); }
+			get { return directoryInfo.FullName; }
+			set { directoryInfo = new DirectoryInfo(value); }
 		}
 
 		public override void OnCreate(Bundle savedInstanceState)
 		{
 			base.OnCreate(savedInstanceState);
-			mFileListAdapter = new FileListAdapter(Activity, new FileSystemInfo[0]);
-			ListAdapter = mFileListAdapter;
+			fileListAdapter = new FileListAdapter(Activity, new FileSystemInfo[0]);
+			ListAdapter = fileListAdapter;
 			DirPath = Android.OS.Environment.ExternalStorageDirectory.AbsolutePath;
-			//DirPath = Com.Changyoung.HI5Controller.Pref.StoragePath;
 		}
 
 		public override View OnCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
@@ -71,35 +72,33 @@
 			base.OnPause();
 		}
 
-		async public override void OnListItemClick(ListView l, View v, int position, long id)
+		public override void OnListItemClick(ListView l, View v, int position, long id)
 		{
-			var fileSystemInfo = mFileListAdapter.GetItem(position);
+			var fileSystemInfo = fileListAdapter.GetItem(position);
 			if (position == 0) {
 				RefreshFilesList(Path.GetDirectoryName(fileSystemInfo.FullName));
 			} else if (fileSystemInfo.IsDirectory()) {
 				RefreshFilesList(fileSystemInfo.FullName);
 			} else {
-				if (fileSystemInfo.FullName.EndsWith(".JOB") || fileSystemInfo.FullName.EndsWith(".SWD")) {
-					var textView = new TextView(Context);
-					textView.SetPadding(10, 10, 10, 10);
-					textView.SetTextSize(ComplexUnitType.Sp, 10f);
-					var scrollView = new ScrollView(Context);
-					scrollView.AddView(textView);
-					AlertDialog.Builder dialog = new AlertDialog.Builder(Context);
-					dialog.SetView(scrollView);
+				var textView = new TextView(Context);
+				textView.SetPadding(10, 10, 10, 10);
+				textView.SetTextSize(ComplexUnitType.Sp, 10f);
+				var scrollView = new ScrollView(Context);
+				scrollView.AddView(textView);
+				AlertDialog.Builder dialog = new AlertDialog.Builder(Context);
+				dialog.SetView(scrollView);
 
-					try {
-						using (StreamReader sr = new StreamReader(fileSystemInfo.FullName, Encoding.GetEncoding("euc-kr"))) {
-							textView.Text = await sr.ReadToEndAsync();
-							sr.Close();
-						}
-					} catch { }
+				try {
+					using (StreamReader sr = new StreamReader(fileSystemInfo.FullName, Encoding.GetEncoding("euc-kr"))) {
+						textView.Text = sr.ReadToEnd();
+						sr.Close();
+					}
+				} catch { }
 
-					dialog.SetPositiveButton("닫기", delegate
-					{ });
+				dialog.SetPositiveButton("닫기", delegate
+				{ });
 
-					dialog.Show();
-				}
+				dialog.Show();
 			}
 
 			base.OnListItemClick(l, v, position, id);
@@ -114,12 +113,14 @@
 				foreach (var item in dir.GetFileSystemInfos().Where(item => item.IsVisible())) {
 					visibleThings.Add(item);
 				}
-				mDirectoryInfo = dir;
+				directoryInfo = dir;
+				if (Key != null)
+					Com.Changyoung.HI5Controller.Pref.SetPath(Key, dir.FullName);
 			} catch (Exception ex) {
-				Log.Error("FileListFragment", "Couldn't access the directory " + mDirectoryInfo.FullName + "; " + ex);
+				Log.Error("FileListFragment", "Couldn't access the directory " + directoryInfo.FullName + "; " + ex);
 				return;
 			}
-			mFileListAdapter.AddDirectoryContents(visibleThings);
+			fileListAdapter.AddDirectoryContents(visibleThings);
 
 			// If we don't do this, then the ListView will not update itself when then data set 
 			// in the adapter changes. It will appear to the user that nothing has happened.

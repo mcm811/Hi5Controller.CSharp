@@ -235,10 +235,10 @@ namespace Com.Changyoung.HI5Controller
 
 		public class HeaderJob : RowJob
 		{
-			string version;
-			string mechType;
-			string totalAxis;
-			string auxAxis;
+			//string version;
+			//string mechType;
+			//string totalAxis;
+			//string auxAxis;
 
 			public HeaderJob(int rowNumber, string rowString) : base(RowTypes.Header, rowNumber, rowString)
 			{ }
@@ -323,7 +323,7 @@ namespace Com.Changyoung.HI5Controller
 
 		public class MoveJob : RowJob
 		{
-			int step;
+			//int step;
 			public MoveJob(int rowNumber, string rowString) : base(RowTypes.Move, rowNumber, rowString)
 			{ }
 		}

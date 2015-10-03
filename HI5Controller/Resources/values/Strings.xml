@@ -22,6 +22,7 @@
   <string name="wcd_ok">확인</string>
   <string name="Load">읽기</string>
   <string name="Settings">설정</string>
+  <string name="Backup">백업</string>
   <string name="Share">공유</string>
   <string name="Save">저장</string>
   
@@ -36,5 +37,10 @@
   <string name="nav_wcdlist">용접 조건</string>
   <string name="nav_spotcnedit">계열 수정</string>
   <string name="nav_robotswd">Robot.swd</string>
+
+  <string name="nav_storage">저장소</string>
+  <string name="nav_sdcard0">내부 저장소</string>
+  <string name="nav_extsdcard">SD 카드</string>
+  <string name="nav_usbstorage">USB 저장소</string>
 
 </resources>

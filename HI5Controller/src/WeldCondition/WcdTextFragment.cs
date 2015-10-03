@@ -13,7 +13,7 @@ using System.Threading.Tasks;
 
 namespace Com.Changyoung.HI5Controller
 {
-	public class WcdTextTabFragment : Android.Support.V4.App.Fragment, IRefresh
+	public class WcdTextFragment : Android.Support.V4.App.Fragment, IRefresh
 	{
 		private View mView;
 		private TextView mTvWcd;
@@ -57,14 +57,14 @@ namespace Com.Changyoung.HI5Controller
 
 		async private void ReadFile()
 		{
-			dirPath = Pref.Path;
+			dirPath = Pref.WorkPath;
 			robotPath = Path.Combine(dirPath, "ROBOT.SWD");
 			mTvWcd.Text = await ReadFile(robotPath);
 		}
 
 		public void Refresh(bool forced = false)
 		{
-			if (forced || dirPath != Pref.Path || mTvWcd.Text.Length == 0) {
+			if (forced || dirPath != Pref.WorkPath || mTvWcd.Text.Length == 0) {
 				ReadFile();
 			}
 		}
@@ -72,7 +72,7 @@ namespace Com.Changyoung.HI5Controller
 		public override View OnCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
 		{
 			LogDebug("OnCreateView");
-			mView = inflater.Inflate(Resource.Layout.wcd_text_tab_fragment, container, false);
+			mView = inflater.Inflate(Resource.Layout.wcd_text_fragment, container, false);
 
 			mTvWcd = mView.FindViewById<TextView>(Resource.Id.wcdTextView);
 

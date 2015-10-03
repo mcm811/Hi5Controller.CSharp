@@ -59,5 +59,7 @@
         android:id="@+id/tvCN"
         android:layout_below="@+id/tvCount"
         android:layout_alignLeft="@+id/tvCount"
-        android:layout_alignStart="@+id/tvCount" />
+        android:layout_alignStart="@+id/tvCount"
+        android:textColor="@color/blue_A400" />
+<!--BLUE_600-->
 </RelativeLayout>

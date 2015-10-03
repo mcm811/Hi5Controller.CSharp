@@ -15,7 +15,7 @@ using Android.Views.InputMethods;
 
 namespace Com.Changyoung.HI5Controller
 {
-	public class WeldCountTabFragment : Fragment, IRefresh
+	public class WeldCountFragment : Fragment, IRefresh
 	{
 		private View view;
 		private ListView listView;
@@ -35,20 +35,27 @@ namespace Com.Changyoung.HI5Controller
 			LogDebug(str);
 		}
 
-		private void SnackbarShow(View viewParent, string str)
+		private void SnackbarLong(string str)
 		{
-			Snackbar.Make(viewParent, str, Snackbar.LengthLong)
-					.SetAction("Undo", (view) => { /*Undo message sending here.*/ })
-					.Show(); // Don’t forget to show!
+			//Snackbar.Make(viewParent, str, Snackbar.LengthLong)
+			//		.SetAction("Undo", (view) => { /*Undo message sending here.*/ })
+			//		.Show(); // Don’t forget to show!
+			Snackbar.Make(view, str, Snackbar.LengthLong).Show();
+			LogDebug(str);
+		}
+
+		private void SnackbarShort(string str)
+		{
+			Snackbar.Make(view, str, Snackbar.LengthShort).Show();
 			LogDebug(str);
 		}
 
 		public void Refresh(bool forced = false)
 		{
-			if (forced || dirPath != Pref.Path || weldCountAdapter.Count == 0) {
-				//LogDebug("Refresh: " + dirPath + " : " + Pref.Path + " : " + weldCountAdapter.Count.ToString());
+			if (forced || dirPath != Pref.WorkPath || weldCountAdapter.Count == 0) {
+				//LogDebug("Refresh: " + dirPath + " : " + Pref.WorkPath + " : " + weldCountAdapter.Count.ToString());
 
-				dirPath = Pref.Path;
+				dirPath = Pref.WorkPath;
 				if (weldCountAdapter == null)
 					weldCountAdapter = new WeldCountAdapter(Context, Resource.Layout.weld_count_row);
 				else
@@ -71,13 +78,13 @@ namespace Com.Changyoung.HI5Controller
 			LogDebug("OnCreate");
 			base.OnCreate(bundle);
 
-			dirPath = Pref.Path;
+			dirPath = Pref.WorkPath;
 			Refresh(forced: true);
 		}
 
 		public override View OnCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
 		{
-			view = inflater.Inflate(Resource.Layout.weld_count_tab_fragment, container, false);
+			view = inflater.Inflate(Resource.Layout.weld_count_fragment, container, false);
 
 			var refresher = view.FindViewById<SwipeRefreshLayout>(Resource.Id.srl);
 			if (refresher != null) {
@@ -134,12 +141,17 @@ namespace Com.Changyoung.HI5Controller
 				return;
 			}
 
+			var jobFile = weldCountAdapter.GetItem(e.Position);
+			if (jobFile.JobCount.Total == 0) {
+				SnackbarShort("CN 항목이 없습니다");
+				return;
+			}
+
 			InputMethodManager imm = (InputMethodManager)Context.GetSystemService(Context.InputMethodService);
 			View dialogView = LayoutInflater.From(Context).Inflate(Resource.Layout.weld_count_editor, null);
 			AlertDialog.Builder dialog = new AlertDialog.Builder(Context);
 			dialog.SetView(dialogView);
 
-			var jobFile = weldCountAdapter.GetItem(e.Position);
 			var statusText = dialogView.FindViewById<TextView>(Resource.Id.statusText);
 			statusText.Text = "계열 수정 (CN: " + jobFile.JobCount.Total.ToString() + "개)";
 

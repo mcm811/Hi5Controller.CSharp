@@ -49,13 +49,14 @@
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <AndroidUseSharedRuntime>False</AndroidUseSharedRuntime>
+    <AndroidUseSharedRuntime>True</AndroidUseSharedRuntime>
     <AndroidLinkMode>SdkOnly</AndroidLinkMode>
     <AndroidLinkSkip />
     <EmbedAssembliesIntoApk>True</EmbedAssembliesIntoApk>
     <BundleAssemblies>False</BundleAssemblies>
     <AndroidCreatePackagePerAbi>False</AndroidCreatePackagePerAbi>
-    <AndroidSupportedAbis>armeabi,armeabi-v7a,x86,x86_64,arm64-v8a</AndroidSupportedAbis>
+    <AndroidSupportedAbis>
+    </AndroidSupportedAbis>
     <AndroidStoreUncompressedFileExtensions />
     <MandroidI18n>
     </MandroidI18n>
@@ -92,62 +93,62 @@
     <Compile Include="src\FilePicker\FileListRowViewHolder.cs" />
     <Compile Include="src\FilePicker\Helpers.cs" />
     <Compile Include="src\Main\Pref.cs" />
-    <Compile Include="src\WeldCondition\IRefresh.cs" />
+    <Compile Include="src\Main\IRefresh.cs" />
     <Compile Include="src\WeldCount\Job.cs" />
     <Compile Include="src\Main\PagerAdapter.cs" />
     <Compile Include="src\Main\Splash.cs" />
     <Compile Include="src\WeldCondition\WcdListRowViewHolder.cs" />
-    <Compile Include="src\WeldCondition\WcdPathTabFragment.cs" />
+    <Compile Include="src\Main\WorkPathFragment.cs" />
     <Compile Include="src\WeldCount\WeldCountAdapter.cs" />
     <Compile Include="src\WeldCount\WeldCountRowViewHolder.cs" />
-    <Compile Include="src\WeldCount\WeldCountTabFragment.cs" />
-    <Compile Include="src\WeldCount\JobEditTabFragment.cs" />
-    <Compile Include="src\Main\WcdActivity.cs" />
+    <Compile Include="src\WeldCount\WeldCountFragment.cs" />
+    <Compile Include="src\WeldCount\JobEditFragment.cs" />
+    <Compile Include="src\Main\MainActivity.cs" />
     <Compile Include="src\WeldCondition\WcdListAdapter.cs" />
     <Compile Include="Resources\Resource.Designer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="src\WeldCondition\WcdListTabFragment.cs" />
-    <Compile Include="src\WeldCondition\WcdTextTabFragment.cs" />
+    <Compile Include="src\WeldCondition\WcdListFragment.cs" />
+    <Compile Include="src\WeldCondition\WcdTextFragment.cs" />
     <Compile Include="src\WeldCondition\WeldConditionData.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
     <None Include="Resources\AboutResources.txt" />
     <None Include="Assets\AboutAssets.txt" />
-    <AndroidResource Include="Resources\layout\wcd.axml" />
+    <AndroidResource Include="Resources\layout\main_activity.axml" />
     <AndroidResource Include="Resources\layout\wcd_editor.axml">
       <SubType>AndroidResource</SubType>
     </AndroidResource>
-    <AndroidResource Include="Resources\layout\wcd_text.axml">
+    <AndroidResource Include="Resources\layout\activity\wcd_text.axml">
       <SubType>AndroidResource</SubType>
     </AndroidResource>
     <AndroidResource Include="Resources\layout\file_picker_list_item.axml">
       <SubType>Designer</SubType>
     </AndroidResource>
-    <AndroidResource Include="Resources\layout\fIle_picker.axml">
+    <AndroidResource Include="Resources\layout\activity\fIle_picker.axml">
       <SubType>Designer</SubType>
     </AndroidResource>
     <AndroidResource Include="Resources\layout\wcd_list_row.axml">
       <SubType>AndroidResource</SubType>
     </AndroidResource>
-    <AndroidResource Include="Resources\layout\wcd_list.axml" />
+    <AndroidResource Include="Resources\layout\activity\wcd_list.axml" />
     <AndroidResource Include="Resources\layout\toolbar.axml">
       <SubType>AndroidResource</SubType>
     </AndroidResource>
     <AndroidResource Include="Resources\layout\drawer_header_layout.axml">
       <SubType>Designer</SubType>
     </AndroidResource>
-    <AndroidResource Include="Resources\layout\wcd_path_tab_fragment.axml">
+    <AndroidResource Include="Resources\layout\work_path_fragment.axml">
       <SubType>AndroidResource</SubType>
     </AndroidResource>
-    <AndroidResource Include="Resources\layout\weld_count_tab_fragment.axml">
+    <AndroidResource Include="Resources\layout\weld_count_fragment.axml">
       <SubType>AndroidResource</SubType>
     </AndroidResource>
-    <AndroidResource Include="Resources\layout\job_edit_tab_fragment.axml">
+    <AndroidResource Include="Resources\layout\job_edit_fragment.axml">
       <SubType>AndroidResource</SubType>
     </AndroidResource>
-    <AndroidResource Include="Resources\layout\wcd_list_tab_fragment.axml" />
-    <AndroidResource Include="Resources\layout\wcd_text_tab_fragment.axml">
+    <AndroidResource Include="Resources\layout\wcd_list_fragment.axml" />
+    <AndroidResource Include="Resources\layout\wcd_text_fragment.axml">
       <SubType>AndroidResource</SubType>
     </AndroidResource>
     <AndroidResource Include="Resources\layout\weld_count_row.axml">
@@ -156,7 +157,7 @@
     <AndroidResource Include="Resources\layout\weld_count_editor.axml">
       <SubType>AndroidResource</SubType>
     </AndroidResource>
-    <AndroidResource Include="Resources\layout\weld_count_text_view.axml">
+    <AndroidResource Include="Resources\layout\activity\weld_count_text_view.axml">
       <SubType>AndroidResource</SubType>
     </AndroidResource>
   </ItemGroup>
@@ -202,17 +203,12 @@
     <AndroidResource Include="Resources\drawable\button_folder.png" />
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="Resources\drawable-hdpi\" />
     <Folder Include="Resources\drawable-ldpi\" />
     <Folder Include="Resources\drawable-mdpi\" />
   </ItemGroup>
   <ItemGroup>
     <AndroidResource Include="Resources\drawable\button_robot.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <AndroidResource Include="Resources\drawable-hdpi\file.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <AndroidResource Include="Resources\drawable-hdpi\folder.png" />
   </ItemGroup>
   <ItemGroup>
     <AndroidResource Include="Resources\drawable\listviewrow_bg.xml" />
@@ -397,6 +393,54 @@
   </ItemGroup>
   <ItemGroup>
     <AndroidResource Include="Resources\drawable\ic_today.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable-xhdpi\ic_usb.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable\ic_usb.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable-xhdpi\ic_sd_card.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable\ic_sd_card.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable\ic_memory.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable-xhdpi\ic_memory.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable-xhdpi\ic_storage.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable-xhdpi\ic_folder_open.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable-xhdpi\ic_description.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable\ic_description.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable-xhdpi\ic_save_white.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable\ic_save_white.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable-xhdpi\ic_archive_white.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable\ic_archive_white.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\menu\work_path.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\menu\backup_path.xml" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\Android\Xamarin.Android.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
