@@ -315,7 +315,7 @@ namespace Com.Changyoung.HI5Controller
 			view = FindViewById(Resource.Id.main_parent_view);
 
 			// 액션바
-			toolbar = FindViewById<Toolbar>(Resource.Id.toolbar);
+			toolbar = FindViewById<Toolbar>(Resource.Id.main_toolbar);
 			SetSupportActionBar(toolbar);
 			actionBar = SupportActionBar;
 			actionBar.SetHomeAsUpIndicator(Resource.Drawable.ic_menu_white);
@@ -366,7 +366,7 @@ namespace Com.Changyoung.HI5Controller
 		public override bool OnCreateOptionsMenu(IMenu menu)
 		{
 			// 액션바 우측 옵션
-			MenuInflater.Inflate(Resource.Menu.home, menu);
+			MenuInflater.Inflate(Resource.Menu.main_actionbar_menu, menu);
 			return base.OnCreateOptionsMenu(menu);
 		}
 
@@ -396,9 +396,9 @@ namespace Com.Changyoung.HI5Controller
 			var sourceFileName = Path.GetFileName(workPath);
 			var sourceDirName = Path.GetDirectoryName(workPath);
 
-			var backupPath = Pref.BackupPath;
+			//var backupPath = Pref.BackupPath;
 			var targetFileName = sourceFileName + System.DateTime.Now.ToString("_yyyyMMdd_hhmmss");
-			var targetDirName = Path.Combine(sourceDirName, "Backup");
+			var targetDirName = Path.Combine(sourceFullPath, "Backup");
 			var targetFullPath = Path.Combine(targetDirName, targetFileName);
 
 			SnackbarLong("백업 원본: " + sourceFullPath + "\n백업 대상: " + targetFullPath);

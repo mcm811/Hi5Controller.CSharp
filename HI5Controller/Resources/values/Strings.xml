@@ -32,12 +32,10 @@
   <string name="JobEditTabFragment">계열 수정</string>
   <string name="WcdTextTabFragment">Robot.swd</string>
 
-  <string name="nav_wcdpath">작업 경로</string>
   <string name="nav_weldcount">용접 카운트</string>
   <string name="nav_wcdlist">용접 조건</string>
-  <string name="nav_spotcnedit">계열 수정</string>
-  <string name="nav_robotswd">Robot.swd</string>
 
+  <string name="nav_path_settings">경로 설정</string>
   <string name="nav_storage">저장소</string>
   <string name="nav_sdcard0">내부 저장소</string>
   <string name="nav_extsdcard">SD 카드</string>

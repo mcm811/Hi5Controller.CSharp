@@ -43,16 +43,14 @@ namespace Com.Changyoung.HI5Controller
 
 		public void Refresh(bool forced = false)
 		{
-			if (forced) {
-				if (viewSwitcher.CurrentView == workPathLayout) {
-					etWorkPath.Text = Pref.WorkPath;
-					workPathFragment.RefreshFilesList(etWorkPath.Text);
-					fab.SetImageResource(Resource.Drawable.ic_save_white);
-				} else if (viewSwitcher.CurrentView == backupPathLayout) {
-					etBackupPath.Text = Pref.BackupPath;
-					backupPathFragment.RefreshFilesList(etBackupPath.Text);
-					fab.SetImageResource(Resource.Drawable.ic_archive_white);
-				}
+			if (viewSwitcher.CurrentView == workPathLayout) {
+				etWorkPath.Text = Pref.WorkPath;
+				workPathFragment.RefreshFilesList(etWorkPath.Text);
+				fab.SetImageResource(Resource.Drawable.ic_save_white);
+			} else if (viewSwitcher.CurrentView == backupPathLayout) {
+				etBackupPath.Text = Pref.BackupPath;
+				backupPathFragment.RefreshFilesList(etBackupPath.Text);
+				fab.SetImageResource(Resource.Drawable.ic_archive_white);
 			}
 		}
 
@@ -73,7 +71,6 @@ namespace Com.Changyoung.HI5Controller
 							backupPathFragment.RefreshFilesList(path);
 							fab.SetImageResource(Resource.Drawable.ic_archive_white);
 						}
-
 					}
 					return true;
 				} catch { }
@@ -88,24 +85,29 @@ namespace Com.Changyoung.HI5Controller
 			view = inflater.Inflate(Resource.Layout.work_path_fragment, container, false);
 			viewSwitcher = view.FindViewById<ViewSwitcher>(Resource.Id.view_switcher);
 
-			string workPath = Pref.WorkPath;
+			// WorkPath
 			workPathLayout = view.FindViewById<LinearLayout>(Resource.Id.work_path_layout);
-
 			workPathToolbar = view.FindViewById<Toolbar>(Resource.Id.work_path_toolbar);
 			workPathToolbar.Title = "작업 경로";
-			workPathToolbar.InflateMenu(Resource.Menu.work_path);
-			workPathToolbar.MenuItemClick += (sender, e) => {
+			workPathToolbar.InflateMenu(Resource.Menu.toolbar_work_path_menu);
+			workPathToolbar.MenuItemClick += (sender, e) =>
+			{
 				//Toast.MakeText(this, "Bottom toolbar pressed: " + e.Item.TitleFormatted, ToastLength.Short).Show();
 				viewSwitcher.ShowNext();
 				if (viewSwitcher.CurrentView == workPathLayout) {
 					fab.SetImageResource(Resource.Drawable.ic_save_white);
+					workPathFragment.RefreshFilesList();
+					etWorkPath.Text = workPathFragment.DirPath;
 				} else if (viewSwitcher.CurrentView == backupPathLayout) {
 					fab.SetImageResource(Resource.Drawable.ic_archive_white);
+					backupPathFragment.RefreshFilesList();
+					etBackupPath.Text = backupPathFragment.DirPath;
 				}
 			};
 
+			string workPath = Pref.WorkPath;
 			workPathFragment = (FileListFragment)ChildFragmentManager.FindFragmentById(Resource.Id.work_path_fragment);
-			workPathFragment.Key = Pref.WorkPathKey;
+			workPathFragment.PrefKey = Pref.WorkPathKey;
 			workPathFragment.RefreshFilesList(workPath);
 
 			etWorkPath = view.FindViewById<EditText>(Resource.Id.etWorkPath);
@@ -136,24 +138,29 @@ namespace Com.Changyoung.HI5Controller
 				}
 			};
 
-			string backupPath = Pref.BackupPath;
+			// BackupPath
 			backupPathLayout = view.FindViewById<LinearLayout>(Resource.Id.backup_path_layout);
-
 			backupPathToolbar = view.FindViewById<Toolbar>(Resource.Id.backup_path_toolbar);
 			backupPathToolbar.Title = "백업 경로";
-			backupPathToolbar.InflateMenu(Resource.Menu.backup_path);
-			backupPathToolbar.MenuItemClick += (sender, e) => {
+			backupPathToolbar.InflateMenu(Resource.Menu.toolbar_backup_path_menu);
+			backupPathToolbar.MenuItemClick += (sender, e) =>
+			{
 				//Toast.MakeText(this, "Bottom toolbar pressed: " + e.Item.TitleFormatted, ToastLength.Short).Show();
 				viewSwitcher.ShowNext();
 				if (viewSwitcher.CurrentView == workPathLayout) {
 					fab.SetImageResource(Resource.Drawable.ic_save_white);
+					workPathFragment.RefreshFilesList();
+					etWorkPath.Text = workPathFragment.DirPath;
 				} else if (viewSwitcher.CurrentView == backupPathLayout) {
 					fab.SetImageResource(Resource.Drawable.ic_archive_white);
+					backupPathFragment.RefreshFilesList();
+					etBackupPath.Text = backupPathFragment.DirPath;
 				}
 			};
 
+			string backupPath = Pref.BackupPath;
 			backupPathFragment = (FileListFragment)ChildFragmentManager.FindFragmentById(Resource.Id.backup_path_fragment);
-			backupPathFragment.Key = Pref.BackupPathKey;
+			backupPathFragment.PrefKey = Pref.BackupPathKey;
 			backupPathFragment.RefreshFilesList(backupPath);
 
 			etBackupPath = view.FindViewById<EditText>(Resource.Id.etBackupPath);
@@ -187,15 +194,15 @@ namespace Com.Changyoung.HI5Controller
 			fab = view.FindViewById<FloatingActionButton>(Resource.Id.fab);
 			fab.Click += (sender, e) =>
 			{
-				//etDirPath.Text = fileListFragment.DirPath;
-				//Pref.WorkPath = etDirPath.Text;
-				//ToastShow("경로 설정: " + etDirPath.Text);
-
 				viewSwitcher.ShowNext();
 				if (viewSwitcher.CurrentView == workPathLayout) {
 					fab.SetImageResource(Resource.Drawable.ic_save_white);
+					workPathFragment.RefreshFilesList();
+					etWorkPath.Text = workPathFragment.DirPath;
 				} else if (viewSwitcher.CurrentView == backupPathLayout) {
 					fab.SetImageResource(Resource.Drawable.ic_archive_white);
+					backupPathFragment.RefreshFilesList();
+					etBackupPath.Text = backupPathFragment.DirPath;
 				}
 			};
 

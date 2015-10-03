@@ -28,7 +28,7 @@
 		private FileListAdapter fileListAdapter;
 		private DirectoryInfo directoryInfo;
 
-		public string Key { get; set; }
+		public string PrefKey { get; set; }
 
 		private void LogDebug(string msg)
 		{
@@ -104,18 +104,20 @@
 			base.OnListItemClick(l, v, position, id);
 		}
 
-		public void RefreshFilesList(string directory)
+		public void RefreshFilesList(string directory = null)
 		{
 			IList<FileSystemInfo> visibleThings = new List<FileSystemInfo>();
 			try {
+				if (directory == null)
+					directory = DirPath;
 				var dir = new DirectoryInfo(directory);
 				visibleThings.Add(dir);
 				foreach (var item in dir.GetFileSystemInfos().Where(item => item.IsVisible())) {
 					visibleThings.Add(item);
 				}
 				directoryInfo = dir;
-				if (Key != null)
-					Com.Changyoung.HI5Controller.Pref.SetPath(Key, dir.FullName);
+				if (PrefKey != null)
+					Com.Changyoung.HI5Controller.Pref.SetPath(PrefKey, dir.FullName);
 			} catch (Exception ex) {
 				Log.Error("FileListFragment", "Couldn't access the directory " + directoryInfo.FullName + "; " + ex);
 				return;

@@ -85,7 +85,14 @@
                 android:minHeight="?attr/actionBarSize"
                 android:background="@color/red_500"
                 android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
-                app:popupTheme="@style/ThemeOverlay.AppCompat.Light" />
+                app:popupTheme="@style/ThemeOverlay.AppCompat.Light">
+                <TextView
+                    android:id="@+id/backup_path_toolbar_title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="백업"
+                    android:textSize="10sp" />
+            </android.support.v7.widget.Toolbar>
         </LinearLayout>
     </ViewSwitcher>
     <android.support.design.widget.FloatingActionButton
