@@ -5,21 +5,21 @@
   <item android:id="@+id/toolbar_backup_path_menu_restore"
   android:icon="@drawable/ic_settings_backup_restore_white"
   local:showAsAction="always"
-  android:title="Restore" />
+  android:title="@string/nav_retore" />
 
-  <item android:id="@+id/toolbar_backup_path_menu_backup"
+  <!--<item android:id="@+id/toolbar_backup_path_menu_backup"
   android:icon="@drawable/ic_archive_white"
   local:showAsAction="always"
-  android:title="Backup" />
+  android:title="@string/nav_backup" />-->
 
   <item android:id="@+id/toolbar_backup_path_menu_home"
   android:icon="@drawable/ic_home_white"
   local:showAsAction="always"
-  android:title="Home" />
+  android:title="@string/nav_home" />
 
   <item android:id="@+id/toolbar_backup_path_menu_up"
   android:icon="@drawable/ic_file_upload_white"
   local:showAsAction="always"
-  android:title="Up" />
+  android:title="@string/nav_up" />
 
 </menu>

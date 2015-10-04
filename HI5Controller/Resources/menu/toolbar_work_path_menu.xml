@@ -4,37 +4,37 @@
 
   <item android:id="@+id/toolbar_work_path_menu_storage"
   android:icon="@drawable/ic_storage_white"
-  local:showAsAction="always"
+  local:showAsAction="ifRoom"
   android:title="Storage" />
 
   <item android:id="@+id/toolbar_work_path_menu_sdcard"
   android:icon="@drawable/ic_memory_white"
   local:showAsAction="always"
-  android:title="Sdcard" />
+  android:title="@string/nav_sdcard" />
 
   <item android:id="@+id/toolbar_work_path_menu_extsdcard"
   android:icon="@drawable/ic_sd_card_white"
-  local:showAsAction="always"
-  android:title="ExtSdcard" />
+  local:showAsAction="ifRoom"
+  android:title="@string/nav_extsdcard" />
 
   <item android:id="@+id/toolbar_work_path_menu_usbstorage"
   android:icon="@drawable/ic_usb_white"
   local:showAsAction="always"
-  android:title="Usb" />
+  android:title="@string/nav_usbstorage" />
 
-  <item android:id="@+id/toolbar_work_path_menu_backup"
+  <!--<item android:id="@+id/toolbar_work_path_menu_backup"
   android:icon="@drawable/ic_archive_white"
   local:showAsAction="always"
-  android:title="Backup" />
+  android:title="@string/nav_backup" />-->
 
   <item android:id="@+id/toolbar_work_path_menu_home"
   android:icon="@drawable/ic_home_white"
   local:showAsAction="always"
-  android:title="Home" />
+  android:title="@string/nav_home" />
 
   <item android:id="@+id/toolbar_work_path_menu_up"
   android:icon="@drawable/ic_file_upload_white"
   local:showAsAction="always"
-  android:title="Up" />
+  android:title="@string/nav_up" />
 
 </menu>

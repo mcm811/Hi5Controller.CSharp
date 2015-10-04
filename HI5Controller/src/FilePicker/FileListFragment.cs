@@ -27,15 +27,22 @@
 
 		public string PrefKey { get; set; }
 
+		public View SnackbarView { get; set; }
+
 		private void LogDebug(string msg)
 		{
-			Log.Debug(Context.PackageName, "FileListFragment: " + msg);
+			try {
+				Log.Debug(Context.PackageName, "FileListFragment: " + msg);
+			} catch { }
 		}
 
 		private void ToastShow(string str)
 		{
-			Snackbar.Make(view, str, Snackbar.LengthLong).Show();
-			LogDebug(str);
+			try {
+				if (SnackbarView != null)
+					Snackbar.Make(SnackbarView, str, Snackbar.LengthLong).Show();
+			} catch { }
+            LogDebug(str);
 		}
 
 		public string DirPath
@@ -56,6 +63,16 @@
 		{
 			view = base.OnCreateView(inflater, container, savedInstanceState);
 			return view;
+		}
+
+		public override void OnActivityCreated(Bundle savedInstanceState)
+		{
+			base.OnActivityCreated(savedInstanceState);
+
+			ListView.LongClick += (object sender, View.LongClickEventArgs e) =>
+			{
+				ToastShow("길게 클릭");
+			};
 		}
 
 		public override void OnResume()

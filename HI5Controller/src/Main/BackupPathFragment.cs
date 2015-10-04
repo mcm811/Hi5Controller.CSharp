@@ -20,17 +20,26 @@ namespace Com.Changyoung.HI5Controller
 		private EditText etBackupPath;
 		private FileListFragment backupPathFragment;
 		private Toolbar backupPathToolbar;
+
 		private FloatingActionButton fab;
+		private CoordinatorLayout coordinatorLayout;
 
 		private void LogDebug(string msg)
 		{
-			Log.Debug(Context.PackageName, "BackupPathFragment: " + msg);
+			try {
+				Log.Debug(Context.PackageName, "BackupPathFragment: " + msg);
+			} catch { }
 		}
 
-		private void ToastShow(string str)
+		public void Show(string str)
 		{
-			//Toast.MakeText(Context, str, ToastLength.Short).Show();
-			Snackbar.Make(view, str, Snackbar.LengthLong).Show();
+			//Snackbar.Make(viewParent, str, Snackbar.LengthLong)
+			//		.SetAction("Undo", (view) => { /*Undo message sending here.*/ })
+			//		.SetAction("Redo", (view) => { /*Undo message sending here.*/ })
+			//		.Show();
+			try {
+				Snackbar.Make(coordinatorLayout, str, Snackbar.LengthShort).Show();
+			} catch { }
 			LogDebug(str);
 		}
 
@@ -65,10 +74,12 @@ namespace Com.Changyoung.HI5Controller
 			LogDebug("OnCreateView");
 			view = inflater.Inflate(Resource.Layout.backup_path_fragment, container, false);
 			backupPathLayout = view.FindViewById<LinearLayout>(Resource.Id.backup_path_layout);
+			coordinatorLayout = view.FindViewById<CoordinatorLayout>(Resource.Id.coordinator_layout);
 
 			string backupPath = Pref.BackupPath;
 			backupPathFragment = (FileListFragment)ChildFragmentManager.FindFragmentById(Resource.Id.backup_path_fragment);
 			backupPathFragment.RefreshFilesList(backupPath);
+			backupPathFragment.SnackbarView = coordinatorLayout;
 			//backupPathFragment.PrefKey = Pref.BackupPathKey;
 
 			etBackupPath = view.FindViewById<EditText>(Resource.Id.etBackupPath);
@@ -80,11 +91,11 @@ namespace Com.Changyoung.HI5Controller
 					if (dir.IsDirectory()) {
 						Pref.BackupPath = etBackupPath.Text;
 					} else {
-						ToastShow("잘못된 경로: " + etBackupPath.Text);
+						Show("잘못된 경로: " + etBackupPath.Text);
 						etBackupPath.Text = Pref.BackupPath;
 					}
 				} catch {
-					ToastShow("잘못된 경로: " + etBackupPath.Text);
+					Show("잘못된 경로: " + etBackupPath.Text);
 					etBackupPath.Text = Pref.BackupPath;
 				}
 				backupPathFragment.RefreshFilesList(etBackupPath.Text);
@@ -116,9 +127,9 @@ namespace Com.Changyoung.HI5Controller
 					case Resource.Id.toolbar_backup_path_menu_restore:
 					Restore();
 					break;
-					case Resource.Id.toolbar_backup_path_menu_backup:
-					Backup();
-					break;
+					//case Resource.Id.toolbar_backup_path_menu_backup:
+					//Backup();
+					//break;
 				}
 				// 백업, 복원(현재 경로에 ROBOT.SWD가 있으면 파일들을 작업경로로 복사),
 				// 디렉토리 삭제
@@ -148,7 +159,7 @@ namespace Com.Changyoung.HI5Controller
 			var sourceFileName = Path.GetFileName(backupPath);
 			var sourceDirName = Path.GetDirectoryName(backupPath);
 
-			ToastShow("복원 원본: " + sourceFullPath + "\n복원 대상: " + targetFullPath);
+			//ToastShow("복원 원본: " + sourceFullPath + "\n복원 대상: " + targetFullPath);
 
 			// 복원할 파일을 먼저 확인
 			bool sourceChecked = false;
@@ -195,12 +206,12 @@ namespace Com.Changyoung.HI5Controller
 						LogDebug("Copy " + s + " To " + destFile);
 					}
 					ret = true;
-					ToastShow("복원 완료: " + sourceFileName);
+					Show("복원 완료: " + sourceFileName);
 				} else {
-					ToastShow("복원 폴더가 없습니다");
+					Show("복원 폴더가 없습니다");
 				}
 			} else {
-				ToastShow("복원 파일이 아닙니다");
+				Show("복원 파일이 아닙니다");
 			}
 
 			return ret;
@@ -218,7 +229,7 @@ namespace Com.Changyoung.HI5Controller
 			var targetDirName = Path.Combine(sourceFullPath, "Backup");
 			var targetFullPath = Path.Combine(targetDirName, targetFileName);
 
-			ToastShow("백업 원본: " + sourceFullPath + "\n백업 대상: " + targetFullPath);
+			//ToastShow("백업 원본: " + sourceFullPath + "\n백업 대상: " + targetFullPath);
 
 			if (!Directory.Exists(targetFullPath)) {
 				Directory.CreateDirectory(targetFullPath);
@@ -244,9 +255,9 @@ namespace Com.Changyoung.HI5Controller
 					LogDebug("Copy " + s + " To " + destFile);
 				}
 				ret = true;
-				ToastShow("백업 완료: " + targetFileName);
+				Show("백업 완료: " + targetFileName);
 			} else {
-				ToastShow("대상 폴더가 없습니다");
+				Show("대상 폴더가 없습니다");
 			}
 			Refresh(Pref.BackupPath);
 
@@ -258,8 +269,7 @@ namespace Com.Changyoung.HI5Controller
 			if (requestCode == 1) {
 				try {
 					Pref.WorkPath = data.GetStringExtra("backup_path");
-				} catch {
-				}
+				} catch { }
 			}
 			base.OnActivityResult(requestCode, resultCode, data);
 		}

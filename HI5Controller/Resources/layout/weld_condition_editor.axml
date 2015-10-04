@@ -28,7 +28,7 @@
             <android.support.v7.widget.AppCompatEditText
                 android:inputType="none"
                 android:id="@+id/etOutputData"
-                android:hint="출력 데이터 (Output data)"
+                android:hint="@string/Editor_OutputData"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center"
@@ -55,7 +55,7 @@
                     <android.support.v7.widget.AppCompatEditText
                         android:inputType="number"
                         android:id="@+id/etOutputType"
-                        android:hint="출력 종류"
+                        android:hint="@string/Editor_OutputType"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:numeric="integer"
@@ -69,7 +69,7 @@
                     <android.support.v7.widget.AppCompatEditText
                         android:inputType="number"
                         android:id="@+id/etSqueezeForce"
-                        android:hint="가압력"
+                        android:hint="@string/Editor_SqueezeForce"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:numeric="integer"
@@ -86,7 +86,7 @@
                     <android.support.v7.widget.AppCompatEditText
                         android:inputType="numberDecimal"
                         android:id="@+id/etMoveTipClearance"
-                        android:hint="이동극 제거율"
+                        android:hint="@string/Editor_MoveTipClearance"
                         android:layout_width="fill_parent"
                         android:layout_height="wrap_content"
                         android:gravity="left"
@@ -100,7 +100,7 @@
                     <android.support.v7.widget.AppCompatEditText
                         android:inputType="numberDecimal"
                         android:id="@+id/etFixedTipClearance"
-                        android:hint="고정극 제거율"
+                        android:hint="@string/Editor_FixedTipClearance"
                         android:layout_width="fill_parent"
                         android:layout_height="wrap_content"
                         android:gravity="left"
@@ -116,7 +116,7 @@
                     <android.support.v7.widget.AppCompatEditText
                         android:inputType="numberDecimal"
                         android:id="@+id/etPannelThickness"
-                        android:hint="패널 두께"
+                        android:hint="@string/Editor_PannelThickness"
                         android:layout_width="fill_parent"
                         android:layout_height="wrap_content"
                         android:gravity="left"
@@ -130,7 +130,7 @@
                     <android.support.v7.widget.AppCompatEditText
                         android:inputType="numberDecimal"
                         android:id="@+id/etCommandOffset"
-                        android:hint="명령 오프셋"
+                        android:hint="@string/Editor_CommandOffset"
                         android:layout_width="fill_parent"
                         android:layout_height="wrap_content"
                         android:gravity="left"

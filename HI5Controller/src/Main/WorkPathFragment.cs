@@ -20,17 +20,26 @@ namespace Com.Changyoung.HI5Controller
 		private EditText etWorkPath;
 		private FileListFragment workPathFragment;
 		private Toolbar workPathToolbar;
+
 		private FloatingActionButton fab;
+		private CoordinatorLayout coordinatorLayout;
 
 		private void LogDebug(string msg)
 		{
-			Log.Debug(Context.PackageName, "WorkPathFragment: " + msg);
+			try {
+				Log.Debug(Context.PackageName, "WorkPathFragment: " + msg);
+			} catch { }
 		}
 
-		private void ToastShow(string str)
+		public void Show(string str)
 		{
-			//Toast.MakeText(Context, str, ToastLength.Short).Show();
-			Snackbar.Make(view, str, Snackbar.LengthLong).Show();
+			//Snackbar.Make(viewParent, str, Snackbar.LengthLong)
+			//		.SetAction("Undo", (view) => { /*Undo message sending here.*/ })
+			//		.SetAction("Redo", (view) => { /*Undo message sending here.*/ })
+			//		.Show();
+			try {
+				Snackbar.Make(coordinatorLayout, str, Snackbar.LengthShort).Show();
+			} catch { }
 			LogDebug(str);
 		}
 
@@ -67,6 +76,7 @@ namespace Com.Changyoung.HI5Controller
 			LogDebug("OnCreateView");
 			view = inflater.Inflate(Resource.Layout.work_path_fragment, container, false);
 			workPathLayout = view.FindViewById<LinearLayout>(Resource.Id.work_path_layout);
+			coordinatorLayout = view.FindViewById<CoordinatorLayout>(Resource.Id.coordinator_layout);
 
 			string workPath = Pref.WorkPath;
 			workPathFragment = (FileListFragment)ChildFragmentManager.FindFragmentById(Resource.Id.work_path_fragment);
@@ -82,11 +92,11 @@ namespace Com.Changyoung.HI5Controller
 					if (dir.IsDirectory()) {
 						Pref.WorkPath = etWorkPath.Text;
 					} else {
-						ToastShow("잘못된 경로: " + etWorkPath.Text);
+						Show("잘못된 경로: " + etWorkPath.Text);
 						etWorkPath.Text = Pref.WorkPath;
 					}
 				} catch {
-					ToastShow("잘못된 경로: " + etWorkPath.Text);
+					Show("잘못된 경로: " + etWorkPath.Text);
 					etWorkPath.Text = Pref.WorkPath;
 				}
 				workPathFragment.RefreshFilesList(etWorkPath.Text);
@@ -151,9 +161,9 @@ namespace Com.Changyoung.HI5Controller
 						}
 					} catch { }
 					break;
-					case Resource.Id.toolbar_work_path_menu_backup:
-					Refresh(Pref.BackupPath);
-					break;
+					//case Resource.Id.toolbar_work_path_menu_backup:
+					//Refresh(Pref.BackupPath);
+					//break;
 				}
 			};
 

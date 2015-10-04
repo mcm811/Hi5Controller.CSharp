@@ -25,28 +25,20 @@ namespace Com.Changyoung.HI5Controller
 
 		private void LogDebug(string msg)
 		{
-			Log.Debug(Context.PackageName, "WeldCountTabFragment: " + msg);
+			try {
+				Log.Debug(Context.PackageName, "WeldCountTabFragment: " + msg);
+			} catch { }
 		}
 
-		private void ToastShow(string str)
-		{
-			//Toast.MakeText(Context, str, ToastLength.Short).Show();
-			Snackbar.Make(view, str, Snackbar.LengthLong).Show();
-			LogDebug(str);
-		}
-
-		private void SnackbarLong(string str)
+		public void Show(string str)
 		{
 			//Snackbar.Make(viewParent, str, Snackbar.LengthLong)
 			//		.SetAction("Undo", (view) => { /*Undo message sending here.*/ })
-			//		.Show(); // Don’t forget to show!
-			Snackbar.Make(view, str, Snackbar.LengthLong).Show();
-			LogDebug(str);
-		}
-
-		private void SnackbarShort(string str)
-		{
-			Snackbar.Make(view, str, Snackbar.LengthShort).Show();
+			//		.SetAction("Redo", (view) => { /*Undo message sending here.*/ })
+			//		.Show();
+			try {
+				Snackbar.Make(view, str, Snackbar.LengthShort).Show();
+			} catch { }
 			LogDebug(str);
 		}
 
@@ -103,7 +95,7 @@ namespace Com.Changyoung.HI5Controller
 				if (weldCountAdapter.Count == 0) {
 					Refresh();
 					if (weldCountAdapter.Count == 0)
-						ToastShow("항목이 없습니다");
+						Show("항목이 없습니다");
 					return;
 				}
 
@@ -140,13 +132,13 @@ namespace Com.Changyoung.HI5Controller
 			if (weldCountAdapter.Count == 0) {
 				Refresh();
 				if (weldCountAdapter.Count == 0)
-					ToastShow("항목이 없습니다");
+					Show("항목이 없습니다");
 				return;
 			}
 
 			var jobFile = weldCountAdapter.GetItem(e.Position);
 			if (jobFile.JobCount.Total == 0) {
-				SnackbarShort("CN 항목이 없습니다");
+				Show("CN 항목이 없습니다");
 				return;
 			}
 
@@ -246,7 +238,7 @@ namespace Com.Changyoung.HI5Controller
 			dialog.SetNegativeButton("취소", delegate
 			{ });
 
-			dialog.SetPositiveButton("저장", delegate
+			dialog.SetPositiveButton("저장", (EventHandler<DialogClickEventArgs>)delegate
 			{
 				foreach (var et in etList) {
 					var job = (Job)et.Tag;
@@ -255,7 +247,7 @@ namespace Com.Changyoung.HI5Controller
 				if (jobFile.JobCount.Total > 0) {
 					jobFile.SaveFile();
 					weldCountAdapter.NotifyDataSetChanged();
-					ToastShow("저장 완료: " + jobFile.JobCount.fi.FullName);
+					this.Show((string)("저장 완료: " + jobFile.JobCount.fi.FullName));
 				}
 			});
 

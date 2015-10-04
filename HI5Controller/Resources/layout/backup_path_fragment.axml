@@ -18,7 +18,7 @@
             android:layout_height="wrap_content">
             <EditText
                 android:textAppearance="?android:attr/textAppearanceSmall"
-                android:hint="백업 경로"
+                android:hint="@string/BackupPath"
                 android:singleLine="true"
                 android:focusable="false"
                 android:focusableInTouchMode="false"
@@ -44,23 +44,21 @@
             android:background="@color/deep_purple_500"
             app:titleTextAppearance="@style/toolbar_title_style"
             android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
-            app:popupTheme="@style/ThemeOverlay.AppCompat.Light">
-        <!--<EditText
-          android:id="@+id/backup_path_toolbar_title"
-          android:layout_width="wrap_content"
-          android:layout_height="wrap_content"
-          android:hint="백업"
-          android:textSize="15sp" />-->
-        </android.support.v7.widget.Toolbar>
+            app:popupTheme="@style/ThemeOverlay.AppCompat.Light" />
     </LinearLayout>
-    <android.support.design.widget.FloatingActionButton
-        android:id="@+id/fab"
-        app:elevation="6dp"
-        app:borderWidth="0dp"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="top|right"
-        android:layout_margin="10dp"
-        android:src="@drawable/ic_archive_white"
-        app:backgroundTint="@color/deep_purple_A400" />
+    <android.support.design.widget.CoordinatorLayout
+        android:id="@+id/coordinator_layout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <android.support.design.widget.FloatingActionButton
+            android:id="@+id/fab"
+            app:elevation="6dp"
+            app:borderWidth="0dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom|left"
+            android:layout_margin="16dp"
+            android:src="@drawable/ic_archive_white"
+            app:backgroundTint="@color/red_A400" />
+    </android.support.design.widget.CoordinatorLayout>
 </FrameLayout>

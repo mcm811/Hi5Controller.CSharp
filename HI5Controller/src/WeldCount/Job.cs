@@ -81,7 +81,9 @@ namespace Com.Changyoung.HI5Controller
 
 		public static void LogDebug(string msg)
 		{
+			try {
 			Log.Debug("Job", "[" + msg + "]");
+			} catch { }
 		}
 
 		private RowTypes GetRowType(string rowString)

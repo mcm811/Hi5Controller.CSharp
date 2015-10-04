@@ -23,7 +23,7 @@
       <item
       android:id="@+id/nav_sdcard0"
       android:icon="@drawable/ic_memory"
-      android:title="@string/nav_sdcard0"/>
+      android:title="@string/nav_sdcard"/>
       <item
       android:id="@+id/nav_extsdcard"
       android:icon="@drawable/ic_sd_card"

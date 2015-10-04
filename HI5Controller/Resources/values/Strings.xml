@@ -11,6 +11,16 @@
   <string name="FixedTipClearance">고정극 제거율</string>
   <string name="PannelThickness">패널 두께</string>
   <string name="CommandOffset">명령 옵셋</string>
+
+  <string name="Editor_OutputData">출력 데이터 (Output data)</string>
+  <string name="Editor_OutputType">출력 종류</string>
+  <string name="Editor_SqueezeForce">가압력</string>
+  <string name="Editor_MoveTipClearance">이동극 제거율</string>
+  <string name="Editor_FixedTipClearance">고정극 제거율</string>
+  <string name="Editor_PannelThickness">패널 두께</string>
+  <string name="Editor_CommandOffset">명령 옵셋</string>
+  <string name="Editor_BeginNumber">시작 번호</string>
+
   <string name="app_name">폴더 선택</string>
   <string name="no_files_or_directories">No files or directories</string>
   <string name="wcd_edit">선택 항목 수정</string>
@@ -21,6 +31,8 @@
   <string name="Share">공유</string>
   <string name="Save">저장</string>
   <string name="Exit">종료</string>
+  <string name="WorkPath">작업 경로</string>
+  <string name="BackupPath">백업 경로</string>
 
   <string name="work_path_fragment">작업 경로</string>
   <string name="weld_count_fragment">용접 카운트</string>
@@ -30,13 +42,15 @@
 
   <string name="nav_weld_count">용접 카운트</string>
   <string name="nav_weld_condition">용접 조건</string>
-
   <string name="nav_path_settings">이동</string>
   <string name="nav_storage">저장소</string>
-  <string name="nav_sdcard0">내부 저장소</string>
+  <string name="nav_sdcard">내부 저장소</string>
   <string name="nav_extsdcard">SD 카드</string>
   <string name="nav_usbstorage">USB 저장소</string>
   <string name="nav_app_exit">앱</string>
-  <string name="nav_exit">종료</string>
+  <string name="nav_backup">백업</string>
+  <string name="nav_restore">복원</string>
+  <string name="nav_home">홈</string>
+  <string name="nav_up">위로</string>
 
 </resources>

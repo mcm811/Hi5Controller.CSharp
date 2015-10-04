@@ -24,6 +24,8 @@ namespace Com.Changyoung.HI5Controller
 	{
 		private View view;
 		private FloatingActionButton fabWcd;
+		private CoordinatorLayout coordinatorLayout;
+		private Snackbar snackbar;
 
 		private string dirPath;
 		private string robotPath;
@@ -39,19 +41,26 @@ namespace Com.Changyoung.HI5Controller
 
 		private void LogDebug(string msg)
 		{
-			Log.Debug(Context.PackageName, "WcdListFragment: " + msg);
+			try {
+				Log.Debug(Context.PackageName, "WcdListFragment: " + msg);
+			} catch { }
 		}
 
-		private void ToastShow(string str)
+		public void Show(string str)
 		{
-			//Toast.MakeText(Context, str, ToastLength.Short).Show();
-			Snackbar.Make(view, str, Snackbar.LengthLong).Show();
+			//Snackbar.Make(viewParent, str, Snackbar.LengthLong)
+			//		.SetAction("Undo", (view) => { /*Undo message sending here.*/ })
+			//		.SetAction("Redo", (view) => { /*Undo message sending here.*/ })
+			//		.Show();
+			try {
+				Snackbar.Make(coordinatorLayout, str, Snackbar.LengthShort).Show();
+			} catch { }
 			LogDebug(str);
 		}
 
-		private void SnackbarShow(View viewParent, string str)
+		private void SnackbarShow(string str)
 		{
-			var sb = Snackbar.Make(viewParent, str, Snackbar.LengthLong);
+			var sb = Snackbar.Make(coordinatorLayout, str, Snackbar.LengthLong);
 			//sb.SetAction("Undo", (view) => { /*Undo message sending here.*/ });
 			sb.Show(); // Don’t forget to show!
 			LogDebug(str);
@@ -114,18 +123,44 @@ namespace Com.Changyoung.HI5Controller
 					sw.Write(sb.ToString());
 					sw.Close();
 					//ToastShow("저장 완료: " + fileName.Substring(fileName.LastIndexOf('/')));
-					ToastShow("저장 완료: " + fileName);
+					Show("저장 완료: " + fileName);
 				}
 			} catch {
-				ToastShow("저장 실패: " + fileName);
+				Show("저장 실패: " + fileName);
 			}
 
 			return sb.ToString();
 		}
 
-		private Color GetArgb(int argb)
+		//private Color GetArgb(int argb)
+		//{
+		//	return Color.Argb(Color.GetAlphaComponent(argb), Color.GetRedComponent(argb), Color.GetGreenComponent(argb), Color.GetBlueComponent(argb));
+		//}
+
+		public void CheckListItem(bool checkValue = false)
 		{
-			return Color.Argb(Color.GetAlphaComponent(argb), Color.GetRedComponent(argb), Color.GetGreenComponent(argb), Color.GetBlueComponent(argb));
+			try {
+				SparseBooleanArray checkedList = listView.CheckedItemPositions;
+				for (int i = 0; i < checkedList.Size(); i++) {
+					if (checkedList.ValueAt(i)) {
+						var pos = checkedList.KeyAt(i);
+						listView.SetItemChecked(pos, checkValue);
+						wcdListAdapter[pos].ItemChecked = checkValue;
+					}
+				}
+				if (wcdListAdapter.Count == 0)
+					fabWcd.SetImageResource(Resource.Drawable.ic_refresh_white);
+				else if (listView.CheckedItemCount == 0)
+					fabWcd.SetImageResource(Resource.Drawable.ic_subject_white);
+				else
+					fabWcd.SetImageResource(Resource.Drawable.ic_edit_white);
+				wcdListAdapter.NotifyDataSetChanged();
+			} catch { }
+
+			if (snackbar != null) {
+				snackbar.Dismiss();
+				snackbar = null;
+			}
 		}
 
 		public void Refresh(bool forced = false)
@@ -145,23 +180,7 @@ namespace Com.Changyoung.HI5Controller
 				wcdListAdapter.NotifyDataSetChanged();
 			}
 
-			try {
-				SparseBooleanArray checkedList = listView.CheckedItemPositions;
-				for (int i = 0; i < checkedList.Size(); i++) {
-					if (checkedList.ValueAt(i)) {
-						var pos = checkedList.KeyAt(i);
-						listView.SetItemChecked(pos, true);
-						wcdListAdapter[pos].ItemChecked = true;
-					}
-				}
-				if (wcdListAdapter.Count == 0)
-					fabWcd.SetImageResource(Resource.Drawable.ic_refresh_white);
-				else if (listView.CheckedItemCount == 0)
-					fabWcd.SetImageResource(Resource.Drawable.ic_subject_white);
-				else
-					fabWcd.SetImageResource(Resource.Drawable.ic_edit_white);
-				wcdListAdapter.NotifyDataSetChanged();
-			} catch { }
+			CheckListItem(true);
 		}
 
 		public override void OnCreate(Bundle bundle)
@@ -180,8 +199,9 @@ namespace Com.Changyoung.HI5Controller
 			LogDebug("OnCreateView");
 			view = inflater.Inflate(Resource.Layout.weld_condition_fragment, container, false);
 
-			selectedBackGroundColor = Context.Resources.GetColor(Resource.Color.tab3_textview_background);
+			coordinatorLayout = view.FindViewById<CoordinatorLayout>(Resource.Id.coordinator_layout);
 
+			selectedBackGroundColor = Context.Resources.GetColor(Resource.Color.tab3_textview_background);
 			listView = view.FindViewById<ListView>(Resource.Id.wcdListView);
 			listView.Adapter = wcdListAdapter;
 			listView.FastScrollEnabled = false;
@@ -204,26 +224,38 @@ namespace Com.Changyoung.HI5Controller
 					else
 						fabWcd.SetImageResource(Resource.Drawable.ic_edit_white);
 				} catch { }
+
+				//if (listView.CheckedItemCount > 0) {
+				//	if (snackbar == null) {
+				//		snackbar = Snackbar.Make(coordinatorLayout, listView.CheckedItemCount.ToString() + "개 항목 선택됨", Snackbar.LengthIndefinite)
+				//				.SetAction("선택 취소", (view) => { CheckListItem(); snackbar = null; });
+				//		snackbar.Show();
+				//	} else {
+				//		snackbar.SetText(listView.CheckedItemCount.ToString() + "개 항목 선택됨");
+				//	}
+				//} else {
+				//	if (snackbar != null) {
+				//		snackbar.Dismiss();
+				//		snackbar = null;
+				//	}
+				//}
+
+				if (snackbar == null)
+					snackbar = Snackbar.Make(coordinatorLayout, listView.CheckedItemCount.ToString() + "개 항목 선택됨", Snackbar.LengthIndefinite)
+							.SetAction("선택 취소", (view) => { CheckListItem(); snackbar = null; });
+				if (listView.CheckedItemCount > 0) {
+					if (snackbar.IsShown)
+						snackbar.SetText(listView.CheckedItemCount.ToString() + "개 항목 선택됨");
+					else
+						snackbar.Show();
+				} else if (snackbar != null) {
+					snackbar.Dismiss();
+					snackbar = null;
+				}
 			};
 			listView.ItemLongClick += (object sender, AdapterView.ItemLongClickEventArgs e) =>
 			{
-				try {
-					SparseBooleanArray checkedList = listView.CheckedItemPositions;
-					for (int i = 0; i < checkedList.Size(); i++) {
-						if (checkedList.ValueAt(i)) {
-							var pos = checkedList.KeyAt(i);
-							listView.SetItemChecked(pos, false);
-							wcdListAdapter[pos].ItemChecked = false;
-						}
-					}
-					if (wcdListAdapter.Count == 0)
-						fabWcd.SetImageResource(Resource.Drawable.ic_refresh_white);
-					else if (listView.CheckedItemCount == 0)
-						fabWcd.SetImageResource(Resource.Drawable.ic_subject_white);
-					else
-						fabWcd.SetImageResource(Resource.Drawable.ic_edit_white);
-					wcdListAdapter.NotifyDataSetChanged();
-				} catch { }
+				FabWcd_Click(sender, e);
 			};
 
 			var refresher = view.FindViewById<SwipeRefreshLayout>(Resource.Id.srl);
@@ -237,7 +269,13 @@ namespace Com.Changyoung.HI5Controller
 
 			// 떠 있는 액션버튼
 			fabWcd = view.FindViewById<FloatingActionButton>(Resource.Id.fab_wcd);
-			fabWcd.Click += FabWcd_Click;
+			fabWcd.Click += (object sender, EventArgs e) =>
+			{
+				if (listView.CheckedItemCount == 0)
+					Pref.TextViewDialog(Context, robotPath);
+				else
+					FabWcd_Click(sender, e);
+			};
 
 			try {
 				if (wcdListAdapter.Count == 0)
@@ -251,47 +289,17 @@ namespace Com.Changyoung.HI5Controller
 			return view;
 		}
 
-		private void FabWcd_TextView(object sender, EventArgs e)
-		{
-			//View dialogView = LayoutInflater.From(Context).Inflate(Resource.Layout.weld_count_text_view, null);
-			//var textView = dialogView.FindViewById<TextView>(Resource.Id.textView);
-			//AlertDialog.Builder dialog = new AlertDialog.Builder(Context);
-			//dialog.SetView(dialogView);
-
-			//var textView = new TextView(Context);
-			//textView.SetPadding(10, 10, 10, 10);
-			//textView.SetTextSize(ComplexUnitType.Sp, 10f);
-			//var scrollView = new ScrollView(Context);
-			//scrollView.AddView(textView);
-			//AlertDialog.Builder dialog = new AlertDialog.Builder(Context);
-			//dialog.SetView(scrollView);
-			//
-			//try {
-			//	using (StreamReader sr = new StreamReader(robotPath, Encoding.GetEncoding("euc-kr"))) {
-			//		textView.Text = sr.ReadToEnd();
-			//		sr.Close();
-			//	}
-			//} catch {
-			//	LogDebug("파일이 없습니다: " + robotPath);
-			//}
-			//
-			//dialog.SetPositiveButton("닫기", delegate
-			//{ });
-			//
-			//dialog.Show();
-
-			Pref.TextViewDialog(Context, robotPath);
-		}
-
 		private void FabWcd_Click(object sender, EventArgs e)
 		{
+			if (snackbar != null) {
+				snackbar.Dismiss();
+				snackbar = null;
+			}
+
 			if (wcdListAdapter.Count == 0) {
 				Refresh();
 				if (wcdListAdapter.Count == 0)
-					ToastShow("항목이 없습니다");
-				return;
-			} else if (listView.CheckedItemCount == 0) {
-				FabWcd_TextView(sender, e);
+					Show("항목이 없습니다");
 				return;
 			}
 
@@ -450,23 +458,7 @@ namespace Com.Changyoung.HI5Controller
 
 			dialog.SetNegativeButton("취소", delegate
 			{
-				try {
-					SparseBooleanArray checkedList = listView.CheckedItemPositions;
-					for (int i = 0; i < checkedList.Size(); i++) {
-						if (checkedList.ValueAt(i)) {
-							var pos = checkedList.KeyAt(i);
-							listView.SetItemChecked(pos, true);
-							wcdListAdapter[pos].ItemChecked = true;
-						}
-					}
-					if (wcdListAdapter.Count == 0)
-						fabWcd.SetImageResource(Resource.Drawable.ic_refresh_white);
-					else if (listView.CheckedItemCount == 0)
-						fabWcd.SetImageResource(Resource.Drawable.ic_subject_white);
-					else
-						fabWcd.SetImageResource(Resource.Drawable.ic_edit_white);
-					wcdListAdapter.NotifyDataSetChanged();
-				} catch { }
+				CheckListItem(false);
 			});
 
 			dialog.SetPositiveButton("저장", async delegate
@@ -497,6 +489,8 @@ namespace Com.Changyoung.HI5Controller
 				if (isUpdate) {
 					wcdListAdapter.NotifyDataSetChanged();
 					await UpdateFileAsync(robotPath, wcdListAdapter);
+				} else {
+					CheckListItem(false);
 				}
 				try {
 					if (wcdListAdapter.Count == 0)

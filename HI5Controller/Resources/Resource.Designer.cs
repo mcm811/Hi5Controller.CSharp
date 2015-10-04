@@ -2722,8 +2722,8 @@ namespace Com.Changyoung.HI5Controller
 		public partial class Id
 		{
 			
-			// aapt resource value: 0x7f0b0078
-			public const int action0 = 2131427448;
+			// aapt resource value: 0x7f0b0079
+			public const int action0 = 2131427449;
 			
 			// aapt resource value: 0x7f0b0055
 			public const int action_bar = 2131427413;
@@ -2749,8 +2749,8 @@ namespace Com.Changyoung.HI5Controller
 			// aapt resource value: 0x7f0b0056
 			public const int action_context_bar = 2131427414;
 			
-			// aapt resource value: 0x7f0b007c
-			public const int action_divider = 2131427452;
+			// aapt resource value: 0x7f0b007d
+			public const int action_divider = 2131427453;
 			
 			// aapt resource value: 0x7f0b0003
 			public const int action_menu_divider = 2131427331;
@@ -2794,8 +2794,8 @@ namespace Com.Changyoung.HI5Controller
 			// aapt resource value: 0x7f0b004b
 			public const int buttonPanel = 2131427403;
 			
-			// aapt resource value: 0x7f0b0079
-			public const int cancel_action = 2131427449;
+			// aapt resource value: 0x7f0b007a
+			public const int cancel_action = 2131427450;
 			
 			// aapt resource value: 0x7f0b0012
 			public const int center = 2131427346;
@@ -2809,8 +2809,8 @@ namespace Com.Changyoung.HI5Controller
 			// aapt resource value: 0x7f0b004d
 			public const int checkbox = 2131427405;
 			
-			// aapt resource value: 0x7f0b007f
-			public const int chronometer = 2131427455;
+			// aapt resource value: 0x7f0b0080
+			public const int chronometer = 2131427456;
 			
 			// aapt resource value: 0x7f0b001b
 			public const int clip_horizontal = 2131427355;
@@ -2823,6 +2823,9 @@ namespace Com.Changyoung.HI5Controller
 			
 			// aapt resource value: 0x7f0b0046
 			public const int contentPanel = 2131427398;
+			
+			// aapt resource value: 0x7f0b0069
+			public const int coordinator_layout = 2131427433;
 			
 			// aapt resource value: 0x7f0b004a
 			public const int custom = 2131427402;
@@ -2839,11 +2842,11 @@ namespace Com.Changyoung.HI5Controller
 			// aapt resource value: 0x7f0b0025
 			public const int disableHome = 2131427365;
 			
-			// aapt resource value: 0x7f0b0076
-			public const int drawerHeader = 2131427446;
+			// aapt resource value: 0x7f0b0077
+			public const int drawerHeader = 2131427447;
 			
-			// aapt resource value: 0x7f0b006f
-			public const int drawer_layout = 2131427439;
+			// aapt resource value: 0x7f0b0070
+			public const int drawer_layout = 2131427440;
 			
 			// aapt resource value: 0x7f0b0057
 			public const int edit_query = 2131427415;
@@ -2851,8 +2854,8 @@ namespace Com.Changyoung.HI5Controller
 			// aapt resource value: 0x7f0b0015
 			public const int end = 2131427349;
 			
-			// aapt resource value: 0x7f0b0084
-			public const int end_padder = 2131427460;
+			// aapt resource value: 0x7f0b0085
+			public const int end_padder = 2131427461;
 			
 			// aapt resource value: 0x7f0b000a
 			public const int enterAlways = 2131427338;
@@ -2866,26 +2869,26 @@ namespace Com.Changyoung.HI5Controller
 			// aapt resource value: 0x7f0b00a2
 			public const int etBeginNumber = 2131427490;
 			
-			// aapt resource value: 0x7f0b0096
-			public const int etCommandOffset = 2131427478;
+			// aapt resource value: 0x7f0b0095
+			public const int etCommandOffset = 2131427477;
 			
-			// aapt resource value: 0x7f0b0092
-			public const int etFixedTipClearance = 2131427474;
+			// aapt resource value: 0x7f0b0091
+			public const int etFixedTipClearance = 2131427473;
 			
-			// aapt resource value: 0x7f0b0090
-			public const int etMoveTipClearance = 2131427472;
+			// aapt resource value: 0x7f0b008f
+			public const int etMoveTipClearance = 2131427471;
 			
-			// aapt resource value: 0x7f0b008a
-			public const int etOutputData = 2131427466;
+			// aapt resource value: 0x7f0b0089
+			public const int etOutputData = 2131427465;
 			
-			// aapt resource value: 0x7f0b008c
-			public const int etOutputType = 2131427468;
+			// aapt resource value: 0x7f0b008b
+			public const int etOutputType = 2131427467;
 			
-			// aapt resource value: 0x7f0b0094
-			public const int etPannelThickness = 2131427476;
+			// aapt resource value: 0x7f0b0093
+			public const int etPannelThickness = 2131427475;
 			
-			// aapt resource value: 0x7f0b008e
-			public const int etSqueezeForce = 2131427470;
+			// aapt resource value: 0x7f0b008d
+			public const int etSqueezeForce = 2131427469;
 			
 			// aapt resource value: 0x7f0b00ad
 			public const int etWorkPath = 2131427501;
@@ -2899,20 +2902,20 @@ namespace Com.Changyoung.HI5Controller
 			// aapt resource value: 0x7f0b004c
 			public const int expanded_menu = 2131427404;
 			
-			// aapt resource value: 0x7f0b0069
-			public const int fab = 2131427433;
+			// aapt resource value: 0x7f0b006a
+			public const int fab = 2131427434;
 			
 			// aapt resource value: 0x7f0b00a1
 			public const int fab_wcd = 2131427489;
 			
-			// aapt resource value: 0x7f0b006c
-			public const int file_picker_image = 2131427436;
-			
 			// aapt resource value: 0x7f0b006d
-			public const int file_picker_text = 2131427437;
+			public const int file_picker_image = 2131427437;
 			
 			// aapt resource value: 0x7f0b006e
-			public const int file_picker_time = 2131427438;
+			public const int file_picker_text = 2131427438;
+			
+			// aapt resource value: 0x7f0b006f
+			public const int file_picker_time = 2131427439;
 			
 			// aapt resource value: 0x7f0b001d
 			public const int fill = 2131427357;
@@ -2941,17 +2944,17 @@ namespace Com.Changyoung.HI5Controller
 			// aapt resource value: 0x7f0b003d
 			public const int image = 2131427389;
 			
-			// aapt resource value: 0x7f0b0083
-			public const int info = 2131427459;
+			// aapt resource value: 0x7f0b0084
+			public const int info = 2131427460;
 			
 			// aapt resource value: 0x7f0b0017
 			public const int left = 2131427351;
 			
-			// aapt resource value: 0x7f0b007d
-			public const int line1 = 2131427453;
+			// aapt resource value: 0x7f0b007e
+			public const int line1 = 2131427454;
 			
-			// aapt resource value: 0x7f0b0081
-			public const int line3 = 2131427457;
+			// aapt resource value: 0x7f0b0082
+			public const int line3 = 2131427458;
 			
 			// aapt resource value: 0x7f0b00a3
 			public const int linearLayout = 2131427491;
@@ -2965,14 +2968,14 @@ namespace Com.Changyoung.HI5Controller
 			// aapt resource value: 0x7f0b003f
 			public const int list_item = 2131427391;
 			
-			// aapt resource value: 0x7f0b0070
-			public const int main_parent_view = 2131427440;
-			
 			// aapt resource value: 0x7f0b0071
-			public const int main_toolbar = 2131427441;
+			public const int main_parent_view = 2131427441;
 			
-			// aapt resource value: 0x7f0b007b
-			public const int media_actions = 2131427451;
+			// aapt resource value: 0x7f0b0072
+			public const int main_toolbar = 2131427442;
+			
+			// aapt resource value: 0x7f0b007c
+			public const int media_actions = 2131427452;
 			
 			// aapt resource value: 0x7f0b00b0
 			public const int menu_backup = 2131427504;
@@ -3004,8 +3007,8 @@ namespace Com.Changyoung.HI5Controller
 			// aapt resource value: 0x7f0b00b8
 			public const int nav_usbstorage = 2131427512;
 			
-			// aapt resource value: 0x7f0b0075
-			public const int nav_view = 2131427445;
+			// aapt resource value: 0x7f0b0076
+			public const int nav_view = 2131427446;
 			
 			// aapt resource value: 0x7f0b00b3
 			public const int nav_weld_condition = 2131427507;
@@ -3025,8 +3028,8 @@ namespace Com.Changyoung.HI5Controller
 			// aapt resource value: 0x7f0b0020
 			public const int normal = 2131427360;
 			
-			// aapt resource value: 0x7f0b0074
-			public const int pager = 2131427444;
+			// aapt resource value: 0x7f0b0075
+			public const int pager = 2131427445;
 			
 			// aapt resource value: 0x7f0b000f
 			public const int parallax = 2131427343;
@@ -3049,14 +3052,14 @@ namespace Com.Changyoung.HI5Controller
 			// aapt resource value: 0x7f0b0018
 			public const int right = 2131427352;
 			
-			// aapt resource value: 0x7f0b008b
-			public const int sampleSeekBar = 2131427467;
+			// aapt resource value: 0x7f0b008a
+			public const int sampleSeekBar = 2131427466;
+			
+			// aapt resource value: 0x7f0b0096
+			public const int sbBegin = 2131427478;
 			
 			// aapt resource value: 0x7f0b0097
-			public const int sbBegin = 2131427479;
-			
-			// aapt resource value: 0x7f0b0098
-			public const int sbEnd = 2131427480;
+			public const int sbEnd = 2131427479;
 			
 			// aapt resource value: 0x7f0b002c
 			public const int screen = 2131427372;
@@ -3118,11 +3121,11 @@ namespace Com.Changyoung.HI5Controller
 			// aapt resource value: 0x7f0b0029
 			public const int showTitle = 2131427369;
 			
-			// aapt resource value: 0x7f0b006b
-			public const int snackbar_action = 2131427435;
+			// aapt resource value: 0x7f0b006c
+			public const int snackbar_action = 2131427436;
 			
-			// aapt resource value: 0x7f0b006a
-			public const int snackbar_text = 2131427434;
+			// aapt resource value: 0x7f0b006b
+			public const int snackbar_text = 2131427435;
 			
 			// aapt resource value: 0x7f0b0008
 			public const int split_action_bar = 2131427336;
@@ -3136,17 +3139,17 @@ namespace Com.Changyoung.HI5Controller
 			// aapt resource value: 0x7f0b002f
 			public const int src_over = 2131427375;
 			
-			// aapt resource value: 0x7f0b0085
-			public const int srl = 2131427461;
+			// aapt resource value: 0x7f0b009f
+			public const int srl = 2131427487;
 			
 			// aapt resource value: 0x7f0b0019
 			public const int start = 2131427353;
 			
-			// aapt resource value: 0x7f0b0088
-			public const int statusText = 2131427464;
+			// aapt resource value: 0x7f0b0087
+			public const int statusText = 2131427463;
 			
-			// aapt resource value: 0x7f0b007a
-			public const int status_bar_latest_event_content = 2131427450;
+			// aapt resource value: 0x7f0b007b
+			public const int status_bar_latest_event_content = 2131427451;
 			
 			// aapt resource value: 0x7f0b0060
 			public const int submit_area = 2131427424;
@@ -3154,44 +3157,44 @@ namespace Com.Changyoung.HI5Controller
 			// aapt resource value: 0x7f0b0024
 			public const int tabMode = 2131427364;
 			
-			// aapt resource value: 0x7f0b0072
-			public const int tab_layout = 2131427442;
+			// aapt resource value: 0x7f0b0073
+			public const int tab_layout = 2131427443;
 			
-			// aapt resource value: 0x7f0b0082
-			public const int text = 2131427458;
+			// aapt resource value: 0x7f0b0083
+			public const int text = 2131427459;
 			
-			// aapt resource value: 0x7f0b0080
-			public const int text2 = 2131427456;
+			// aapt resource value: 0x7f0b0081
+			public const int text2 = 2131427457;
 			
-			// aapt resource value: 0x7f0b0089
-			public const int textInputLayout1 = 2131427465;
+			// aapt resource value: 0x7f0b0088
+			public const int textInputLayout1 = 2131427464;
 			
 			// aapt resource value: 0x7f0b0065
 			public const int textInputLayout2 = 2131427429;
 			
-			// aapt resource value: 0x7f0b008d
-			public const int textInputLayout3 = 2131427469;
+			// aapt resource value: 0x7f0b008c
+			public const int textInputLayout3 = 2131427468;
 			
-			// aapt resource value: 0x7f0b008f
-			public const int textInputLayout4 = 2131427471;
+			// aapt resource value: 0x7f0b008e
+			public const int textInputLayout4 = 2131427470;
 			
-			// aapt resource value: 0x7f0b0091
-			public const int textInputLayout5 = 2131427473;
+			// aapt resource value: 0x7f0b0090
+			public const int textInputLayout5 = 2131427472;
 			
-			// aapt resource value: 0x7f0b0093
-			public const int textInputLayout6 = 2131427475;
+			// aapt resource value: 0x7f0b0092
+			public const int textInputLayout6 = 2131427474;
 			
-			// aapt resource value: 0x7f0b0095
-			public const int textInputLayout7 = 2131427477;
+			// aapt resource value: 0x7f0b0094
+			public const int textInputLayout7 = 2131427476;
 			
 			// aapt resource value: 0x7f0b0048
 			public const int textSpacerNoButtons = 2131427400;
 			
-			// aapt resource value: 0x7f0b0077
-			public const int textView1 = 2131427447;
+			// aapt resource value: 0x7f0b0078
+			public const int textView1 = 2131427448;
 			
-			// aapt resource value: 0x7f0b007e
-			public const int time = 2131427454;
+			// aapt resource value: 0x7f0b007f
+			public const int time = 2131427455;
 			
 			// aapt resource value: 0x7f0b0041
 			public const int title = 2131427393;
@@ -3199,41 +3202,35 @@ namespace Com.Changyoung.HI5Controller
 			// aapt resource value: 0x7f0b0044
 			public const int title_template = 2131427396;
 			
-			// aapt resource value: 0x7f0b0073
-			public const int toolbar = 2131427443;
+			// aapt resource value: 0x7f0b0074
+			public const int toolbar = 2131427444;
 			
 			// aapt resource value: 0x7f0b00bb
-			public const int toolbar_backup_path_menu_backup = 2131427515;
-			
-			// aapt resource value: 0x7f0b00bc
-			public const int toolbar_backup_path_menu_home = 2131427516;
+			public const int toolbar_backup_path_menu_home = 2131427515;
 			
 			// aapt resource value: 0x7f0b00ba
 			public const int toolbar_backup_path_menu_restore = 2131427514;
 			
-			// aapt resource value: 0x7f0b00bd
-			public const int toolbar_backup_path_menu_up = 2131427517;
-			
-			// aapt resource value: 0x7f0b00c2
-			public const int toolbar_work_path_menu_backup = 2131427522;
-			
-			// aapt resource value: 0x7f0b00c0
-			public const int toolbar_work_path_menu_extsdcard = 2131427520;
-			
-			// aapt resource value: 0x7f0b00c3
-			public const int toolbar_work_path_menu_home = 2131427523;
+			// aapt resource value: 0x7f0b00bc
+			public const int toolbar_backup_path_menu_up = 2131427516;
 			
 			// aapt resource value: 0x7f0b00bf
-			public const int toolbar_work_path_menu_sdcard = 2131427519;
-			
-			// aapt resource value: 0x7f0b00be
-			public const int toolbar_work_path_menu_storage = 2131427518;
-			
-			// aapt resource value: 0x7f0b00c4
-			public const int toolbar_work_path_menu_up = 2131427524;
+			public const int toolbar_work_path_menu_extsdcard = 2131427519;
 			
 			// aapt resource value: 0x7f0b00c1
-			public const int toolbar_work_path_menu_usbstorage = 2131427521;
+			public const int toolbar_work_path_menu_home = 2131427521;
+			
+			// aapt resource value: 0x7f0b00be
+			public const int toolbar_work_path_menu_sdcard = 2131427518;
+			
+			// aapt resource value: 0x7f0b00bd
+			public const int toolbar_work_path_menu_storage = 2131427517;
+			
+			// aapt resource value: 0x7f0b00c2
+			public const int toolbar_work_path_menu_up = 2131427522;
+			
+			// aapt resource value: 0x7f0b00c0
+			public const int toolbar_work_path_menu_usbstorage = 2131427520;
 			
 			// aapt resource value: 0x7f0b001a
 			public const int top = 2131427354;
@@ -3244,8 +3241,8 @@ namespace Com.Changyoung.HI5Controller
 			// aapt resource value: 0x7f0b00a8
 			public const int tvCN = 2131427496;
 			
-			// aapt resource value: 0x7f0b009b
-			public const int tvCommandOffset = 2131427483;
+			// aapt resource value: 0x7f0b009a
+			public const int tvCommandOffset = 2131427482;
 			
 			// aapt resource value: 0x7f0b00a9
 			public const int tvCount = 2131427497;
@@ -3253,20 +3250,20 @@ namespace Com.Changyoung.HI5Controller
 			// aapt resource value: 0x7f0b00a6
 			public const int tvFileName = 2131427494;
 			
-			// aapt resource value: 0x7f0b009f
-			public const int tvFixedTipClearance = 2131427487;
+			// aapt resource value: 0x7f0b009e
+			public const int tvFixedTipClearance = 2131427486;
+			
+			// aapt resource value: 0x7f0b009b
+			public const int tvMoveTipClearance = 2131427483;
+			
+			// aapt resource value: 0x7f0b0098
+			public const int tvOutputData = 2131427480;
 			
 			// aapt resource value: 0x7f0b009c
-			public const int tvMoveTipClearance = 2131427484;
+			public const int tvOutputType = 2131427484;
 			
 			// aapt resource value: 0x7f0b0099
-			public const int tvOutputData = 2131427481;
-			
-			// aapt resource value: 0x7f0b009d
-			public const int tvOutputType = 2131427485;
-			
-			// aapt resource value: 0x7f0b009a
-			public const int tvPannelThickness = 2131427482;
+			public const int tvPannelThickness = 2131427481;
 			
 			// aapt resource value: 0x7f0b00a7
 			public const int tvPreview = 2131427495;
@@ -3274,8 +3271,8 @@ namespace Com.Changyoung.HI5Controller
 			// aapt resource value: 0x7f0b00aa
 			public const int tvSize = 2131427498;
 			
-			// aapt resource value: 0x7f0b009e
-			public const int tvSqueezeForce = 2131427486;
+			// aapt resource value: 0x7f0b009d
+			public const int tvSqueezeForce = 2131427485;
 			
 			// aapt resource value: 0x7f0b00ab
 			public const int tvTime = 2131427499;
@@ -3291,9 +3288,6 @@ namespace Com.Changyoung.HI5Controller
 			
 			// aapt resource value: 0x7f0b00a0
 			public const int wcdListView = 2131427488;
-			
-			// aapt resource value: 0x7f0b0087
-			public const int wcdTextView = 2131427463;
 			
 			// aapt resource value: 0x7f0b00a5
 			public const int weldCountListView = 2131427493;
@@ -3508,28 +3502,25 @@ namespace Com.Changyoung.HI5Controller
 			public const int support_simple_spinner_dropdown_item = 2130903089;
 			
 			// aapt resource value: 0x7f030032
-			public const int text_view_fragment = 2130903090;
+			public const int weld_condition_editor = 2130903090;
 			
 			// aapt resource value: 0x7f030033
-			public const int weld_condition_editor = 2130903091;
+			public const int weld_condition_fragment = 2130903091;
 			
 			// aapt resource value: 0x7f030034
-			public const int weld_condition_fragment = 2130903092;
+			public const int weld_condition_row = 2130903092;
 			
 			// aapt resource value: 0x7f030035
-			public const int weld_condition_row = 2130903093;
+			public const int weld_count_editor = 2130903093;
 			
 			// aapt resource value: 0x7f030036
-			public const int weld_count_editor = 2130903094;
+			public const int weld_count_fragment = 2130903094;
 			
 			// aapt resource value: 0x7f030037
-			public const int weld_count_fragment = 2130903095;
+			public const int weld_count_row = 2130903095;
 			
 			// aapt resource value: 0x7f030038
-			public const int weld_count_row = 2130903096;
-			
-			// aapt resource value: 0x7f030039
-			public const int work_path_fragment = 2130903097;
+			public const int work_path_fragment = 2130903096;
 			
 			static Layout()
 			{
@@ -3575,8 +3566,35 @@ namespace Com.Changyoung.HI5Controller
 			// aapt resource value: 0x7f060010
 			public const int Backup = 2131099664;
 			
+			// aapt resource value: 0x7f060027
+			public const int BackupPath = 2131099687;
+			
 			// aapt resource value: 0x7f060009
 			public const int CommandOffset = 2131099657;
+			
+			// aapt resource value: 0x7f060030
+			public const int Editor_BeginNumber = 2131099696;
+			
+			// aapt resource value: 0x7f06002f
+			public const int Editor_CommandOffset = 2131099695;
+			
+			// aapt resource value: 0x7f06002d
+			public const int Editor_FixedTipClearance = 2131099693;
+			
+			// aapt resource value: 0x7f06002c
+			public const int Editor_MoveTipClearance = 2131099692;
+			
+			// aapt resource value: 0x7f060029
+			public const int Editor_OutputData = 2131099689;
+			
+			// aapt resource value: 0x7f06002a
+			public const int Editor_OutputType = 2131099690;
+			
+			// aapt resource value: 0x7f06002e
+			public const int Editor_PannelThickness = 2131099694;
+			
+			// aapt resource value: 0x7f06002b
+			public const int Editor_SqueezeForce = 2131099691;
 			
 			// aapt resource value: 0x7f060013
 			public const int Exit = 2131099667;
@@ -3614,56 +3632,59 @@ namespace Com.Changyoung.HI5Controller
 			// aapt resource value: 0x7f060002
 			public const int WcdListViewName = 2131099650;
 			
-			// aapt resource value: 0x7f060022
-			public const int abc_action_bar_home_description = 2131099682;
-			
-			// aapt resource value: 0x7f060023
-			public const int abc_action_bar_home_description_format = 2131099683;
-			
-			// aapt resource value: 0x7f060024
-			public const int abc_action_bar_home_subtitle_description_format = 2131099684;
-			
-			// aapt resource value: 0x7f060025
-			public const int abc_action_bar_up_description = 2131099685;
-			
-			// aapt resource value: 0x7f060026
-			public const int abc_action_menu_overflow_description = 2131099686;
-			
-			// aapt resource value: 0x7f060027
-			public const int abc_action_mode_done = 2131099687;
-			
 			// aapt resource value: 0x7f060028
-			public const int abc_activity_chooser_view_see_all = 2131099688;
-			
-			// aapt resource value: 0x7f060029
-			public const int abc_activitychooserview_choose_application = 2131099689;
-			
-			// aapt resource value: 0x7f06002a
-			public const int abc_search_hint = 2131099690;
-			
-			// aapt resource value: 0x7f06002b
-			public const int abc_searchview_description_clear = 2131099691;
-			
-			// aapt resource value: 0x7f06002c
-			public const int abc_searchview_description_query = 2131099692;
-			
-			// aapt resource value: 0x7f06002d
-			public const int abc_searchview_description_search = 2131099693;
-			
-			// aapt resource value: 0x7f06002e
-			public const int abc_searchview_description_submit = 2131099694;
-			
-			// aapt resource value: 0x7f06002f
-			public const int abc_searchview_description_voice = 2131099695;
-			
-			// aapt resource value: 0x7f060030
-			public const int abc_shareactionprovider_share_with = 2131099696;
+			public const int WorkPath = 2131099688;
 			
 			// aapt resource value: 0x7f060031
-			public const int abc_shareactionprovider_share_with_application = 2131099697;
+			public const int abc_action_bar_home_description = 2131099697;
 			
 			// aapt resource value: 0x7f060032
-			public const int abc_toolbar_collapse_description = 2131099698;
+			public const int abc_action_bar_home_description_format = 2131099698;
+			
+			// aapt resource value: 0x7f060033
+			public const int abc_action_bar_home_subtitle_description_format = 2131099699;
+			
+			// aapt resource value: 0x7f060034
+			public const int abc_action_bar_up_description = 2131099700;
+			
+			// aapt resource value: 0x7f060035
+			public const int abc_action_menu_overflow_description = 2131099701;
+			
+			// aapt resource value: 0x7f060036
+			public const int abc_action_mode_done = 2131099702;
+			
+			// aapt resource value: 0x7f060037
+			public const int abc_activity_chooser_view_see_all = 2131099703;
+			
+			// aapt resource value: 0x7f060038
+			public const int abc_activitychooserview_choose_application = 2131099704;
+			
+			// aapt resource value: 0x7f060039
+			public const int abc_search_hint = 2131099705;
+			
+			// aapt resource value: 0x7f06003a
+			public const int abc_searchview_description_clear = 2131099706;
+			
+			// aapt resource value: 0x7f06003b
+			public const int abc_searchview_description_query = 2131099707;
+			
+			// aapt resource value: 0x7f06003c
+			public const int abc_searchview_description_search = 2131099708;
+			
+			// aapt resource value: 0x7f06003d
+			public const int abc_searchview_description_submit = 2131099709;
+			
+			// aapt resource value: 0x7f06003e
+			public const int abc_searchview_description_voice = 2131099710;
+			
+			// aapt resource value: 0x7f06003f
+			public const int abc_shareactionprovider_share_with = 2131099711;
+			
+			// aapt resource value: 0x7f060040
+			public const int abc_shareactionprovider_share_with_application = 2131099712;
+			
+			// aapt resource value: 0x7f060041
+			public const int abc_toolbar_collapse_description = 2131099713;
 			
 			// aapt resource value: 0x7f060000
 			public const int ad_unit_id = 2131099648;
@@ -3671,8 +3692,8 @@ namespace Com.Changyoung.HI5Controller
 			// aapt resource value: 0x7f06000a
 			public const int app_name = 2131099658;
 			
-			// aapt resource value: 0x7f060034
-			public const int appbar_scrolling_view_behavior = 2131099700;
+			// aapt resource value: 0x7f060043
+			public const int appbar_scrolling_view_behavior = 2131099715;
 			
 			// aapt resource value: 0x7f060017
 			public const int backup_path_fragment = 2131099671;
@@ -3680,20 +3701,35 @@ namespace Com.Changyoung.HI5Controller
 			// aapt resource value: 0x7f060020
 			public const int nav_app_exit = 2131099680;
 			
+			// aapt resource value: 0x7f060023
+			public const int nav_backup = 2131099683;
+			
 			// aapt resource value: 0x7f060021
 			public const int nav_exit = 2131099681;
 			
 			// aapt resource value: 0x7f06001e
 			public const int nav_extsdcard = 2131099678;
 			
+			// aapt resource value: 0x7f060025
+			public const int nav_home = 2131099685;
+			
 			// aapt resource value: 0x7f06001b
 			public const int nav_path_settings = 2131099675;
+			
+			// aapt resource value: 0x7f060024
+			public const int nav_restore = 2131099684;
+			
+			// aapt resource value: 0x7f060022
+			public const int nav_sdcard = 2131099682;
 			
 			// aapt resource value: 0x7f06001d
 			public const int nav_sdcard0 = 2131099677;
 			
 			// aapt resource value: 0x7f06001c
 			public const int nav_storage = 2131099676;
+			
+			// aapt resource value: 0x7f060026
+			public const int nav_up = 2131099686;
 			
 			// aapt resource value: 0x7f06001f
 			public const int nav_usbstorage = 2131099679;
@@ -3707,8 +3743,8 @@ namespace Com.Changyoung.HI5Controller
 			// aapt resource value: 0x7f06000b
 			public const int no_files_or_directories = 2131099659;
 			
-			// aapt resource value: 0x7f060033
-			public const int status_bar_notification_info_overflow = 2131099699;
+			// aapt resource value: 0x7f060042
+			public const int status_bar_notification_info_overflow = 2131099714;
 			
 			// aapt resource value: 0x7f060018
 			public const int text_view_fragment = 2131099672;

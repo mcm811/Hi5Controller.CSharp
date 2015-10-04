@@ -35,28 +35,15 @@ namespace Com.Changyoung.HI5Controller
 			Log.Debug(Application.PackageName, "WcdActivity: " + msg);
 		}
 
-		private void ToastShow(string str)
-		{
-			//Toast.MakeText(this, str, ToastLength.Short).Show();
-			Snackbar.Make(view, str, Snackbar.LengthLong).Show();
-			LogDebug(str);
-		}
-
-		private void SnackbarShort(string str)
+		public void Show(string str)
 		{
 			//Snackbar.Make(viewParent, str, Snackbar.LengthLong)
 			//		.SetAction("Undo", (view) => { /*Undo message sending here.*/ })
-			//		.Show(); // Don’t forget to show!
-			Snackbar.Make(view, str, Snackbar.LengthShort).Show();
-			LogDebug(str);
-		}
-
-		private void SnackbarLong(string str)
-		{
-			//Snackbar.Make(viewParent, str, Snackbar.LengthLong)
-			//		.SetAction("Undo", (view) => { /*Undo message sending here.*/ })
-			//		.Show(); // Don’t forget to show!
-			Snackbar.Make(view, str, Snackbar.LengthLong).Show();
+			//		.SetAction("Redo", (view) => { /*Undo message sending here.*/ })
+			//		.Show();
+			try {
+				Snackbar.Make(view, str, Snackbar.LengthShort).Show();
+			} catch { }
 			LogDebug(str);
 		}
 
@@ -355,7 +342,9 @@ namespace Com.Changyoung.HI5Controller
 				//base.OnBackPressed();
 				break;
 				case 2:
-				//base.OnBackPressed();
+				var f2 = (WeldConditionFragment)GetFragment(position);
+				if (f2 != null)
+					f2.CheckListItem();
 				break;
 				case 3:
 				var f3 = (BackupPathFragment)GetFragment(position);
