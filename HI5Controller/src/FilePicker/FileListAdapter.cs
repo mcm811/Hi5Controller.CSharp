@@ -59,7 +59,10 @@ namespace com.xamarin.recipes.filepicker
 			View row;
 			if (convertView == null) {
 				row = _context.GetLayoutInflater().Inflate(Resource.Layout.file_picker_list_item, parent, false);
-				viewHolder = new FileListRowViewHolder(row.FindViewById<TextView>(Resource.Id.file_picker_text), row.FindViewById<ImageView>(Resource.Id.file_picker_image));
+				viewHolder = new FileListRowViewHolder(
+					row.FindViewById<TextView>(Resource.Id.file_picker_time),
+					row.FindViewById<TextView>(Resource.Id.file_picker_text),
+					row.FindViewById<ImageView>(Resource.Id.file_picker_image));
 				row.Tag = viewHolder;
 			} else {
 				row = convertView;
@@ -68,11 +71,11 @@ namespace com.xamarin.recipes.filepicker
 			if (position == 0) {
 				//Log.Error("======", "[" + fileSystemEntry.FullName + "][" + Path.GetDirectoryName(fileSystemEntry.FullName) + "]");
 				if (fileSystemEntry.FullName == "/")
-					viewHolder.Update(fileSystemEntry.FullName, Resource.Drawable.ic_android);
+					viewHolder.Update("", fileSystemEntry.FullName, Resource.Drawable.ic_android);
 				else
-					viewHolder.Update(Path.Combine(fileSystemEntry.FullName, ".."), Resource.Drawable.ic_file_upload);
+					viewHolder.Update("", Path.Combine(fileSystemEntry.FullName, ".."), Resource.Drawable.ic_file_upload);
 			} else {
-				viewHolder.Update(fileSystemEntry.Name, fileSystemEntry.IsDirectory() ? Resource.Drawable.ic_folder_open : Resource.Drawable.ic_description);
+				viewHolder.Update(fileSystemEntry.LastWriteTime.ToString(), fileSystemEntry.Name, fileSystemEntry.IsDirectory() ? Resource.Drawable.ic_folder_open : Resource.Drawable.ic_description);
 			}
 
 			return row;

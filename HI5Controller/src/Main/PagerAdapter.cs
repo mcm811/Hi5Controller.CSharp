@@ -35,34 +35,28 @@ namespace Com.Changyoung.HI5Controller
 
 		public enum FragmentPosition
 		{
-			WcdPathTabFragment,
-			WeldCountTabFragment,
-			WcdListTabFragment,
-			JobEditTabFragment,
-			WcdTextTabFragment
+			WorkPathFragment,
+			WeldCountFragment,
+			WeldConditionFragment,
+			BackupPathFragment,
 		}
 
 		public override Fragment GetItem(int position)
 		{
 			if (fragments[position] == null) {
 				switch ((FragmentPosition)position) {
-					case FragmentPosition.WcdPathTabFragment:
+					case FragmentPosition.WorkPathFragment:
 					fragments[position] = new WorkPathFragment();
 					break;
-					case FragmentPosition.WeldCountTabFragment:
+					case FragmentPosition.WeldCountFragment:
 					fragments[position] = new WeldCountFragment();
 					break;
-					case FragmentPosition.WcdListTabFragment:
-					fragments[position] = new WcdListFragment();
+					case FragmentPosition.WeldConditionFragment:
+					fragments[position] = new WeldConditionFragment();
 					break;
-					case FragmentPosition.JobEditTabFragment:
-					fragments[position] = new JobEditFragment();
+					case FragmentPosition.BackupPathFragment:
+					fragments[position] = new BackupPathFragment();
 					break;
-					case FragmentPosition.WcdTextTabFragment:
-					fragments[position] = new WcdTextFragment();
-					break;
-					default:
-					return null;
 				}
 			}
 			return fragments[position];

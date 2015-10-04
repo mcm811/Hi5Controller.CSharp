@@ -4,17 +4,16 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
   <group android:checkableBehavior="single">
     <item
-      android:id="@+id/nav_weldcount"
+      android:id="@+id/nav_weld_count"
       android:icon="@drawable/ic_today"
-      android:title="@string/nav_weldcount" />
+      android:title="@string/nav_weld_count" />
     <item
-      android:id="@+id/nav_wcdlist"
+      android:id="@+id/nav_weld_condition"
       android:icon="@drawable/ic_view_list"
-      android:title="@string/nav_wcdlist" />
+      android:title="@string/nav_weld_condition" />
   </group>
   <item
       android:id="@+id/navigation_subheader"
-      android:icon="@drawable/ic_settings"
       android:title="@string/nav_path_settings">
     <menu>
       <item
@@ -35,4 +34,15 @@
       android:title="@string/nav_usbstorage"/>
     </menu>
   </item>
+
+  <item
+    android:title="@string/nav_app_exit">
+    <menu>
+      <item
+      android:id="@+id/nav_exit"
+      android:icon="@drawable/ic_exit_to_app"
+      android:title="@string/nav_exit"/>
+    </menu>
+  </item>
+
 </menu>

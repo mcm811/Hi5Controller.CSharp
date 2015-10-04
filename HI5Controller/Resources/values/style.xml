@@ -23,4 +23,9 @@
     <item name="android:windowBackground">@drawable/splash_blue</item>
     <item name="android:windowNoTitle">true</item>
   </style>
+
+  <style name="toolbar_title_style" parent="@style/Base.TextAppearance.AppCompat.Title">
+    <item name="android:textSize">15sp</item>
+  </style>
+
 </resources>

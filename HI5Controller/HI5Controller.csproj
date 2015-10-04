@@ -92,23 +92,23 @@
     <Compile Include="src\FilePicker\FileListFragment.cs" />
     <Compile Include="src\FilePicker\FileListRowViewHolder.cs" />
     <Compile Include="src\FilePicker\Helpers.cs" />
+    <Compile Include="src\Main\BackupPathFragment.cs" />
     <Compile Include="src\Main\Pref.cs" />
     <Compile Include="src\Main\IRefresh.cs" />
     <Compile Include="src\WeldCount\Job.cs" />
     <Compile Include="src\Main\PagerAdapter.cs" />
     <Compile Include="src\Main\Splash.cs" />
-    <Compile Include="src\WeldCondition\WcdListRowViewHolder.cs" />
+    <Compile Include="src\WeldCondition\WeldConditionRowViewHolder.cs" />
     <Compile Include="src\Main\WorkPathFragment.cs" />
     <Compile Include="src\WeldCount\WeldCountAdapter.cs" />
     <Compile Include="src\WeldCount\WeldCountRowViewHolder.cs" />
     <Compile Include="src\WeldCount\WeldCountFragment.cs" />
-    <Compile Include="src\WeldCount\JobEditFragment.cs" />
     <Compile Include="src\Main\MainActivity.cs" />
-    <Compile Include="src\WeldCondition\WcdListAdapter.cs" />
+    <Compile Include="src\WeldCondition\WeldConditionAdapter.cs" />
     <Compile Include="Resources\Resource.Designer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="src\WeldCondition\WcdListFragment.cs" />
-    <Compile Include="src\WeldCondition\WcdTextFragment.cs" />
+    <Compile Include="src\WeldCondition\WeldConditionFragment.cs" />
+    <Compile Include="src\Main\TextViewFragment.cs" />
     <Compile Include="src\WeldCondition\WeldConditionData.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -116,22 +116,15 @@
     <None Include="Resources\AboutResources.txt" />
     <None Include="Assets\AboutAssets.txt" />
     <AndroidResource Include="Resources\layout\main_activity.axml" />
-    <AndroidResource Include="Resources\layout\wcd_editor.axml">
-      <SubType>AndroidResource</SubType>
-    </AndroidResource>
-    <AndroidResource Include="Resources\layout\activity\wcd_text.axml">
+    <AndroidResource Include="Resources\layout\weld_condition_editor.axml">
       <SubType>AndroidResource</SubType>
     </AndroidResource>
     <AndroidResource Include="Resources\layout\file_picker_list_item.axml">
       <SubType>Designer</SubType>
     </AndroidResource>
-    <AndroidResource Include="Resources\layout\activity\fIle_picker.axml">
-      <SubType>Designer</SubType>
-    </AndroidResource>
-    <AndroidResource Include="Resources\layout\wcd_list_row.axml">
+    <AndroidResource Include="Resources\layout\weld_condition_row.axml">
       <SubType>AndroidResource</SubType>
     </AndroidResource>
-    <AndroidResource Include="Resources\layout\activity\wcd_list.axml" />
     <AndroidResource Include="Resources\layout\main_toolbar.axml">
       <SubType>AndroidResource</SubType>
     </AndroidResource>
@@ -144,11 +137,8 @@
     <AndroidResource Include="Resources\layout\weld_count_fragment.axml">
       <SubType>AndroidResource</SubType>
     </AndroidResource>
-    <AndroidResource Include="Resources\layout\job_edit_fragment.axml">
-      <SubType>AndroidResource</SubType>
-    </AndroidResource>
-    <AndroidResource Include="Resources\layout\wcd_list_fragment.axml" />
-    <AndroidResource Include="Resources\layout\wcd_text_fragment.axml">
+    <AndroidResource Include="Resources\layout\weld_condition_fragment.axml" />
+    <AndroidResource Include="Resources\layout\text_view_fragment.axml">
       <SubType>AndroidResource</SubType>
     </AndroidResource>
     <AndroidResource Include="Resources\layout\weld_count_row.axml">
@@ -157,7 +147,7 @@
     <AndroidResource Include="Resources\layout\weld_count_editor.axml">
       <SubType>AndroidResource</SubType>
     </AndroidResource>
-    <AndroidResource Include="Resources\layout\activity\weld_count_text_view.axml">
+    <AndroidResource Include="Resources\layout\backup_path_fragment.axml">
       <SubType>AndroidResource</SubType>
     </AndroidResource>
   </ItemGroup>
@@ -405,6 +395,84 @@
   </ItemGroup>
   <ItemGroup>
     <AndroidResource Include="Resources\menu\toolbar_backup_path_menu.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable-xhdpi\ic_usb_white.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable\ic_usb_white.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable-xhdpi\ic_sd_card_white.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable\ic_sd_card_white.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable-xhdpi\ic_memory_white.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable\ic_memory_white.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable-xhdpi\ic_storage_white.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable\ic_storage_white.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable-xhdpi\ic_home_white.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable\ic_home_white.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable-xhdpi\ic_home.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable\ic_home.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable-xhdpi\ic_settings_backup_restore_white.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable-xhdpi\ic_settings_backup_restore.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable\ic_settings_backup_restore.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable\ic_settings_backup_restore_white.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable-xhdpi\ic_exit_to_app_white.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable-xhdpi\ic_exit_to_app.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable\ic_exit_to_app_white.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable\ic_exit_to_app.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable-xhdpi\ic_file_upload_white.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable\ic_file_upload_white.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable-xhdpi\ic_publish_white.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable-xhdpi\ic_publish.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable\ic_publish.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable\ic_publish_white.png" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\Android\Xamarin.Android.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

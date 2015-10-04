@@ -1,8 +1,25 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
 	  xmlns:local="http://schemas.android.com/apk/res-auto">
-  <item android:id="@+id/menu_backup"
-    android:icon="@drawable/ic_archive_white"
-    local:showAsAction="always"
-    android:title="Backup" />
+
+  <item android:id="@+id/toolbar_backup_path_menu_restore"
+  android:icon="@drawable/ic_settings_backup_restore_white"
+  local:showAsAction="always"
+  android:title="Restore" />
+
+  <item android:id="@+id/toolbar_backup_path_menu_backup"
+  android:icon="@drawable/ic_archive_white"
+  local:showAsAction="always"
+  android:title="Backup" />
+
+  <item android:id="@+id/toolbar_backup_path_menu_home"
+  android:icon="@drawable/ic_home_white"
+  local:showAsAction="always"
+  android:title="Home" />
+
+  <item android:id="@+id/toolbar_backup_path_menu_up"
+  android:icon="@drawable/ic_file_upload_white"
+  local:showAsAction="always"
+  android:title="Up" />
+
 </menu>

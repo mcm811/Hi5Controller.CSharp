@@ -20,7 +20,7 @@ using System.Text;
 
 namespace Com.Changyoung.HI5Controller
 {
-	public class WcdListFragment : Fragment, IRefresh
+	public class WeldConditionFragment : Fragment, IRefresh
 	{
 		private View view;
 		private FloatingActionButton fabWcd;
@@ -178,7 +178,7 @@ namespace Com.Changyoung.HI5Controller
 		public override View OnCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
 		{
 			LogDebug("OnCreateView");
-			view = inflater.Inflate(Resource.Layout.wcd_list_fragment, container, false);
+			view = inflater.Inflate(Resource.Layout.weld_condition_fragment, container, false);
 
 			selectedBackGroundColor = Context.Resources.GetColor(Resource.Color.tab3_textview_background);
 
@@ -258,27 +258,29 @@ namespace Com.Changyoung.HI5Controller
 			//AlertDialog.Builder dialog = new AlertDialog.Builder(Context);
 			//dialog.SetView(dialogView);
 
-			var textView = new TextView(Context);
-			textView.SetPadding(10, 10, 10, 10);
-			textView.SetTextSize(ComplexUnitType.Sp, 10f);
-			var scrollView = new ScrollView(Context);
-			scrollView.AddView(textView);
-			AlertDialog.Builder dialog = new AlertDialog.Builder(Context);
-			dialog.SetView(scrollView);
+			//var textView = new TextView(Context);
+			//textView.SetPadding(10, 10, 10, 10);
+			//textView.SetTextSize(ComplexUnitType.Sp, 10f);
+			//var scrollView = new ScrollView(Context);
+			//scrollView.AddView(textView);
+			//AlertDialog.Builder dialog = new AlertDialog.Builder(Context);
+			//dialog.SetView(scrollView);
+			//
+			//try {
+			//	using (StreamReader sr = new StreamReader(robotPath, Encoding.GetEncoding("euc-kr"))) {
+			//		textView.Text = sr.ReadToEnd();
+			//		sr.Close();
+			//	}
+			//} catch {
+			//	LogDebug("파일이 없습니다: " + robotPath);
+			//}
+			//
+			//dialog.SetPositiveButton("닫기", delegate
+			//{ });
+			//
+			//dialog.Show();
 
-			try {
-				using (StreamReader sr = new StreamReader(robotPath, Encoding.GetEncoding("euc-kr"))) {
-					textView.Text = sr.ReadToEnd();
-					sr.Close();
-				}
-			} catch {
-				LogDebug("파일이 없습니다: " + robotPath);
-			}
-
-			dialog.SetPositiveButton("닫기", delegate
-			{ });
-
-			dialog.Show();
+			Pref.TextViewDialog(Context, robotPath);
 		}
 
 		private void FabWcd_Click(object sender, EventArgs e)
@@ -307,7 +309,7 @@ namespace Com.Changyoung.HI5Controller
 				return;
 			}
 
-			View dialogView = LayoutInflater.From(Context).Inflate(Resource.Layout.wcd_editor, null);
+			View dialogView = LayoutInflater.From(Context).Inflate(Resource.Layout.weld_condition_editor, null);
 			AlertDialog.Builder dialog = new AlertDialog.Builder(Context);
 			dialog.SetView(dialogView);
 

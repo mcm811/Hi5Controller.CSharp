@@ -4,6 +4,9 @@
   <item
      android:id="@+id/menu_backup"
      android:title="@string/Backup" />
+  <item
+     android:id="@+id/menu_exit"
+     android:title="@string/Exit" />
 </menu>
   <!--<item
        android:id="@+id/menu_share"

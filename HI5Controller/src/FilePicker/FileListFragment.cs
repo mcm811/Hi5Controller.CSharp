@@ -11,9 +11,6 @@
 	using Android.Widget;
 	using Android.Content;
 	using Android.Support.Design.Widget;
-	using Android;
-	using AlertDialog = Android.Support.V7.App.AlertDialog;
-	using System.Text;
 
 	/// <summary>
 	///   A ListFragment that will show the files and subdirectories of a given directory.
@@ -80,31 +77,13 @@
 			} else if (fileSystemInfo.IsDirectory()) {
 				RefreshFilesList(fileSystemInfo.FullName);
 			} else {
-				var textView = new TextView(Context);
-				textView.SetPadding(10, 10, 10, 10);
-				textView.SetTextSize(ComplexUnitType.Sp, 10f);
-				var scrollView = new ScrollView(Context);
-				scrollView.AddView(textView);
-				AlertDialog.Builder dialog = new AlertDialog.Builder(Context);
-				dialog.SetView(scrollView);
-
-				try {
-					using (StreamReader sr = new StreamReader(fileSystemInfo.FullName, Encoding.GetEncoding("euc-kr"))) {
-						textView.Text = sr.ReadToEnd();
-						sr.Close();
-					}
-				} catch { }
-
-				dialog.SetPositiveButton("닫기", delegate
-				{ });
-
-				dialog.Show();
+				Com.Changyoung.HI5Controller.Pref.TextViewDialog(Context, fileSystemInfo.FullName);
 			}
 
 			base.OnListItemClick(l, v, position, id);
 		}
 
-		public void RefreshFilesList(string directory = null)
+		public string RefreshFilesList(string directory = null)
 		{
 			IList<FileSystemInfo> visibleThings = new List<FileSystemInfo>();
 			try {
@@ -119,8 +98,8 @@
 				if (PrefKey != null)
 					Com.Changyoung.HI5Controller.Pref.SetPath(PrefKey, dir.FullName);
 			} catch (Exception ex) {
-				Log.Error("FileListFragment", "Couldn't access the directory " + directoryInfo.FullName + "; " + ex);
-				return;
+				//Log.Error("FileListFragment", "Couldn't access the directory " + directoryInfo.FullName + "; " + ex);
+				return DirPath;
 			}
 			fileListAdapter.AddDirectoryContents(visibleThings);
 
@@ -128,7 +107,9 @@
 			// in the adapter changes. It will appear to the user that nothing has happened.
 			ListView.RefreshDrawableState();
 
-			Log.Verbose("FileListFragment", "Displaying the contents of directory {0}.", directory);
+			//Log.Verbose("FileListFragment", "Displaying the contents of directory {0}.", directory);
+
+			return DirPath;
 		}
 	}
 }

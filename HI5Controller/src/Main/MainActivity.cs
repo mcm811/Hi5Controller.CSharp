@@ -2,7 +2,6 @@
 using Android.Content;
 using Android.Runtime;
 using Android.Views;
-using Android.Widget;
 using Android.OS;
 using Android.Util;
 using Android.Support.V7.App;
@@ -80,75 +79,17 @@ namespace Com.Changyoung.HI5Controller
 			//};
 		}
 
-		private WorkPathFragment GetWcdPathTabFragment()
+		private Android.Support.V4.App.Fragment GetFragment(int position = 0)
 		{
-			return (WorkPathFragment)((PagerAdapter)viewPager.Adapter)[(int)PagerAdapter.FragmentPosition.WcdPathTabFragment];
+			return (Android.Support.V4.App.Fragment)((PagerAdapter)viewPager.Adapter)[position];
 		}
 
 		private bool StorageRefresh(string storagePath)
 		{
-			var f = GetWcdPathTabFragment();
+			var f = (WorkPathFragment)GetFragment();
 			if (f != null)
 				return f.Refresh(storagePath);
 			return false;
-		}
-
-		private bool GetStorage()
-		{
-			bool ret = StorageRefresh("/storage");
-			if (ret)
-				SnackbarLong("경로 이동: /storage");
-			return ret;
-		}
-
-		private bool GetSdCard()
-		{
-			bool ret = StorageRefresh(Environment.ExternalStorageDirectory.AbsolutePath);
-			if (ret)
-				SnackbarLong("경로 이동: " + Environment.ExternalStorageDirectory.AbsolutePath);
-			return ret;
-		}
-
-		private bool GetExtSdCard()
-		{
-			bool ret = false;
-			try {
-				var dir = new DirectoryInfo("/storage");
-				foreach (var item in dir.GetDirectories()) {
-					if (item.Name.ToLower().StartsWith("ext") || item.Name.ToLower().StartsWith("sdcard1")) {
-						foreach (var subItem in item.GetFileSystemInfos()) {
-							ret = StorageRefresh(item.FullName);
-							if (ret) {
-								SnackbarLong("경로 이동: " + item.FullName);
-								break;
-							}
-						}
-					}
-				}
-			} catch {
-			}
-			return ret;
-		}
-
-		private bool GetUsbStorage()
-		{
-			bool ret = false;
-			try {
-				var dir = new DirectoryInfo("/storage");
-				foreach (var item in dir.GetDirectories()) {
-					if (item.Name.ToLower().StartsWith("usb")) {
-						foreach (var subItem in item.GetFileSystemInfos()) {
-							ret = StorageRefresh(item.FullName);
-							if (ret) {
-								SnackbarLong("경로 이동: " + item.FullName);
-								break;
-							}
-						}
-					}
-				}
-			} catch {
-			}
-			return ret;
 		}
 
 		private void NaviView()
@@ -160,27 +101,54 @@ namespace Com.Changyoung.HI5Controller
 			{
 				e.MenuItem.SetChecked(true);
 				switch (e.MenuItem.ItemId) {
-					case Resource.Id.nav_weldcount:
+					case Resource.Id.nav_weld_count:
 					viewPager.SetCurrentItem(1, true);
 					break;
-					case Resource.Id.nav_wcdlist:
+					case Resource.Id.nav_weld_condition:
 					viewPager.SetCurrentItem(2, true);
 					break;
 					case Resource.Id.nav_storage:
 					viewPager.SetCurrentItem(0, true);
-					GetStorage();
+					StorageRefresh("/storage");
 					break;
 					case Resource.Id.nav_sdcard0:
 					viewPager.SetCurrentItem(0, true);
-					GetSdCard();
+					StorageRefresh(Environment.ExternalStorageDirectory.AbsolutePath);
 					break;
 					case Resource.Id.nav_extsdcard:
 					viewPager.SetCurrentItem(0, true);
-					GetExtSdCard();
+					try {
+						var dir = new DirectoryInfo("/storage");
+						foreach (var item in dir.GetDirectories()) {
+							if (item.Name.ToLower().StartsWith("ext") || item.Name.ToLower().StartsWith("sdcard1")) {
+								foreach (var subItem in item.GetFileSystemInfos()) {
+									if (StorageRefresh(item.FullName)) {
+										//SnackbarLong("경로 이동: " + item.FullName);
+										break;
+									}
+								}
+							}
+						}
+					} catch { }
 					break;
 					case Resource.Id.nav_usbstorage:
 					viewPager.SetCurrentItem(0, true);
-					GetUsbStorage();
+					try {
+						var dir = new DirectoryInfo("/storage");
+						foreach (var item in dir.GetDirectories()) {
+							if (item.Name.ToLower().StartsWith("usb")) {
+								foreach (var subItem in item.GetFileSystemInfos()) {
+									if (StorageRefresh(item.FullName)) {
+										//SnackbarLong("경로 이동: " + item.FullName);
+										break;
+									}
+								}
+							}
+						}
+					} catch { }
+					break;
+					case Resource.Id.nav_exit:
+					Finish();
 					break;
 				}
 				drawerLayout.CloseDrawers();
@@ -221,16 +189,6 @@ namespace Com.Changyoung.HI5Controller
 			//};
 		}
 
-		private void ActionBarTab()
-		{
-			//actionBar.NavigationMode = (int) ActionBarNavigationMode.Tabs;
-			//ActionBar.Tab tab = actionBar.NewTab();
-			//tab.SetText(Resources.GetString(Resource.String.tab1_text));
-			//tab.SetIcon(Resource.Drawable.ic_android);
-			////tab.SetTabListener(new TabListener<HomeFragment>(this, "home"));
-			//actionBar.AddTab(tab);
-		}
-
 		// TabListener that replaces a Fragment when a tab is clicked.
 		private class TabLayoutOnTabSelectedListener : Java.Lang.Object, TabLayout.IOnTabSelectedListener
 		{
@@ -261,20 +219,17 @@ namespace Com.Changyoung.HI5Controller
 			{
 				viewPager.SetCurrentItem(tab.Position, true);
 				switch ((PagerAdapter.FragmentPosition)tab.Position) {
-					case PagerAdapter.FragmentPosition.WcdPathTabFragment:
+					case PagerAdapter.FragmentPosition.WorkPathFragment:
 					SetBackground(Resource.Color.tab1_actionbar_background, Resource.Color.tab1_tablayout_background, Resource.Color.tab1_tabindicator_background);
 					break;
-					case PagerAdapter.FragmentPosition.WeldCountTabFragment:
+					case PagerAdapter.FragmentPosition.WeldCountFragment:
 					SetBackground(Resource.Color.tab2_actionbar_background, Resource.Color.tab2_tablayout_background, Resource.Color.tab2_tabindicator_background);
 					break;
-					case PagerAdapter.FragmentPosition.WcdListTabFragment:
+					case PagerAdapter.FragmentPosition.WeldConditionFragment:
 					SetBackground(Resource.Color.tab3_actionbar_background, Resource.Color.tab3_tablayout_background, Resource.Color.tab3_tabindicator_background);
 					break;
-					case PagerAdapter.FragmentPosition.JobEditTabFragment:
+					case PagerAdapter.FragmentPosition.BackupPathFragment:
 					SetBackground(Resource.Color.tab4_actionbar_background, Resource.Color.tab4_tablayout_background, Resource.Color.tab4_tabindicator_background);
-					break;
-					case PagerAdapter.FragmentPosition.WcdTextTabFragment:
-					SetBackground(Resource.Color.tab5_actionbar_background, Resource.Color.tab5_tablayout_background, Resource.Color.tab5_tabindicator_background);
 					break;
 				}
 				var ir = (IRefresh)((PagerAdapter)viewPager.Adapter)[tab.Position];
@@ -293,11 +248,10 @@ namespace Com.Changyoung.HI5Controller
 			tabLayout.TabMode = TabLayout.ModeScrollable;
 
 			// PagerAdapter.FragmentPosition과 순서를 맞출것
-			tabLayout.AddTab(tabLayout.NewTab().SetText(Resources.GetString(Resource.String.WcdPathTabFragment)));
-			tabLayout.AddTab(tabLayout.NewTab().SetText(Resources.GetString(Resource.String.WeldCountTabFragment)));
-			tabLayout.AddTab(tabLayout.NewTab().SetText(Resources.GetString(Resource.String.WcdListTabFragment)));
-			//tabLayout.AddTab(tabLayout.NewTab().SetText(Resources.GetString(Resource.String.JobEditTabFragment)));
-			//tabLayout.AddTab(tabLayout.NewTab().SetText(Resources.GetString(Resource.String.WcdTextTabFragment)));
+			tabLayout.AddTab(tabLayout.NewTab().SetText(Resources.GetString(Resource.String.work_path_fragment)));
+			tabLayout.AddTab(tabLayout.NewTab().SetText(Resources.GetString(Resource.String.weld_count_fragment)));
+			tabLayout.AddTab(tabLayout.NewTab().SetText(Resources.GetString(Resource.String.weld_condition_fragment)));
+			tabLayout.AddTab(tabLayout.NewTab().SetText(Resources.GetString(Resource.String.backup_path_fragment)));
 
 			viewPager = FindViewById<ViewPager>(Resource.Id.pager);
 			pagerAdapter = new PagerAdapter(SupportFragmentManager, tabLayout.TabCount);
@@ -329,25 +283,25 @@ namespace Com.Changyoung.HI5Controller
 			MainView();
 
 			//var position = tabLayout.SelectedTabPosition;
-			int startTabPosition = 0;
-			viewPager.SetCurrentItem(startTabPosition, true);
-			switch (startTabPosition % 3) {
-				case 0:
-				actionBar.SetBackgroundDrawable(new ColorDrawable(Resources.GetColor(Resource.Color.tab1_actionbar_background)));
-				tabLayout.Background = new ColorDrawable(Resources.GetColor(Resource.Color.tab1_tablayout_background));
-				tabLayout.SetSelectedTabIndicatorColor(Resources.GetColor(Resource.Color.tab1_tabindicator_background));
-				break;
-				case 1:
-				actionBar.SetBackgroundDrawable(new ColorDrawable(Resources.GetColor(Resource.Color.tab2_actionbar_background)));
-				tabLayout.Background = new ColorDrawable(Resources.GetColor(Resource.Color.tab2_tablayout_background));
-				tabLayout.SetSelectedTabIndicatorColor(Resources.GetColor(Resource.Color.tab2_tabindicator_background));
-				break;
-				case 2:
-				actionBar.SetBackgroundDrawable(new ColorDrawable(Resources.GetColor(Resource.Color.tab3_actionbar_background)));
-				tabLayout.Background = new ColorDrawable(Resources.GetColor(Resource.Color.tab3_tablayout_background));
-				tabLayout.SetSelectedTabIndicatorColor(Resources.GetColor(Resource.Color.tab3_tabindicator_background));
-				break;
-			}
+			//int startTabPosition = 0;
+			//viewPager.SetCurrentItem(startTabPosition, true);
+			//switch (startTabPosition % 3) {
+			//	case 0:
+			actionBar.SetBackgroundDrawable(new ColorDrawable(Resources.GetColor(Resource.Color.tab1_actionbar_background)));
+			tabLayout.Background = new ColorDrawable(Resources.GetColor(Resource.Color.tab1_tablayout_background));
+			tabLayout.SetSelectedTabIndicatorColor(Resources.GetColor(Resource.Color.tab1_tabindicator_background));
+			//	break;
+			//	case 1:
+			//	actionBar.SetBackgroundDrawable(new ColorDrawable(Resources.GetColor(Resource.Color.tab2_actionbar_background)));
+			//	tabLayout.Background = new ColorDrawable(Resources.GetColor(Resource.Color.tab2_tablayout_background));
+			//	tabLayout.SetSelectedTabIndicatorColor(Resources.GetColor(Resource.Color.tab2_tabindicator_background));
+			//	break;
+			//	case 2:
+			//	actionBar.SetBackgroundDrawable(new ColorDrawable(Resources.GetColor(Resource.Color.tab3_actionbar_background)));
+			//	tabLayout.Background = new ColorDrawable(Resources.GetColor(Resource.Color.tab3_tablayout_background));
+			//	tabLayout.SetSelectedTabIndicatorColor(Resources.GetColor(Resource.Color.tab3_tabindicator_background));
+			//	break;
+			//}
 		}
 
 		protected override void OnActivityResult(int requestCode, [GeneratedEnum] Result resultCode, Intent data)
@@ -356,11 +310,6 @@ namespace Com.Changyoung.HI5Controller
 				Pref.WorkPath = data.GetStringExtra("work_path");
 			}
 			base.OnActivityResult(requestCode, resultCode, data);
-		}
-
-		protected override void OnStop()
-		{
-			base.OnStop();
 		}
 
 		public override bool OnCreateOptionsMenu(IMenu menu)
@@ -382,6 +331,10 @@ namespace Com.Changyoung.HI5Controller
 				OnBackup();
 				return true;
 
+				case Resource.Id.menu_exit:
+				Finish();
+				return true;
+
 				//case Resource.Id.menu_settings:
 				//viewPager.SetCurrentItem(0, true);
 				//return true;
@@ -389,35 +342,34 @@ namespace Com.Changyoung.HI5Controller
 			return base.OnOptionsItemSelected(item);
 		}
 
+		public override void OnBackPressed()
+		{
+			var position = tabLayout.SelectedTabPosition;
+			switch (position) {
+				case 0:
+				var f0 = (WorkPathFragment)GetFragment(position);
+				if (f0 != null)
+					f0.RefreshParent();
+				break;
+				case 1:
+				//base.OnBackPressed();
+				break;
+				case 2:
+				//base.OnBackPressed();
+				break;
+				case 3:
+				var f3 = (BackupPathFragment)GetFragment(position);
+				if (f3 != null)
+					f3.RefreshParent();
+				break;
+			}
+		}
+
 		public void OnBackup()
 		{
-			var workPath = Pref.WorkPath;
-			var sourceFullPath = Path.GetFullPath(workPath);
-			var sourceFileName = Path.GetFileName(workPath);
-			var sourceDirName = Path.GetDirectoryName(workPath);
-
-			//var backupPath = Pref.BackupPath;
-			var targetFileName = sourceFileName + System.DateTime.Now.ToString("_yyyyMMdd_hhmmss");
-			var targetDirName = Path.Combine(sourceFullPath, "Backup");
-			var targetFullPath = Path.Combine(targetDirName, targetFileName);
-
-			SnackbarLong("백업 원본: " + sourceFullPath + "\n백업 대상: " + targetFullPath);
-
-			if (!Directory.Exists(targetFullPath)) {
-				Directory.CreateDirectory(targetFullPath);
-			}
-
-			if (Directory.Exists(sourceFullPath)) {
-				string[] files = Directory.GetFiles(sourceFullPath);
-				foreach (string s in files) {
-					var fileName = Path.GetFileName(s);
-					var destFile = Path.Combine(targetFullPath, fileName);
-					File.Copy(s, destFile, true);
-				}
-				SnackbarLong("백업 완료: " + targetFileName);
-			} else {
-				SnackbarLong("대상 폴더가 없습니다");
-			}
+			var f = (BackupPathFragment)GetFragment(3);
+			if (f != null)
+				f.Backup();
 		}
 	}
 }

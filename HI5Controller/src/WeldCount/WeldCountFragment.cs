@@ -64,7 +64,7 @@ namespace Com.Changyoung.HI5Controller
 				try {
 					var dir = new DirectoryInfo(dirPath);
 					foreach (var item in dir.GetFileSystemInfos()) {
-						if (item.FullName.EndsWith(".JOB"))
+						if (item.FullName.EndsWith(".JOB") || item.FullName.StartsWith("HX"))
 							weldCountAdapter.Add(new JobFile(item.FullName));
 					}
 					weldCountAdapter.NotifyDataSetChanged();
@@ -112,21 +112,24 @@ namespace Com.Changyoung.HI5Controller
 				//AlertDialog.Builder dialog = new AlertDialog.Builder(Context);
 				//dialog.SetView(dialogView);
 
-				var textView = new TextView(Context);
-				textView.SetPadding(10, 10, 10, 10);
-				textView.SetTextSize(ComplexUnitType.Sp, 10f);
-				var scrollView = new ScrollView(Context);
-				scrollView.AddView(textView);
-				AlertDialog.Builder dialog = new AlertDialog.Builder(Context);
-				dialog.SetView(scrollView);
+				//////////////////////////////////////////
+				//var textView = new TextView(Context);
+				//textView.SetPadding(10, 10, 10, 10);
+				//textView.SetTextSize(ComplexUnitType.Sp, 10f);
+				//var scrollView = new ScrollView(Context);
+				//scrollView.AddView(textView);
+				//AlertDialog.Builder dialog = new AlertDialog.Builder(Context);
+				//dialog.SetView(scrollView);
+				//
+				//var jobFile = weldCountAdapter.GetItem(e.Position);
+				//textView.Text = jobFile.RowText();
+				//
+				//dialog.SetPositiveButton("닫기", delegate
+				//{ });
+				//
+				//dialog.Show();
 
-				var jobFile = weldCountAdapter.GetItem(e.Position);
-				textView.Text = jobFile.RowText();
-
-				dialog.SetPositiveButton("닫기", delegate
-				{ });
-
-				dialog.Show();
+				Pref.TextViewDialog(Context, null, weldCountAdapter.GetItem(e.Position).RowText());
 			};
 
 			return view;
