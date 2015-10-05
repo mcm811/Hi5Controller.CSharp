@@ -9,13 +9,14 @@ namespace com.xamarin.recipes.filepicker
 	using Android.Widget;
 	using Com.Changyoung.HI5Controller;
 	using Android.Util;
+	using FloatingActionButton = Android.Support.Design.Widget.FloatingActionButton;
 
 	public class FileListAdapter : ArrayAdapter<FileSystemInfo>
 	{
 		private readonly Context _context;
 
 		public FileListAdapter(Context context, IList<FileSystemInfo> fsi)
-			: base(context, Resource.Layout.file_picker_list_item, Android.Resource.Id.Text1, fsi)
+			: base(context, Resource.Layout.file_list_item, Android.Resource.Id.Text1, fsi)
 		{
 			_context = context;
 		}
@@ -58,22 +59,22 @@ namespace com.xamarin.recipes.filepicker
 			FileListRowViewHolder viewHolder;
 			View row;
 			if (convertView == null) {
-				row = _context.GetLayoutInflater().Inflate(Resource.Layout.file_picker_list_item, parent, false);
-				viewHolder = new FileListRowViewHolder(
-					row.FindViewById<TextView>(Resource.Id.file_picker_time),
-					row.FindViewById<TextView>(Resource.Id.file_picker_text),
-					row.FindViewById<ImageView>(Resource.Id.file_picker_image));
+				row = _context.GetLayoutInflater().Inflate(Resource.Layout.file_list_item, parent, false);
+				viewHolder = new FileListRowViewHolder(row.FindViewById<TextView>(Resource.Id.file_picker_time),
+													   row.FindViewById<TextView>(Resource.Id.file_picker_text),
+													   row.FindViewById<FloatingActionButton>(Resource.Id.file_picker_fab));
 				row.Tag = viewHolder;
 			} else {
 				row = convertView;
 				viewHolder = (FileListRowViewHolder)row.Tag;
 			}
 			if (position == 0) {
-				//Log.Error("======", "[" + fileSystemEntry.FullName + "][" + Path.GetDirectoryName(fileSystemEntry.FullName) + "]");
-				if (fileSystemEntry.FullName == "/")
-					viewHolder.Update("", fileSystemEntry.FullName, Resource.Drawable.ic_android);
-				else
-					viewHolder.Update("", Path.Combine(fileSystemEntry.FullName, ".."), Resource.Drawable.ic_file_upload);
+				if (fileSystemEntry.FullName == "/") {
+					viewHolder.Update(null, ".", Resource.Drawable.ic_android);
+				} else {
+					var p = Path.GetFileName(Path.GetDirectoryName(fileSystemEntry.FullName));
+					viewHolder.Update(null, Path.Combine(p, ".."), Resource.Drawable.ic_file_upload);
+				}
 			} else {
 				viewHolder.Update(fileSystemEntry.LastWriteTime.ToString(), fileSystemEntry.Name, fileSystemEntry.IsDirectory() ? Resource.Drawable.ic_folder_open : Resource.Drawable.ic_description);
 			}

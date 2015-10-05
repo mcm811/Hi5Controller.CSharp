@@ -65,15 +65,14 @@ namespace Com.Changyoung.HI5Controller
 			return false;
 		}
 
-		public string RefreshParent()
+		public string OnBackPressedFragment()
 		{
 			var parent = Path.GetDirectoryName(workPathFragment.DirPath);
-            return workPathFragment.RefreshFilesList(parent);
+			return workPathFragment.RefreshFilesList(parent);
 		}
 
 		public override View OnCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
 		{
-			LogDebug("OnCreateView");
 			view = inflater.Inflate(Resource.Layout.work_path_fragment, container, false);
 			workPathLayout = view.FindViewById<LinearLayout>(Resource.Id.work_path_layout);
 			coordinatorLayout = view.FindViewById<CoordinatorLayout>(Resource.Id.coordinator_layout);
@@ -81,6 +80,7 @@ namespace Com.Changyoung.HI5Controller
 			string workPath = Pref.WorkPath;
 			workPathFragment = (FileListFragment)ChildFragmentManager.FindFragmentById(Resource.Id.work_path_fragment);
 			workPathFragment.RefreshFilesList(workPath);
+			workPathFragment.SnackbarView = coordinatorLayout;
 			//workPathFragment.PrefKey = Pref.WorkPathKey;
 
 			etWorkPath = view.FindViewById<EditText>(Resource.Id.etWorkPath);
@@ -113,57 +113,63 @@ namespace Com.Changyoung.HI5Controller
 			};
 
 			workPathToolbar = view.FindViewById<Toolbar>(Resource.Id.work_path_toolbar);
-			//workPathToolbar.Title = "이동";
 			workPathToolbar.InflateMenu(Resource.Menu.toolbar_work_path_menu);
 			workPathToolbar.MenuItemClick += (sender, e) =>
 			{
 				//Toast.MakeText(this, "Bottom toolbar pressed: " + e.Item.TitleFormatted, ToastLength.Short).Show();
+				bool ret;
 				switch (e.Item.ItemId) {
 					case Resource.Id.toolbar_work_path_menu_up:
-					RefreshParent();
+					OnBackPressedFragment();
 					break;
 					case Resource.Id.toolbar_work_path_menu_home:
-					Refresh(Pref.WorkPath);
+					if (!Refresh(Pref.WorkPath))
+						Show("경로 이동 실패: " + Pref.WorkPath);
 					break;
 					case Resource.Id.toolbar_work_path_menu_storage:
-					Refresh("/storage");
+					if (!Refresh("/storage"))
+						Show("경로 이동 실패: " + "/storage");
 					break;
 					case Resource.Id.toolbar_work_path_menu_sdcard:
-					Refresh(Environment.ExternalStorageDirectory.AbsolutePath);
+					if (!Refresh(Environment.ExternalStorageDirectory.AbsolutePath))
+						Show("경로 이동 실패: " + Environment.ExternalStorageDirectory.AbsolutePath);
 					break;
 					case Resource.Id.toolbar_work_path_menu_extsdcard:
+					ret = false;
 					try {
 						var dir = new DirectoryInfo("/storage");
 						foreach (var item in dir.GetDirectories()) {
 							if (item.Name.ToLower().StartsWith("ext") || item.Name.ToLower().StartsWith("sdcard1")) {
 								foreach (var subItem in item.GetFileSystemInfos()) {
 									if (Refresh(item.FullName)) {
-										//SnackbarLong("경로 이동: " + item.FullName);
+										ret = true;
 										break;
 									}
 								}
 							}
 						}
 					} catch { }
+					if (!ret)
+						Show("경로 이동 실패: " + "SD 카드");
 					break;
 					case Resource.Id.toolbar_work_path_menu_usbstorage:
+					ret = false;
 					try {
 						var dir = new DirectoryInfo("/storage");
 						foreach (var item in dir.GetDirectories()) {
 							if (item.Name.ToLower().StartsWith("usb")) {
 								foreach (var subItem in item.GetFileSystemInfos()) {
 									if (Refresh(item.FullName)) {
-										//SnackbarLong("경로 이동: " + item.FullName);
+										ret = true;
 										break;
 									}
 								}
 							}
 						}
 					} catch { }
+					if (!ret)
+						Show("경로 이동 실패: " + "USB 저장소");
 					break;
-					//case Resource.Id.toolbar_work_path_menu_backup:
-					//Refresh(Pref.BackupPath);
-					//break;
 				}
 			};
 
@@ -174,20 +180,10 @@ namespace Com.Changyoung.HI5Controller
 				etWorkPath.Text = workPathFragment.DirPath;
 				Pref.WorkPath = etWorkPath.Text;
 				workPathFragment.RefreshFilesList();
+				Show("경로 설정 완료: " + etWorkPath.Text);
 			};
 
 			return view;
-		}
-
-		public override void OnActivityResult(int requestCode, int resultCode, Intent data)
-		{
-			if (requestCode == 1) {
-				try {
-					Pref.WorkPath = data.GetStringExtra("work_path");
-				} catch {
-				}
-			}
-			base.OnActivityResult(requestCode, resultCode, data);
 		}
 	}
 }

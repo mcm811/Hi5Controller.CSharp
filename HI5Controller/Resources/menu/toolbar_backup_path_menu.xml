@@ -5,7 +5,7 @@
   <item android:id="@+id/toolbar_backup_path_menu_restore"
   android:icon="@drawable/ic_settings_backup_restore_white"
   local:showAsAction="always"
-  android:title="@string/nav_retore" />
+  android:title="@string/nav_restore" />
 
   <!--<item android:id="@+id/toolbar_backup_path_menu_backup"
   android:icon="@drawable/ic_archive_white"

@@ -4,10 +4,10 @@ using Android.Util;
 using Android.Views;
 using Android.Widget;
 using System.IO;
+using AlertDialog = Android.Support.V7.App.AlertDialog;
 using Fragment = Android.Support.V4.App.Fragment;
 using EditText = Android.Support.V7.Widget.AppCompatEditText;
 using Android.Support.V4.Widget;
-using Android.Support.V7.App;
 using Android.Support.Design.Widget;
 using System.Collections.Generic;
 using System;
@@ -19,7 +19,7 @@ namespace Com.Changyoung.HI5Controller
 	{
 		private View view;
 		private ListView listView;
-		private WeldCountAdapter weldCountAdapter;
+		private WeldCountAdapter adapter;
 
 		private string dirPath;
 
@@ -44,30 +44,38 @@ namespace Com.Changyoung.HI5Controller
 
 		public void Refresh(bool forced = false)
 		{
-			if (forced || dirPath != Pref.WorkPath || weldCountAdapter.Count == 0) {
-				//LogDebug("Refresh: " + dirPath + " : " + Pref.WorkPath + " : " + weldCountAdapter.Count.ToString());
-
+			if (forced || dirPath != Pref.WorkPath || adapter.Count == 0) {
 				dirPath = Pref.WorkPath;
-				if (weldCountAdapter == null)
-					weldCountAdapter = new WeldCountAdapter(Context, Resource.Layout.weld_count_row);
+				if (adapter == null)
+					adapter = new WeldCountAdapter(Context, Resource.Layout.weld_count_row);
 				else
-					weldCountAdapter.Clear();
+					adapter.Clear();
 
 				try {
 					var dir = new DirectoryInfo(dirPath);
 					foreach (var item in dir.GetFileSystemInfos()) {
-						if (item.FullName.EndsWith(".JOB") || item.FullName.StartsWith("HX"))
-							weldCountAdapter.Add(new JobFile(item.FullName));
+						if (item.Name.ToUpper().EndsWith(".JOB") || item.Name.ToUpper().StartsWith("HX"))
+							adapter.Add(new JobFile(item.FullName));
 					}
-					weldCountAdapter.NotifyDataSetChanged();
+					adapter.NotifyDataSetChanged();
+					listView.RefreshDrawableState();
 				} catch {
 				}
 			}
 		}
 
+		public bool Refresh(string path)
+		{
+			return true;
+		}
+
+		public string OnBackPressedFragment()
+		{
+			return null;
+		}
+
 		public override void OnCreate(Bundle bundle)
 		{
-			LogDebug("OnCreate");
 			base.OnCreate(bundle);
 
 			dirPath = Pref.WorkPath;
@@ -87,56 +95,41 @@ namespace Com.Changyoung.HI5Controller
 				};
 			}
 
-			listView = view.FindViewById<ListView>(Resource.Id.weldCountListView);
-			listView.Adapter = weldCountAdapter;
-			listView.ItemClick += ListView_Click;
+			listView = view.FindViewById<ListView>(Resource.Id.listView);
+			listView.Adapter = adapter;
+			listView.ItemClick += (object sender, AdapterView.ItemClickEventArgs e) =>
+			{
+				var builder = new AlertDialog.Builder(Context);
+				builder.SetItems(Resource.Array.select_dialog_items, (object sender1, DialogClickEventArgs e1) =>
+				{
+					var items = Resources.GetStringArray(Resource.Array.select_dialog_items);
+					var item = items[(int)e1.Which];
+					if (e1.Which == 0) {
+						ListView_Click(e.Position);
+					} else if (e1.Which == 1) {
+						Pref.TextViewDialog(Context, null, adapter.GetItem(e.Position).RowText());
+					}
+				});
+				builder.Create().Show();
+			};
 			listView.ItemLongClick += (object sender, AdapterView.ItemLongClickEventArgs e) =>
 			{
-				if (weldCountAdapter.Count == 0) {
-					Refresh();
-					if (weldCountAdapter.Count == 0)
-						Show("항목이 없습니다");
-					return;
-				}
-
-				//View dialogView = LayoutInflater.From(Context).Inflate(Resource.Layout.weld_count_text_view, null);
-				//var textView = dialogView.FindViewById<TextView>(Resource.Id.textView);
-				//AlertDialog.Builder dialog = new AlertDialog.Builder(Context);
-				//dialog.SetView(dialogView);
-
-				//////////////////////////////////////////
-				//var textView = new TextView(Context);
-				//textView.SetPadding(10, 10, 10, 10);
-				//textView.SetTextSize(ComplexUnitType.Sp, 10f);
-				//var scrollView = new ScrollView(Context);
-				//scrollView.AddView(textView);
-				//AlertDialog.Builder dialog = new AlertDialog.Builder(Context);
-				//dialog.SetView(scrollView);
-				//
-				//var jobFile = weldCountAdapter.GetItem(e.Position);
-				//textView.Text = jobFile.RowText();
-				//
-				//dialog.SetPositiveButton("닫기", delegate
-				//{ });
-				//
-				//dialog.Show();
-
-				Pref.TextViewDialog(Context, null, weldCountAdapter.GetItem(e.Position).RowText());
+				ListView_Click(e.Position);
 			};
 
 			return view;
 		}
 
-		private void ListView_Click(object sender, AdapterView.ItemClickEventArgs e)
+		private void ListView_Click(int position)
 		{
-			if (weldCountAdapter.Count == 0) {
+			if (adapter.Count == 0) {
 				Refresh();
-				if (weldCountAdapter.Count == 0)
+				if (adapter.Count == 0)
 					Show("항목이 없습니다");
 				return;
 			}
 
-			var jobFile = weldCountAdapter.GetItem(e.Position);
+			var jobFile = adapter.GetItem(position);
 			if (jobFile.JobCount.Total == 0) {
 				Show("CN 항목이 없습니다");
 				return;
@@ -159,6 +152,8 @@ namespace Com.Changyoung.HI5Controller
 				if (jobFile[i].RowType == Job.RowTypes.Spot) {
 					var textInputLayout = new TextInputLayout(Context);
 					var etCN = new EditText(Context);
+					etCN.SetSingleLine();
+					etCN.SetTextSize(ComplexUnitType.Dip, 12);
 					etCN.InputType = etBeginNumber.InputType;
 					etCN.SetSelectAllOnFocus(true);
 					etCN.Hint = "CN[" + jobFile[i].RowNumber + "]";
@@ -193,7 +188,7 @@ namespace Com.Changyoung.HI5Controller
 			etBeginNumber.FocusChange += (object sender1, View.FocusChangeEventArgs e1) =>
 			{
 				int beginNumber;
-				if (Int32.TryParse(etBeginNumber.Text, out beginNumber)) {
+				if (int.TryParse(etBeginNumber.Text, out beginNumber)) {
 					if (beginNumber > 255) {
 						beginNumber = 255;
 						etBeginNumber.Text = beginNumber.ToString();
@@ -238,7 +233,7 @@ namespace Com.Changyoung.HI5Controller
 			dialog.SetNegativeButton("취소", delegate
 			{ });
 
-			dialog.SetPositiveButton("저장", (EventHandler<DialogClickEventArgs>)delegate
+			dialog.SetPositiveButton("저장", delegate
 			{
 				foreach (var et in etList) {
 					var job = (Job)et.Tag;
@@ -246,7 +241,8 @@ namespace Com.Changyoung.HI5Controller
 				}
 				if (jobFile.JobCount.Total > 0) {
 					jobFile.SaveFile();
-					weldCountAdapter.NotifyDataSetChanged();
+					adapter.NotifyDataSetChanged();
+					listView.RefreshDrawableState();
 					this.Show((string)("저장 완료: " + jobFile.JobCount.fi.FullName));
 				}
 			});

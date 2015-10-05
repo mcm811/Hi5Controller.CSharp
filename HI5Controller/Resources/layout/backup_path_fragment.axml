@@ -24,15 +24,15 @@
                 android:focusableInTouchMode="false"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="20dp"
-                android:layout_marginRight="20dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
                 android:id="@+id/etBackupPath" />
         </android.support.design.widget.TextInputLayout>
         <fragment
-            class="com.xamarin.recipes.filepicker.FileListFragment"
+            class="Com.Changyoung.HI5Controller.FileListFragment"
             android:id="@+id/backup_path_fragment"
-            android:layout_marginLeft="20dp"
-            android:layout_marginRight="20dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
             android:layout_weight="1"
             android:layout_width="match_parent"
             android:layout_height="match_parent" />
@@ -59,6 +59,6 @@
             android:layout_gravity="bottom|left"
             android:layout_margin="16dp"
             android:src="@drawable/ic_archive_white"
-            app:backgroundTint="@color/red_A400" />
+            app:backgroundTint="@color/red_A200" />
     </android.support.design.widget.CoordinatorLayout>
 </FrameLayout>

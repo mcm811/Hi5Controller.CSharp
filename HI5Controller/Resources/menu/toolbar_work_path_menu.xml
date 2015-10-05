@@ -5,7 +5,7 @@
   <item android:id="@+id/toolbar_work_path_menu_storage"
   android:icon="@drawable/ic_storage_white"
   local:showAsAction="ifRoom"
-  android:title="Storage" />
+  android:title="@string/nav_storage" />
 
   <item android:id="@+id/toolbar_work_path_menu_sdcard"
   android:icon="@drawable/ic_memory_white"

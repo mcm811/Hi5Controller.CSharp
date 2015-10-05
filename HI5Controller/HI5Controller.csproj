@@ -88,10 +88,10 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="src\FilePicker\FileListAdapter.cs" />
-    <Compile Include="src\FilePicker\FileListFragment.cs" />
-    <Compile Include="src\FilePicker\FileListRowViewHolder.cs" />
-    <Compile Include="src\FilePicker\Helpers.cs" />
+    <Compile Include="src\FileList\FileListFragment.cs" />
+    <Compile Include="src\FileList\FileListAdapter.cs" />
+    <Compile Include="src\FileList\FileListRowViewHolder.cs" />
+    <Compile Include="src\FileList\Helpers.cs" />
     <Compile Include="src\Main\BackupPathFragment.cs" />
     <Compile Include="src\Main\Pref.cs" />
     <Compile Include="src\Main\IRefresh.cs" />
@@ -118,7 +118,7 @@
     <AndroidResource Include="Resources\layout\weld_condition_editor.axml">
       <SubType>AndroidResource</SubType>
     </AndroidResource>
-    <AndroidResource Include="Resources\layout\file_picker_list_item.axml">
+    <AndroidResource Include="Resources\layout\file_list_item.axml">
       <SubType>Designer</SubType>
     </AndroidResource>
     <AndroidResource Include="Resources\layout\weld_condition_row.axml">
@@ -144,6 +144,12 @@
       <SubType>AndroidResource</SubType>
     </AndroidResource>
     <AndroidResource Include="Resources\layout\backup_path_fragment.axml">
+      <SubType>AndroidResource</SubType>
+    </AndroidResource>
+    <AndroidResource Include="Resources\menu\weld_count_list_menu.xml">
+      <SubType>AndroidResource</SubType>
+    </AndroidResource>
+    <AndroidResource Include="Resources\layout\file_list_fragment.axml">
       <SubType>AndroidResource</SubType>
     </AndroidResource>
   </ItemGroup>
@@ -289,9 +295,6 @@
   </ItemGroup>
   <ItemGroup>
     <AndroidResource Include="Resources\drawable\ic_refresh_white.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <AndroidResource Include="Resources\drawable\splash_blue.png" />
   </ItemGroup>
   <ItemGroup>
     <AndroidResource Include="Resources\drawable\nvheader_bg_blue.png" />
@@ -469,6 +472,12 @@
   </ItemGroup>
   <ItemGroup>
     <AndroidResource Include="Resources\drawable\ic_publish_white.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\values\arrays.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable\splash_red.png" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\Android\Xamarin.Android.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

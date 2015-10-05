@@ -146,7 +146,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="bottom|right"
             android:layout_margin="16dp"
-            app:backgroundTint="@color/orange_A700"
+            app:backgroundTint="@color/blue_A200"
             android:src="@drawable/ic_edit_white" />
     </android.support.design.widget.CoordinatorLayout>
 </FrameLayout>

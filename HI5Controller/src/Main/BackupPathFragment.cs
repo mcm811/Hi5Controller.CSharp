@@ -63,7 +63,7 @@ namespace Com.Changyoung.HI5Controller
 			return false;
 		}
 
-		public string RefreshParent()
+		public string OnBackPressedFragment()
 		{
 			var parent = Path.GetDirectoryName(backupPathFragment.DirPath);
 			return backupPathFragment.RefreshFilesList(parent);
@@ -71,7 +71,6 @@ namespace Com.Changyoung.HI5Controller
 
 		public override View OnCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
 		{
-			LogDebug("OnCreateView");
 			view = inflater.Inflate(Resource.Layout.backup_path_fragment, container, false);
 			backupPathLayout = view.FindViewById<LinearLayout>(Resource.Id.backup_path_layout);
 			coordinatorLayout = view.FindViewById<CoordinatorLayout>(Resource.Id.coordinator_layout);
@@ -116,50 +115,37 @@ namespace Com.Changyoung.HI5Controller
 			backupPathToolbar.InflateMenu(Resource.Menu.toolbar_backup_path_menu);
 			backupPathToolbar.MenuItemClick += (sender, e) =>
 			{
-				//Toast.MakeText(this, "Bottom toolbar pressed: " + e.Item.TitleFormatted, ToastLength.Short).Show();
 				switch (e.Item.ItemId) {
 					case Resource.Id.toolbar_backup_path_menu_up:
-					RefreshParent();
+					OnBackPressedFragment();
 					break;
 					case Resource.Id.toolbar_backup_path_menu_home:
 					Refresh(Pref.BackupPath);
 					break;
 					case Resource.Id.toolbar_backup_path_menu_restore:
-					Restore();
+					Show(Restore());
 					break;
-					//case Resource.Id.toolbar_backup_path_menu_backup:
-					//Backup();
-					//break;
 				}
-				// 백업, 복원(현재 경로에 ROBOT.SWD가 있으면 파일들을 작업경로로 복사),
-				// 디렉토리 삭제
 			};
 
 			fab = view.FindViewById<FloatingActionButton>(Resource.Id.fab);
 			fab.Click += (sender, e) =>
 			{
-				//fab.SetImageResource(Resource.Drawable.ic_archive_white);
-				//etBackupPath.Text = backupPathFragment.DirPath;
-				//Pref.BackupPath = etBackupPath.Text;
-				Backup();
+				Show(Backup());
 			};
 
 			return view;
 		}
 
-		public bool Restore()
+		public string Restore()
 		{
 			var workPath = Pref.WorkPath;
 			var targetFullPath = Path.GetFullPath(workPath);
-			var targetFileName = Path.GetFileName(workPath);
 			var targetDirName = Path.GetDirectoryName(workPath);
 
 			var backupPath = backupPathFragment.DirPath;
 			var sourceFullPath = Path.GetFullPath(backupPath);
 			var sourceFileName = Path.GetFileName(backupPath);
-			var sourceDirName = Path.GetDirectoryName(backupPath);
-
-			//ToastShow("복원 원본: " + sourceFullPath + "\n복원 대상: " + targetFullPath);
 
 			// 복원할 파일을 먼저 확인
 			bool sourceChecked = false;
@@ -174,7 +160,7 @@ namespace Com.Changyoung.HI5Controller
 				}
 			}
 
-			var ret = false;
+			string ret;
 			if (sourceChecked) {
 				//Directory.Delete(targetFullPath, true);
 				if (Directory.Exists(targetFullPath)) {
@@ -192,86 +178,51 @@ namespace Com.Changyoung.HI5Controller
 					foreach (string s in files) {
 						var fileName = Path.GetFileName(s);
 						var destFile = Path.Combine(targetFullPath, fileName);
-
-						var attributes = File.GetAttributes(s);
-						//var creationTime = File.GetCreationTime(s);
-						//var lastWriteTime = File.GetLastWriteTime(s);
-
 						File.Copy(s, destFile, true);
-
-						File.SetAttributes(destFile, attributes);
-						//File.SetCreationTime(destFile, creationTime);
-						//File.SetLastWriteTime(destFile, lastWriteTime);
-
 						LogDebug("Copy " + s + " To " + destFile);
 					}
-					ret = true;
-					Show("복원 완료: " + sourceFileName);
+					ret = "복원 완료: " + sourceFileName;
 				} else {
-					Show("복원 폴더가 없습니다");
+					ret = "복원 폴더가 없습니다";
 				}
 			} else {
-				Show("복원 파일이 아닙니다");
+				ret = "현재 폴더에 복원할 파일이 없습니다";
 			}
 
 			return ret;
 		}
 
-		public bool Backup()
+		public string Backup()
 		{
 			var workPath = Pref.WorkPath;
 			var sourceFullPath = Path.GetFullPath(workPath);
 			var sourceFileName = Path.GetFileName(workPath);
-			var sourceDirName = Path.GetDirectoryName(workPath);
 
-			//var backupPath = Pref.BackupPath;
 			var targetFileName = sourceFileName + System.DateTime.Now.ToString("_yyyyMMdd_hhmmss");
 			var targetDirName = Path.Combine(sourceFullPath, "Backup");
 			var targetFullPath = Path.Combine(targetDirName, targetFileName);
-
-			//ToastShow("백업 원본: " + sourceFullPath + "\n백업 대상: " + targetFullPath);
 
 			if (!Directory.Exists(targetFullPath)) {
 				Directory.CreateDirectory(targetFullPath);
 			}
 
-			var ret = false;
+			string ret;
 			if (Directory.Exists(sourceFullPath)) {
 				string[] files = Directory.GetFiles(sourceFullPath);
 				foreach (string s in files) {
 					var fileName = Path.GetFileName(s);
 					var destFile = Path.Combine(targetFullPath, fileName);
-
 					var attributes = File.GetAttributes(s);
-					//var creationTime = File.GetCreationTime(s);
-					//var lastWriteTime = File.GetLastWriteTime(s);
-
 					File.Copy(s, destFile, true);
-
-					File.SetAttributes(destFile, attributes);
-					//File.SetCreationTime(destFile, creationTime);
-					//File.SetLastWriteTime(destFile, lastWriteTime);
-
 					LogDebug("Copy " + s + " To " + destFile);
 				}
-				ret = true;
-				Show("백업 완료: " + targetFileName);
+				ret = "백업 완료: " + targetFileName;
 			} else {
-				Show("대상 폴더가 없습니다");
+				ret = "대상 폴더가 없습니다";
 			}
 			Refresh(Pref.BackupPath);
 
 			return ret;
-		}
-
-		public override void OnActivityResult(int requestCode, int resultCode, Intent data)
-		{
-			if (requestCode == 1) {
-				try {
-					Pref.WorkPath = data.GetStringExtra("backup_path");
-				} catch { }
-			}
-			base.OnActivityResult(requestCode, resultCode, data);
 		}
 	}
 }

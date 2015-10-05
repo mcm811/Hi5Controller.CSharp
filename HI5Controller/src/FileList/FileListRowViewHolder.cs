@@ -1,6 +1,7 @@
 namespace com.xamarin.recipes.filepicker
 {
 	using Android.Widget;
+	using FloatingActionButton = Android.Support.Design.Widget.FloatingActionButton;
 
 	using Java.Lang;
 
@@ -13,14 +14,14 @@ namespace com.xamarin.recipes.filepicker
 	/// </remarks>
 	public class FileListRowViewHolder : Object
 	{
-		public FileListRowViewHolder(TextView timeTextView, TextView textView, ImageView imageView)
+		public FileListRowViewHolder(TextView timeTextView, TextView textView, FloatingActionButton fab)
 		{
 			TimeTextView = timeTextView;
 			TextView = textView;
-			ImageView = imageView;
+			Fab = fab;
 		}
 
-		public ImageView ImageView { get; private set; }
+		public FloatingActionButton Fab { get; private set; }
 		public TextView TextView { get; private set; }
 		public TextView TimeTextView { get; private set; }
 
@@ -32,9 +33,15 @@ namespace com.xamarin.recipes.filepicker
 		/// <param name="fileImageResourceId"> </param>
 		public void Update(string fileTime, string fileName, int fileImageResourceId)
 		{
-			TimeTextView.Text = fileTime;
+			if (fileTime == null) {
+				TimeTextView.Text = "";
+				TimeTextView.Visibility = Android.Views.ViewStates.Gone;
+			} else {
+				TimeTextView.Text = fileTime;
+				TimeTextView.Visibility = Android.Views.ViewStates.Visible;
+			}
 			TextView.Text = fileName;
-			ImageView.SetImageResource(fileImageResourceId);
+			Fab.SetImageResource(fileImageResourceId);
 		}
 	}
 }

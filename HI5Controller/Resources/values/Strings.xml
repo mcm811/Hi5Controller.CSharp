@@ -33,6 +33,9 @@
   <string name="Exit">종료</string>
   <string name="WorkPath">작업 경로</string>
   <string name="BackupPath">백업 경로</string>
+  <string name="Read">읽기</string>
+  <string name="View">보기</string>
+  <string name="Edit">수정</string>
 
   <string name="work_path_fragment">작업 경로</string>
   <string name="weld_count_fragment">용접 카운트</string>
@@ -48,6 +51,7 @@
   <string name="nav_extsdcard">SD 카드</string>
   <string name="nav_usbstorage">USB 저장소</string>
   <string name="nav_app_exit">앱</string>
+  <string name="nav_exit">종료</string>
   <string name="nav_backup">백업</string>
   <string name="nav_restore">복원</string>
   <string name="nav_home">홈</string>

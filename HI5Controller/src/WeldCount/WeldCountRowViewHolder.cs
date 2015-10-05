@@ -1,4 +1,3 @@
-using Android.Util;
 using Android.Views;
 using Android.Widget;
 
@@ -31,9 +30,6 @@ namespace Com.Changyoung.HI5Controller
 			tvCount.Text = jobFile.JobCount.GetString();
 			tvPreview.Text = jobFile.JobCount.Preview;
 			tvCN.Text = jobFile.GetCNList();
-
-			//Log.Debug("WeldCountRowViewHolder", "Preview1: " + tvPreview.Text);
-			//Log.Debug("WeldCountRowViewHolder", "Preview2: " + jobFile.JobCount.Preview);
 		}
 	}
 }

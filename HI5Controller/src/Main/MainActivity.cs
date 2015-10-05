@@ -8,6 +8,7 @@ using Android.Support.V7.App;
 using Android.Support.V4.Widget;
 using Android.Support.Design.Widget;
 
+using Fragment = Android.Support.V4.App.Fragment;
 using Toolbar = Android.Support.V7.Widget.Toolbar;
 using ViewPager = Android.Support.V4.View.ViewPager;
 using TabLayout = Android.Support.Design.Widget.TabLayout;
@@ -41,8 +42,11 @@ namespace Com.Changyoung.HI5Controller
 			//		.SetAction("Undo", (view) => { /*Undo message sending here.*/ })
 			//		.SetAction("Redo", (view) => { /*Undo message sending here.*/ })
 			//		.Show();
+			//Snackbar.Make(view, str, Snackbar.LengthShort).Show();
 			try {
-				Snackbar.Make(view, str, Snackbar.LengthShort).Show();
+				var r = (IRefresh)((PagerAdapter)viewPager.Adapter)[tabLayout.SelectedTabPosition];
+				if (r != null)
+					r.Show(str);
 			} catch { }
 			LogDebug(str);
 		}
@@ -66,16 +70,16 @@ namespace Com.Changyoung.HI5Controller
 			//};
 		}
 
-		private Android.Support.V4.App.Fragment GetFragment(int position = 0)
+		private Fragment GetFragment(int position = 0)
 		{
-			return (Android.Support.V4.App.Fragment)((PagerAdapter)viewPager.Adapter)[position];
+			return ((PagerAdapter)viewPager.Adapter)[position];
 		}
 
 		private bool StorageRefresh(string storagePath)
 		{
-			var f = (WorkPathFragment)GetFragment();
-			if (f != null)
-				return f.Refresh(storagePath);
+			var r = (IRefresh)GetFragment(0);
+			if (r != null)
+				return r.Refresh(storagePath);
 			return false;
 		}
 
@@ -87,6 +91,7 @@ namespace Com.Changyoung.HI5Controller
 			navigationView.NavigationItemSelected += (sender, e) =>
 			{
 				e.MenuItem.SetChecked(true);
+				bool ret;
 				switch (e.MenuItem.ItemId) {
 					case Resource.Id.nav_weld_count:
 					viewPager.SetCurrentItem(1, true);
@@ -96,43 +101,53 @@ namespace Com.Changyoung.HI5Controller
 					break;
 					case Resource.Id.nav_storage:
 					viewPager.SetCurrentItem(0, true);
-					StorageRefresh("/storage");
+					if (!StorageRefresh("/storage"))
+						Show("경로 이동 실패: " + "/storage");
 					break;
 					case Resource.Id.nav_sdcard0:
 					viewPager.SetCurrentItem(0, true);
-					StorageRefresh(Environment.ExternalStorageDirectory.AbsolutePath);
+					if (!StorageRefresh(Environment.ExternalStorageDirectory.AbsolutePath))
+						Show("경로 이동 실패: " + Environment.ExternalStorageDirectory.AbsolutePath);
 					break;
 					case Resource.Id.nav_extsdcard:
 					viewPager.SetCurrentItem(0, true);
+					ret = false;
 					try {
 						var dir = new DirectoryInfo("/storage");
 						foreach (var item in dir.GetDirectories()) {
 							if (item.Name.ToLower().StartsWith("ext") || item.Name.ToLower().StartsWith("sdcard1")) {
 								foreach (var subItem in item.GetFileSystemInfos()) {
 									if (StorageRefresh(item.FullName)) {
-										//SnackbarLong("경로 이동: " + item.FullName);
+										//Show("경로 이동: " + item.FullName);
+										ret = true;
 										break;
 									}
 								}
 							}
 						}
 					} catch { }
+					if (!ret)
+						Show("경로 이동 실패: " + "SD 카드");
 					break;
 					case Resource.Id.nav_usbstorage:
 					viewPager.SetCurrentItem(0, true);
+					ret = false;
 					try {
 						var dir = new DirectoryInfo("/storage");
 						foreach (var item in dir.GetDirectories()) {
 							if (item.Name.ToLower().StartsWith("usb")) {
 								foreach (var subItem in item.GetFileSystemInfos()) {
 									if (StorageRefresh(item.FullName)) {
-										//SnackbarLong("경로 이동: " + item.FullName);
+										//Show("경로 이동: " + item.FullName);
+										ret = true;
 										break;
 									}
 								}
 							}
 						}
 					} catch { }
+					if (!ret)
+						Show("경로 이동 실패: " + "USB 저장소");
 					break;
 					case Resource.Id.nav_exit:
 					Finish();
@@ -141,39 +156,6 @@ namespace Com.Changyoung.HI5Controller
 				drawerLayout.CloseDrawers();
 			};
 			NaviViewHeader();
-		}
-
-		private void MainView()
-		{
-			//// 기본 화면 구성
-			//etDirPath = FindViewById<EditText>(Resource.Id.etDirPath);
-			//etDirPath.Text = Pref.WorkPath;
-
-			//// 떠 있는 액션버튼
-			//fab = FindViewById<FloatingActionButton>(Resource.Id.fab);
-			//fab.Elevation = 6;
-			//fab.Click += (sender, e) =>
-			//{
-			//	var intent = new Intent(this, typeof(FilePickerActivity));
-			//	intent.PutExtra("work_path", etDirPath.Text);
-			//	StartActivityForResult(intent, 1);
-			//};
-
-			//wcdListViewButton = FindViewById<Button>(Resource.Id.button1);
-			//wcdListViewButton.Click += (sender, e) =>
-			//{
-			//	var intent = new Intent(this, typeof(WcdListViewActivity));
-			//	intent.PutExtra("work_path", etDirPath.Text);
-			//	StartActivity(intent);
-			//};
-
-			//wcdTextButton = FindViewById<Button>(Resource.Id.button2);
-			//wcdTextButton.Click += (sender, e) =>
-			//{
-			//	var intent = new Intent(this, typeof(WcdTextViewActivity));
-			//	intent.PutExtra("work_path", etDirPath.Text);
-			//	StartActivity(intent);
-			//};
 		}
 
 		// TabListener that replaces a Fragment when a tab is clicked.
@@ -267,36 +249,12 @@ namespace Com.Changyoung.HI5Controller
 
 			TabLayoutViewPager();
 			NaviView();
-			MainView();
 
 			//var position = tabLayout.SelectedTabPosition;
-			//int startTabPosition = 0;
-			//viewPager.SetCurrentItem(startTabPosition, true);
-			//switch (startTabPosition % 3) {
-			//	case 0:
+			//viewPager.SetCurrentItem(0, true);
 			actionBar.SetBackgroundDrawable(new ColorDrawable(Resources.GetColor(Resource.Color.tab1_actionbar_background)));
 			tabLayout.Background = new ColorDrawable(Resources.GetColor(Resource.Color.tab1_tablayout_background));
 			tabLayout.SetSelectedTabIndicatorColor(Resources.GetColor(Resource.Color.tab1_tabindicator_background));
-			//	break;
-			//	case 1:
-			//	actionBar.SetBackgroundDrawable(new ColorDrawable(Resources.GetColor(Resource.Color.tab2_actionbar_background)));
-			//	tabLayout.Background = new ColorDrawable(Resources.GetColor(Resource.Color.tab2_tablayout_background));
-			//	tabLayout.SetSelectedTabIndicatorColor(Resources.GetColor(Resource.Color.tab2_tabindicator_background));
-			//	break;
-			//	case 2:
-			//	actionBar.SetBackgroundDrawable(new ColorDrawable(Resources.GetColor(Resource.Color.tab3_actionbar_background)));
-			//	tabLayout.Background = new ColorDrawable(Resources.GetColor(Resource.Color.tab3_tablayout_background));
-			//	tabLayout.SetSelectedTabIndicatorColor(Resources.GetColor(Resource.Color.tab3_tabindicator_background));
-			//	break;
-			//}
-		}
-
-		protected override void OnActivityResult(int requestCode, [GeneratedEnum] Result resultCode, Intent data)
-		{
-			if (resultCode == Result.Ok && requestCode == 1) {
-				Pref.WorkPath = data.GetStringExtra("work_path");
-			}
-			base.OnActivityResult(requestCode, resultCode, data);
 		}
 
 		public override bool OnCreateOptionsMenu(IMenu menu)
@@ -315,50 +273,24 @@ namespace Com.Changyoung.HI5Controller
 				return true;
 
 				case Resource.Id.menu_backup:
-				OnBackup();
+				viewPager.SetCurrentItem((int)PagerAdapter.FragmentPosition.BackupPathFragment, true);
+				var f = (BackupPathFragment)GetFragment((int)PagerAdapter.FragmentPosition.BackupPathFragment);
+				if (f != null)
+					Show(f.Backup());
 				return true;
 
 				case Resource.Id.menu_exit:
 				Finish();
 				return true;
-
-				//case Resource.Id.menu_settings:
-				//viewPager.SetCurrentItem(0, true);
-				//return true;
 			}
 			return base.OnOptionsItemSelected(item);
 		}
 
 		public override void OnBackPressed()
 		{
-			var position = tabLayout.SelectedTabPosition;
-			switch (position) {
-				case 0:
-				var f0 = (WorkPathFragment)GetFragment(position);
-				if (f0 != null)
-					f0.RefreshParent();
-				break;
-				case 1:
-				//base.OnBackPressed();
-				break;
-				case 2:
-				var f2 = (WeldConditionFragment)GetFragment(position);
-				if (f2 != null)
-					f2.CheckListItem();
-				break;
-				case 3:
-				var f3 = (BackupPathFragment)GetFragment(position);
-				if (f3 != null)
-					f3.RefreshParent();
-				break;
-			}
-		}
-
-		public void OnBackup()
-		{
-			var f = (BackupPathFragment)GetFragment(3);
-			if (f != null)
-				f.Backup();
+			var r = (IRefresh)GetFragment(tabLayout.SelectedTabPosition);
+			if (r != null)
+				r.OnBackPressedFragment();
 		}
 	}
 }

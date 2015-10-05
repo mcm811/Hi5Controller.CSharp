@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="fill_parent"
     android:layout_height="wrap_content"
     android:orientation="horizontal">
-    <ImageView
+<!--<ImageView
         android:id="@+id/file_picker_image"
         android:layout_width="20dip"
         android:layout_height="20dip"
@@ -11,7 +12,20 @@
         android:layout_marginBottom="5dip"
         android:layout_marginLeft="5dip"
         android:src="@drawable/ic_description"
-        android:scaleType="centerCrop" />
+        android:scaleType="centerCrop" />-->
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/file_picker_fab"
+        app:elevation="6dp"
+        app:borderWidth="0dp"
+        android:layout_width="20dip"
+        android:layout_height="20dip"
+        android:layout_marginTop="5dip"
+        android:layout_marginBottom="5dip"
+        android:layout_marginLeft="5dip"
+        android:scaleType="centerCrop"
+        android:rotation="180"
+        android:src="@drawable/ic_description"
+        app:backgroundTint="@color/grey_200" />
     <TextView
         android:id="@+id/file_picker_text"
         android:layout_width="fill_parent"

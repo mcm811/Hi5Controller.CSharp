@@ -183,9 +183,19 @@ namespace Com.Changyoung.HI5Controller
 			CheckListItem(true);
 		}
 
+		public bool Refresh(string path)
+		{
+			return true;
+		}
+
+		public string OnBackPressedFragment()
+		{
+			CheckListItem();
+			return null;
+		}
+
 		public override void OnCreate(Bundle bundle)
 		{
-			LogDebug("OnCreate");
 			base.OnCreate(bundle);
 
 			dirPath = Pref.WorkPath;
@@ -196,7 +206,6 @@ namespace Com.Changyoung.HI5Controller
 
 		public override View OnCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
 		{
-			LogDebug("OnCreateView");
 			view = inflater.Inflate(Resource.Layout.weld_condition_fragment, container, false);
 
 			coordinatorLayout = view.FindViewById<CoordinatorLayout>(Resource.Id.coordinator_layout);
@@ -224,21 +233,6 @@ namespace Com.Changyoung.HI5Controller
 					else
 						fabWcd.SetImageResource(Resource.Drawable.ic_edit_white);
 				} catch { }
-
-				//if (listView.CheckedItemCount > 0) {
-				//	if (snackbar == null) {
-				//		snackbar = Snackbar.Make(coordinatorLayout, listView.CheckedItemCount.ToString() + "개 항목 선택됨", Snackbar.LengthIndefinite)
-				//				.SetAction("선택 취소", (view) => { CheckListItem(); snackbar = null; });
-				//		snackbar.Show();
-				//	} else {
-				//		snackbar.SetText(listView.CheckedItemCount.ToString() + "개 항목 선택됨");
-				//	}
-				//} else {
-				//	if (snackbar != null) {
-				//		snackbar.Dismiss();
-				//		snackbar = null;
-				//	}
-				//}
 
 				if (snackbar == null)
 					snackbar = Snackbar.Make(coordinatorLayout, listView.CheckedItemCount.ToString() + "개 항목 선택됨", Snackbar.LengthIndefinite)

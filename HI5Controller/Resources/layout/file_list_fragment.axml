@@ -6,8 +6,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:id="@+id/linearLayout1"
-    android:paddingLeft="10dp"
-    android:paddingRight="10dp">
+    android:paddingLeft="0dp"
+    android:paddingRight="0dp">
     <android.support.v4.widget.SwipeRefreshLayout
         android:id="@+id/srl"
         android:layout_width="match_parent"
