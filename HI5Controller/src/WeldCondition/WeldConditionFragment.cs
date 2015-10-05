@@ -123,10 +123,10 @@ namespace Com.Changyoung.HI5Controller
 					sw.Write(sb.ToString());
 					sw.Close();
 					//ToastShow("저장 완료: " + fileName.Substring(fileName.LastIndexOf('/')));
-					Show("저장 완료: " + fileName);
+					Show("저장 완료: " + System.IO.Path.GetFileName(fileName));
 				}
 			} catch {
-				Show("저장 실패: " + fileName);
+				Show("저장 실패: " + System.IO.Path.GetFileName(fileName));
 			}
 
 			return sb.ToString();

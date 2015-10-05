@@ -243,7 +243,7 @@ namespace Com.Changyoung.HI5Controller
 					jobFile.SaveFile();
 					adapter.NotifyDataSetChanged();
 					listView.RefreshDrawableState();
-					this.Show((string)("저장 완료: " + jobFile.JobCount.fi.FullName));
+					this.Show((string)("저장 완료: " + jobFile.JobCount.fi.Name));
 				}
 			});
 
