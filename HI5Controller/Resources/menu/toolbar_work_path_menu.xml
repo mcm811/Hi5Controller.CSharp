@@ -1,0 +1,40 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+	  xmlns:local="http://schemas.android.com/apk/res-auto">
+
+  <item android:id="@+id/toolbar_work_path_menu_storage"
+  android:icon="@drawable/ic_storage_white"
+  local:showAsAction="ifRoom"
+  android:title="@string/nav_storage" />
+
+  <item android:id="@+id/toolbar_work_path_menu_sdcard"
+  android:icon="@drawable/ic_memory_white"
+  local:showAsAction="always"
+  android:title="@string/nav_sdcard" />
+
+  <item android:id="@+id/toolbar_work_path_menu_extsdcard"
+  android:icon="@drawable/ic_sd_card_white"
+  local:showAsAction="ifRoom"
+  android:title="@string/nav_extsdcard" />
+
+  <item android:id="@+id/toolbar_work_path_menu_usbstorage"
+  android:icon="@drawable/ic_usb_white"
+  local:showAsAction="always"
+  android:title="@string/nav_usbstorage" />
+
+  <!--<item android:id="@+id/toolbar_work_path_menu_backup"
+  android:icon="@drawable/ic_archive_white"
+  local:showAsAction="always"
+  android:title="@string/nav_backup" />-->
+
+  <item android:id="@+id/toolbar_work_path_menu_home"
+  android:icon="@drawable/ic_home_white"
+  local:showAsAction="always"
+  android:title="@string/nav_home" />
+
+  <item android:id="@+id/toolbar_work_path_menu_up"
+  android:icon="@drawable/ic_file_upload_white"
+  local:showAsAction="always"
+  android:title="@string/nav_up" />
+
+</menu>
