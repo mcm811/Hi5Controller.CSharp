@@ -3735,56 +3735,56 @@ namespace Com.Changyoung.HI5Controller
 			// aapt resource value: 0x7f070004
 			public const int WorkPathConfigButton = 2131165188;
 			
-			// aapt resource value: 0x7f070042
-			public const int abc_action_bar_home_description = 2131165250;
-			
-			// aapt resource value: 0x7f070043
-			public const int abc_action_bar_home_description_format = 2131165251;
-			
-			// aapt resource value: 0x7f070044
-			public const int abc_action_bar_home_subtitle_description_format = 2131165252;
-			
-			// aapt resource value: 0x7f070045
-			public const int abc_action_bar_up_description = 2131165253;
-			
-			// aapt resource value: 0x7f070046
-			public const int abc_action_menu_overflow_description = 2131165254;
-			
 			// aapt resource value: 0x7f070047
-			public const int abc_action_mode_done = 2131165255;
+			public const int abc_action_bar_home_description = 2131165255;
 			
 			// aapt resource value: 0x7f070048
-			public const int abc_activity_chooser_view_see_all = 2131165256;
+			public const int abc_action_bar_home_description_format = 2131165256;
 			
 			// aapt resource value: 0x7f070049
-			public const int abc_activitychooserview_choose_application = 2131165257;
+			public const int abc_action_bar_home_subtitle_description_format = 2131165257;
 			
 			// aapt resource value: 0x7f07004a
-			public const int abc_search_hint = 2131165258;
+			public const int abc_action_bar_up_description = 2131165258;
 			
 			// aapt resource value: 0x7f07004b
-			public const int abc_searchview_description_clear = 2131165259;
+			public const int abc_action_menu_overflow_description = 2131165259;
 			
 			// aapt resource value: 0x7f07004c
-			public const int abc_searchview_description_query = 2131165260;
+			public const int abc_action_mode_done = 2131165260;
 			
 			// aapt resource value: 0x7f07004d
-			public const int abc_searchview_description_search = 2131165261;
+			public const int abc_activity_chooser_view_see_all = 2131165261;
 			
 			// aapt resource value: 0x7f07004e
-			public const int abc_searchview_description_submit = 2131165262;
+			public const int abc_activitychooserview_choose_application = 2131165262;
 			
 			// aapt resource value: 0x7f07004f
-			public const int abc_searchview_description_voice = 2131165263;
+			public const int abc_search_hint = 2131165263;
 			
 			// aapt resource value: 0x7f070050
-			public const int abc_shareactionprovider_share_with = 2131165264;
+			public const int abc_searchview_description_clear = 2131165264;
 			
 			// aapt resource value: 0x7f070051
-			public const int abc_shareactionprovider_share_with_application = 2131165265;
+			public const int abc_searchview_description_query = 2131165265;
 			
 			// aapt resource value: 0x7f070052
-			public const int abc_toolbar_collapse_description = 2131165266;
+			public const int abc_searchview_description_search = 2131165266;
+			
+			// aapt resource value: 0x7f070053
+			public const int abc_searchview_description_submit = 2131165267;
+			
+			// aapt resource value: 0x7f070054
+			public const int abc_searchview_description_voice = 2131165268;
+			
+			// aapt resource value: 0x7f070055
+			public const int abc_shareactionprovider_share_with = 2131165269;
+			
+			// aapt resource value: 0x7f070056
+			public const int abc_shareactionprovider_share_with_application = 2131165270;
+			
+			// aapt resource value: 0x7f070057
+			public const int abc_toolbar_collapse_description = 2131165271;
 			
 			// aapt resource value: 0x7f070000
 			public const int ad_unit_id = 2131165184;
@@ -3792,8 +3792,8 @@ namespace Com.Changyoung.HI5Controller
 			// aapt resource value: 0x7f07000e
 			public const int app_name = 2131165198;
 			
-			// aapt resource value: 0x7f070054
-			public const int appbar_scrolling_view_behavior = 2131165268;
+			// aapt resource value: 0x7f070059
+			public const int appbar_scrolling_view_behavior = 2131165273;
 			
 			// aapt resource value: 0x7f070036
 			public const int backup_path_fragment = 2131165238;
@@ -3858,8 +3858,8 @@ namespace Com.Changyoung.HI5Controller
 			// aapt resource value: 0x7f07000f
 			public const int no_files_or_directories = 2131165199;
 			
-			// aapt resource value: 0x7f070053
-			public const int status_bar_notification_info_overflow = 2131165267;
+			// aapt resource value: 0x7f070058
+			public const int status_bar_notification_info_overflow = 2131165272;
 			
 			// aapt resource value: 0x7f070037
 			public const int text_view_fragment = 2131165239;
@@ -3869,6 +3869,21 @@ namespace Com.Changyoung.HI5Controller
 			
 			// aapt resource value: 0x7f070011
 			public const int wcd_ok = 2131165201;
+			
+			// aapt resource value: 0x7f070042
+			public const int wcd_tab1_text = 2131165250;
+			
+			// aapt resource value: 0x7f070043
+			public const int wcd_tab2_text = 2131165251;
+			
+			// aapt resource value: 0x7f070044
+			public const int wcd_tab3_text = 2131165252;
+			
+			// aapt resource value: 0x7f070045
+			public const int wcd_tab4_text = 2131165253;
+			
+			// aapt resource value: 0x7f070046
+			public const int wcd_tab5_text = 2131165254;
 			
 			// aapt resource value: 0x7f070035
 			public const int weld_condition_fragment = 2131165237;
