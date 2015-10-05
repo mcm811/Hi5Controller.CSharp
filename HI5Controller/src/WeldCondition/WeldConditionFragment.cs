@@ -58,14 +58,6 @@ namespace Com.Changyoung.HI5Controller
 			LogDebug(str);
 		}
 
-		private void SnackbarShow(string str)
-		{
-			var sb = Snackbar.Make(coordinatorLayout, str, Snackbar.LengthLong);
-			//sb.SetAction("Undo", (view) => { /*Undo message sending here.*/ });
-			sb.Show(); // Don’t forget to show!
-			LogDebug(str);
-		}
-
 		private void ReadFile(string fileName, WcdListAdapter items, Context context = null)
 		{
 			try {
@@ -81,10 +73,10 @@ namespace Com.Changyoung.HI5Controller
 							addText = true;
 					}
 					sr.Close();
-					LogDebug("불러 오기:" + fileName);
+					//LogDebug("불러 오기:" + fileName);
 				}
 			} catch {
-				LogDebug("읽기 실패:" + fileName);
+				//LogDebug("읽기 실패:" + fileName);
 			}
 		}
 
@@ -115,7 +107,7 @@ namespace Com.Changyoung.HI5Controller
 					sr.Close();
 				}
 			} catch {
-				LogDebug("읽기 실패: " + fileName);
+				//LogDebug("읽기 실패: " + fileName);
 			}
 
 			try {

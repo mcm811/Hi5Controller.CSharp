@@ -33,10 +33,6 @@ namespace Com.Changyoung.HI5Controller
 
 		public void Show(string str)
 		{
-			//Snackbar.Make(viewParent, str, Snackbar.LengthLong)
-			//		.SetAction("Undo", (view) => { /*Undo message sending here.*/ })
-			//		.SetAction("Redo", (view) => { /*Undo message sending here.*/ })
-			//		.Show();
 			try {
 				Snackbar.Make(coordinatorLayout, str, Snackbar.LengthShort).Show();
 			} catch { }
@@ -176,7 +172,6 @@ namespace Com.Changyoung.HI5Controller
 			fab = view.FindViewById<FloatingActionButton>(Resource.Id.fab);
 			fab.Click += (sender, e) =>
 			{
-				//fab.SetImageResource(Resource.Drawable.ic_save_white);
 				etWorkPath.Text = workPathFragment.DirPath;
 				Pref.WorkPath = etWorkPath.Text;
 				workPathFragment.RefreshFilesList();

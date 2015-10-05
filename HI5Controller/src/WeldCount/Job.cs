@@ -113,8 +113,6 @@ namespace Com.Changyoung.HI5Controller
 		{
 			RowTypes rowType = GetRowType(rowString);
 
-			//LogDebug(rowType.ToString() + "::::" + rowString);
-
 			switch (rowType) {
 				case RowTypes.Header:
 				row = new HeaderJob(rowNumber, rowString);

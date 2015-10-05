@@ -8,7 +8,6 @@ namespace com.xamarin.recipes.filepicker
 	using Android.Views;
 	using Android.Widget;
 	using Com.Changyoung.HI5Controller;
-	using Android.Util;
 	using FloatingActionButton = Android.Support.Design.Widget.FloatingActionButton;
 
 	public class FileListAdapter : ArrayAdapter<FileSystemInfo>
@@ -62,6 +61,7 @@ namespace com.xamarin.recipes.filepicker
 				row = _context.GetLayoutInflater().Inflate(Resource.Layout.file_list_item, parent, false);
 				viewHolder = new FileListRowViewHolder(row.FindViewById<TextView>(Resource.Id.file_picker_time),
 													   row.FindViewById<TextView>(Resource.Id.file_picker_text),
+													   row.FindViewById<ImageView>(Resource.Id.file_picker_image),
 													   row.FindViewById<FloatingActionButton>(Resource.Id.file_picker_fab));
 				row.Tag = viewHolder;
 			} else {

@@ -40,11 +40,6 @@ namespace Com.Changyoung.HI5Controller
 
 		public void Show(string str)
 		{
-			//Snackbar.Make(viewParent, str, Snackbar.LengthLong)
-			//		.SetAction("Undo", (view) => { /*Undo message sending here.*/ })
-			//		.SetAction("Redo", (view) => { /*Undo message sending here.*/ })
-			//		.Show();
-			//Snackbar.Make(view, str, Snackbar.LengthShort).Show();
 			try {
 				var r = (IRefresh)((PagerAdapter)viewPager.Adapter)[tabLayout.SelectedTabPosition];
 				if (r != null)
@@ -120,7 +115,6 @@ namespace Com.Changyoung.HI5Controller
 							if (item.Name.ToLower().StartsWith("ext") || item.Name.ToLower().StartsWith("sdcard1")) {
 								foreach (var subItem in item.GetFileSystemInfos()) {
 									if (StorageRefresh(item.FullName)) {
-										//Show("경로 이동: " + item.FullName);
 										ret = true;
 										break;
 									}
@@ -140,7 +134,6 @@ namespace Com.Changyoung.HI5Controller
 							if (item.Name.ToLower().StartsWith("usb")) {
 								foreach (var subItem in item.GetFileSystemInfos()) {
 									if (StorageRefresh(item.FullName)) {
-										//Show("경로 이동: " + item.FullName);
 										ret = true;
 										break;
 									}
@@ -246,7 +239,6 @@ namespace Com.Changyoung.HI5Controller
 			actionBar.SetHomeAsUpIndicator(Resource.Drawable.ic_menu_white);
 			actionBar.SetDisplayHomeAsUpEnabled(true);
 			actionBar.Title = Resources.GetString(Resource.String.ApplicationName);
-			//actionBar.Elevation = 0;
 			actionBar.Show();
 
 			TabLayoutViewPager();
@@ -304,7 +296,7 @@ namespace Com.Changyoung.HI5Controller
 				exitCount++;
 			}
 
-			if (exitCount == 3)
+			if (exitCount >= 2)
 				base.OnBackPressed();
 		}
 	}

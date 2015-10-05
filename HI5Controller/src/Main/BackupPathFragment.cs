@@ -33,10 +33,6 @@ namespace Com.Changyoung.HI5Controller
 
 		public void Show(string str)
 		{
-			//Snackbar.Make(viewParent, str, Snackbar.LengthLong)
-			//		.SetAction("Undo", (view) => { /*Undo message sending here.*/ })
-			//		.SetAction("Redo", (view) => { /*Undo message sending here.*/ })
-			//		.Show();
 			try {
 				Snackbar.Make(coordinatorLayout, str, Snackbar.LengthShort).Show();
 			} catch { }
@@ -111,7 +107,6 @@ namespace Com.Changyoung.HI5Controller
 			};
 
 			backupPathToolbar = view.FindViewById<Toolbar>(Resource.Id.backup_path_toolbar);
-			//backupPathToolbar.Title = "백업";
 			backupPathToolbar.InflateMenu(Resource.Menu.toolbar_backup_path_menu);
 			backupPathToolbar.MenuItemClick += (sender, e) =>
 			{
@@ -162,7 +157,6 @@ namespace Com.Changyoung.HI5Controller
 
 			string ret;
 			if (sourceChecked) {
-				//Directory.Delete(targetFullPath, true);
 				if (Directory.Exists(targetFullPath)) {
 					string[] files = Directory.GetFiles(targetFullPath);
 					foreach (string s in files) {

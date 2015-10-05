@@ -14,14 +14,16 @@ namespace com.xamarin.recipes.filepicker
 	/// </remarks>
 	public class FileListRowViewHolder : Object
 	{
-		public FileListRowViewHolder(TextView timeTextView, TextView textView, FloatingActionButton fab)
+		public FileListRowViewHolder(TextView timeTextView, TextView textView, ImageView imageView, FloatingActionButton fab)
 		{
 			TimeTextView = timeTextView;
 			TextView = textView;
+			ImageView = imageView;
 			Fab = fab;
 		}
 
 		public FloatingActionButton Fab { get; private set; }
+		public ImageView ImageView { get; private set; }
 		public TextView TextView { get; private set; }
 		public TextView TimeTextView { get; private set; }
 
@@ -41,7 +43,15 @@ namespace com.xamarin.recipes.filepicker
 				TimeTextView.Visibility = Android.Views.ViewStates.Visible;
 			}
 			TextView.Text = fileName;
+			ImageView.SetImageResource(fileImageResourceId);
 			Fab.SetImageResource(fileImageResourceId);
+			if (Android.OS.Build.VERSION.SdkInt >= Android.OS.BuildVersionCodes.Lollipop) {
+				Fab.Visibility = Android.Views.ViewStates.Visible;
+				ImageView.Visibility = Android.Views.ViewStates.Gone;
+			} else {
+				Fab.Visibility = Android.Views.ViewStates.Gone;
+				ImageView.Visibility = Android.Views.ViewStates.Visible;
+			}
 		}
 	}
 }

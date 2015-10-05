@@ -4,7 +4,7 @@
     android:layout_width="fill_parent"
     android:layout_height="wrap_content"
     android:orientation="horizontal">
-<!--<ImageView
+    <ImageView
         android:id="@+id/file_picker_image"
         android:layout_width="20dip"
         android:layout_height="20dip"
@@ -12,7 +12,7 @@
         android:layout_marginBottom="5dip"
         android:layout_marginLeft="5dip"
         android:src="@drawable/ic_description"
-        android:scaleType="centerCrop" />-->
+        android:scaleType="centerCrop" />
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/file_picker_fab"
         app:elevation="6dp"

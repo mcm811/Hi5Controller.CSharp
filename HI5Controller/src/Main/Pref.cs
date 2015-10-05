@@ -11,10 +11,10 @@ namespace Com.Changyoung.HI5Controller
 {
 	public class Pref
 	{
-		//private readonly static string pkgName = Application.PackageName; // Context.PackageName
-		//private readonly static string storagePath = Android.OS.Environment.ExternalStorageDirectory.AbsolutePath;
+		//private readonly static string PackageName = Application.PackageName; // Context.PackageName
+		//public readonly static string StoragePath = "/storage";
 		public readonly static string PackageName = "Com.Changyoung.HI5Conroller.App";
-		public readonly static string StoragePath = "/storage";
+		private readonly static string StoragePath = Android.OS.Environment.ExternalStorageDirectory.AbsolutePath;
 
 		public readonly static string WorkPathKey = "work_path";
 		public readonly static string BackupPathKey = "backup_path";
@@ -28,7 +28,6 @@ namespace Com.Changyoung.HI5Controller
 		public static string BackupPath
 		{
 			get {
-				//return GetPath(BackupPathKey);
 				return Path.Combine(Path.GetFullPath(WorkPath), "Backup");
 			}
 			set { SetPath(BackupPathKey, value); }
