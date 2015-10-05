@@ -31,6 +31,8 @@ namespace Com.Changyoung.HI5Controller
 		private ViewPager viewPager;
 		private PagerAdapter pagerAdapter;
 
+		private int exitCount;
+
 		private void LogDebug(string msg)
 		{
 			Log.Debug(Application.PackageName, "WcdActivity: " + msg);
@@ -288,9 +290,22 @@ namespace Com.Changyoung.HI5Controller
 
 		public override void OnBackPressed()
 		{
-			var r = (IRefresh)GetFragment(tabLayout.SelectedTabPosition);
-			if (r != null)
-				r.OnBackPressedFragment();
+			try {
+				var r = (IRefresh)GetFragment(tabLayout.SelectedTabPosition);
+				if (r != null) {
+					var s = r.OnBackPressedFragment();
+                    if (s == null || s == "/") {
+						exitCount++;
+					} else {
+						exitCount = 0;
+					}
+				}
+			} catch {
+				exitCount++;
+			}
+
+			if (exitCount == 3)
+				base.OnBackPressed();
 		}
 	}
 }
