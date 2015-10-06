@@ -18,7 +18,7 @@ using System.IO;
 
 namespace Com.Changyoung.HI5Controller
 {
-	[Activity(Label = "@string/ApplicationName", MainLauncher = false, Icon = "@drawable/robot_industrial", Theme = "@style/MyTheme")]
+	[Activity(Label = "@string/ApplicationName", MainLauncher = false, Icon = "@drawable/ic_launcher", Theme = "@style/MyTheme")]
 	public class MainActivity : AppCompatActivity
 	{
 		private View view;

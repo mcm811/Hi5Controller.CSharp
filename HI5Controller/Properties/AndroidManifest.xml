@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<manifest xmlns:android="http://schemas.android.com/apk/res/android" package="Com.Changyoung.HI5Conroller.App" android:versionCode="1" android:versionName="1.0" android:installLocation="preferExternal">
+<manifest xmlns:android="http://schemas.android.com/apk/res/android" package="com.changyoung.hi5controller" android:versionCode="2" android:installLocation="preferExternal" android:versionName="1.0.0a">
 	<uses-sdk android:minSdkVersion="15" android:targetSdkVersion="23" />
-	<application android:label="HI5Conroller" android:icon="@drawable/robot_industrial"></application>
+	<application android:label="HI5Conroller" android:icon="@drawable/ic_launcher"></application>
 	<uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 	<uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
 </manifest>

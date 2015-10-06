@@ -112,14 +112,14 @@ namespace Com.Changyoung.HI5Controller
 			{
 				switch (e.Item.ItemId) {
 					case Resource.Id.toolbar_backup_path_menu_up:
-					OnBackPressedFragment();
-					break;
+						OnBackPressedFragment();
+						break;
 					case Resource.Id.toolbar_backup_path_menu_home:
-					Refresh(Pref.BackupPath);
-					break;
+						Refresh(Pref.BackupPath);
+						break;
 					case Resource.Id.toolbar_backup_path_menu_restore:
-					Show(Restore());
-					break;
+						Show(Restore());
+						break;
 				}
 			};
 
@@ -142,46 +142,37 @@ namespace Com.Changyoung.HI5Controller
 			var sourceFullPath = Path.GetFullPath(backupPath);
 			var sourceFileName = Path.GetFileName(backupPath);
 
-			// 복원할 파일을 먼저 확인
-			bool sourceChecked = false;
-			if (Directory.Exists(sourceFullPath)) {
-				string[] files = Directory.GetFiles(sourceFullPath);
-				foreach (string s in files) {
-					var fileName = Path.GetFileName(s).ToUpper();
-					if (fileName.StartsWith("HX") || fileName.EndsWith("JOB") || fileName.StartsWith("ROBOT")) {
-						sourceChecked = true;
-						break;
-					}
-				}
-			}
-
-			string ret;
-			if (sourceChecked) {
-				if (Directory.Exists(targetFullPath)) {
-					string[] files = Directory.GetFiles(targetFullPath);
-					foreach (string s in files) {
-						File.Delete(s);
-						LogDebug("Delete: " + s);
-					}
-				} else {
-					Directory.CreateDirectory(targetFullPath);
-				}
-
+			string ret = "복원 실패";
+			try {
+				// 복원할 파일을 먼저 확인
+				bool sourceChecked = false;
 				if (Directory.Exists(sourceFullPath)) {
-					string[] files = Directory.GetFiles(sourceFullPath);
-					foreach (string s in files) {
-						var fileName = Path.GetFileName(s);
-						var destFile = Path.Combine(targetFullPath, fileName);
-						File.Copy(s, destFile, true);
-						LogDebug("Copy " + s + " To " + destFile);
+					var srcFiles = Directory.GetFiles(sourceFullPath);
+					foreach (var file in srcFiles) {
+						var fileName = Path.GetFileName(file).ToUpper();
+						if (fileName.StartsWith("HX") || fileName.EndsWith("JOB") || fileName.StartsWith("ROBOT")) {
+							sourceChecked = true;
+							break;
+						}
 					}
-					ret = "복원 완료: " + sourceFileName;
-				} else {
-					ret = "복원 폴더가 없습니다";
+					if (sourceChecked) {
+						if (Directory.Exists(targetFullPath)) {
+							var targetFiles = Directory.GetFiles(targetFullPath);
+							foreach (var file in targetFiles) {
+								File.Delete(file);
+							}
+						} else {
+							Directory.CreateDirectory(targetFullPath);
+						}
+						foreach (string s in srcFiles) {
+							var fileName = Path.GetFileName(s);
+							var destFile = Path.Combine(targetFullPath, fileName);
+							File.Copy(s, destFile, true);
+						}
+						ret = "복원 완료: " + sourceFileName;
+					}
 				}
-			} else {
-				ret = "현재 폴더에 복원할 파일이 없습니다";
-			}
+			} catch { }
 
 			return ret;
 		}
@@ -196,25 +187,21 @@ namespace Com.Changyoung.HI5Controller
 			var targetDirName = Path.Combine(sourceFullPath, "Backup");
 			var targetFullPath = Path.Combine(targetDirName, targetFileName);
 
-			if (!Directory.Exists(targetFullPath)) {
-				Directory.CreateDirectory(targetFullPath);
-			}
-
-			string ret;
-			if (Directory.Exists(sourceFullPath)) {
-				string[] files = Directory.GetFiles(sourceFullPath);
-				foreach (string s in files) {
-					var fileName = Path.GetFileName(s);
-					var destFile = Path.Combine(targetFullPath, fileName);
-					var attributes = File.GetAttributes(s);
-					File.Copy(s, destFile, true);
-					LogDebug("Copy " + s + " To " + destFile);
+			string ret = "백업 실패";
+			try {
+				if (Directory.Exists(sourceFullPath)) {
+					string[] files = Directory.GetFiles(sourceFullPath);
+					if (!Directory.Exists(targetFullPath))
+						Directory.CreateDirectory(targetFullPath);
+					foreach (string s in files) {
+						var fileName = Path.GetFileName(s);
+						var destFile = Path.Combine(targetFullPath, fileName);
+						File.Copy(s, destFile, true);
+					}
+					ret = "백업 완료: " + targetFileName;
 				}
-				ret = "백업 완료: " + targetFileName;
-			} else {
-				ret = "대상 폴더가 없습니다";
-			}
-			Refresh(Pref.BackupPath);
+				Refresh(Pref.BackupPath);
+			} catch { }
 
 			return ret;
 		}

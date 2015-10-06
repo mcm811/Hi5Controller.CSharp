@@ -21,9 +21,11 @@ namespace Com.Changyoung.HI5Controller
 		private FileListAdapter adapter;
 		private DirectoryInfo directoryInfo;
 
-		public string PrefKey { get; set; }
+		public string PrefKey
+		{ get; set; }
 
-		public View SnackbarView { get; set; }
+		public View SnackbarView
+		{ get; set; }
 
 		private void LogDebug(string msg)
 		{
@@ -93,11 +95,19 @@ namespace Com.Changyoung.HI5Controller
 				var builder = new AlertDialog.Builder(Context);
 				builder.SetTitle(actionName)
 					   .SetMessage(msg)
-					   .SetNegativeButton("취소", delegate { RefreshFilesList(DirPath); })
+					   .SetNegativeButton("취소", delegate
+					   {
+						   RefreshFilesList(DirPath);
+						   Show("삭제가 취소 되었습니다");
+					   })
 					   .SetPositiveButton("삭제", delegate
 						{
-							Directory.Delete(fileSystemInfo.FullName, true);
-							RefreshFilesList(DirPath);
+							try {
+								Directory.Delete(fileSystemInfo.FullName, true);
+								RefreshFilesList(DirPath);
+							} catch {
+								Show("삭제할 수 없습니다");
+							}
 						});
 				builder.Create().Show();
 			};
